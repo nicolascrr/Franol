@@ -1,0 +1,37 @@
+{
+  "dashboard": {
+    "welcome": "Bon retour parmi nous !",
+    "subtitle": "Continuez à apprendre l'espagnol",
+    "portalName": "Portail Français",
+    "wordsLearned": "Mots appris",
+    "successRate": "Taux de réussite",
+    "quizCompleted": "Quiz complétés",
+    "quickActions": "Actions rapides",
+    "addVocabulary": "Ajouter du vocabulaire",
+    "addVocabularyDesc": "Enrichir votre dictionnaire",
+    "practice": "S'entraîner",
+    "practiceDesc": "Quiz et exercices",
+    "viewLessons": "Voir les cours",
+    "viewLessonsDesc": "Fiches et mémos"
+  },
+  "nav": {
+    "home": "Accueil",
+    "add": "Ajouter",
+    "practice": "S'entraîner",
+    "lessons": "Cours"
+  },
+  "auth": {
+    "title": "Accès Frañol",
+    "subtitle": "Entrez le mot de passe pour accéder",
+    "password": "Mot de passe",
+    "enter": "Entrer",
+    "connecting": "Connexion...",
+    "incorrect": "Mot de passe incorrect",
+    "logout": "Déconnexion"
+  },
+  "common": {
+    "back": "Retour",
+    "error": "Une erreur est survenue",
+    "loading": "Chargement..."
+  }
+}

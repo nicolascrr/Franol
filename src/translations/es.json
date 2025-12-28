@@ -1,0 +1,37 @@
+{
+  "dashboard": {
+    "welcome": "¡Bienvenido de nuevo!",
+    "subtitle": "Sigue aprendiendo francés",
+    "portalName": "Portal Español",
+    "wordsLearned": "Palabras aprendidas",
+    "successRate": "Tasa de éxito",
+    "quizCompleted": "Quiz completados",
+    "quickActions": "Acciones rápidas",
+    "addVocabulary": "Añadir vocabulario",
+    "addVocabularyDesc": "Enriquecer tu diccionario",
+    "practice": "Practicar",
+    "practiceDesc": "Quiz y ejercicios",
+    "viewLessons": "Ver lecciones",
+    "viewLessonsDesc": "Fichas y resúmenes"
+  },
+  "nav": {
+    "home": "Inicio",
+    "add": "Añadir",
+    "practice": "Practicar",
+    "lessons": "Lecciones"
+  },
+  "auth": {
+    "title": "Acceso Frañol",
+    "subtitle": "Ingresa la contraseña para acceder",
+    "password": "Contraseña",
+    "enter": "Entrar",
+    "connecting": "Conectando...",
+    "incorrect": "Contraseña incorrecta",
+    "logout": "Cerrar sesión"
+  },
+  "common": {
+    "back": "Volver",
+    "error": "Ha ocurrido un error",
+    "loading": "Cargando..."
+  }
+}
