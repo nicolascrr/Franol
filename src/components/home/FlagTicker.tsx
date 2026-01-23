@@ -1,28 +1,28 @@
-'use client';
+"use client";
 
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from "react";
 
 const flags = [
-  { code: 'fr', name: 'France' },
-  { code: 'be', name: 'Belgique' },
-  { code: 'ch', name: 'Suisse' },
-  { code: 'ca', name: 'Canada' },
-  { code: 'sn', name: 'Sénégal' },
-  { code: 'ci', name: "Côte d'Ivoire" },
-  { code: 'mg', name: 'Madagascar' },
-  { code: 'ht', name: 'Haïti' },
-  { code: 'lu', name: 'Luxembourg' },
-  { code: 'mc', name: 'Monaco' },
-  { code: 'es', name: 'Espagne' },
-  { code: 'ar', name: 'Argentine' },
-  { code: 'mx', name: 'Mexique' },
-  { code: 'co', name: 'Colombie' },
-  { code: 'pe', name: 'Pérou' },
-  { code: 'cl', name: 'Chili' },
-  { code: 'ec', name: 'Équateur' },
-  { code: 'cu', name: 'Cuba' },
-  { code: 'uy', name: 'Uruguay' },
-  { code: 've', name: 'Venezuela' },
+  { code: "fr", name: "France" },
+  { code: "be", name: "Belgique" },
+  { code: "ch", name: "Suisse" },
+  { code: "ca", name: "Canada" },
+  { code: "sn", name: "Sénégal" },
+  { code: "ci", name: "Côte d'Ivoire" },
+  { code: "mg", name: "Madagascar" },
+  { code: "ht", name: "Haïti" },
+  { code: "lu", name: "Luxembourg" },
+  { code: "mc", name: "Monaco" },
+  { code: "es", name: "Espagne" },
+  { code: "ar", name: "Argentine" },
+  { code: "mx", name: "Mexique" },
+  { code: "co", name: "Colombie" },
+  { code: "pe", name: "Pérou" },
+  { code: "cl", name: "Chili" },
+  { code: "ec", name: "Équateur" },
+  { code: "cu", name: "Cuba" },
+  { code: "uy", name: "Uruguay" },
+  { code: "ve", name: "Venezuela" },
 ];
 
 function shuffleArray<T>(array: T[]): T[] {
@@ -41,8 +41,8 @@ export function FlagTicker() {
     const shuffled1 = shuffleArray(flags);
     const shuffled2 = shuffleArray(flags);
     return {
-      topRowFlags: [...shuffled1, ...shuffled1, ...shuffled1],
-      bottomRowFlags: [...shuffled2, ...shuffled2, ...shuffled2],
+      topRowFlags: [...shuffled1, ...shuffled1],
+      bottomRowFlags: [...shuffled2, ...shuffled2],
     };
   }, []);
 
@@ -56,8 +56,8 @@ export function FlagTicker() {
 
   return (
     <div className="w-full overflow-hidden ticker-mask select-none pointer-events-none">
-      <div className="flex mb-4">
-        <div className="flex animate-scroll-left flag-ticker">
+      <div className="mb-4 overflow-hidden">
+        <div className="flex animate-scroll-left flag-ticker w-fit">
           {topRowFlags.map((flag, index) => (
             <div
               key={`top-${flag.code}-${index}`}
@@ -66,33 +66,16 @@ export function FlagTicker() {
               <img
                 src={`https://flagcdn.com/w80/${flag.code}.png`}
                 alt={flag.name}
-                className="w-full h-full object-cover pointer-events-none"
+                className="w-full h-full object-contain pointer-events-none"
                 loading="lazy"
-                draggable={false}
-              />
-            </div>
-          ))}
-        </div>
-        <div className="flex animate-scroll-left flag-ticker" aria-hidden="true">
-          {topRowFlags.map((flag, index) => (
-            <div
-              key={`top-dup-${flag.code}-${index}`}
-              className="flex-shrink-0 w-16 h-10 rounded-md overflow-hidden shadow-sm opacity-60"
-            >
-              <img
-                src={`https://flagcdn.com/w80/${flag.code}.png`}
-                alt=""
-                className="w-full h-full object-cover pointer-events-none"
-                loading="lazy"
-                draggable={false}
               />
             </div>
           ))}
         </div>
       </div>
 
-      <div className="flex">
-        <div className="flex animate-scroll-right flag-ticker">
+      <div className="overflow-hidden">
+        <div className="flex animate-scroll-right flag-ticker w-fit">
           {bottomRowFlags.map((flag, index) => (
             <div
               key={`bottom-${flag.code}-${index}`}
@@ -101,23 +84,7 @@ export function FlagTicker() {
               <img
                 src={`https://flagcdn.com/w80/${flag.code}.png`}
                 alt={flag.name}
-                className="w-full h-full object-cover pointer-events-none"
-                loading="lazy"
-                draggable={false}
-              />
-            </div>
-          ))}
-        </div>
-        <div className="flex animate-scroll-right flag-ticker" aria-hidden="true">
-          {bottomRowFlags.map((flag, index) => (
-            <div
-              key={`bottom-dup-${flag.code}-${index}`}
-              className="flex-shrink-0 w-16 h-10 rounded-md overflow-hidden shadow-sm opacity-60"
-            >
-              <img
-                src={`https://flagcdn.com/w80/${flag.code}.png`}
-                alt=""
-                className="w-full h-full object-cover pointer-events-none"
+                className="w-full h-full object-contain pointer-events-none"
                 loading="lazy"
                 draggable={false}
               />

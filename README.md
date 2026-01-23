@@ -66,5 +66,3 @@ Simple et robuste :
 - Middleware de protection des routes
 
 ---
-
-Fait avec ❤️ pour 🇫🇷 + 🇦🇷

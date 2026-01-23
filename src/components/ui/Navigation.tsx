@@ -1,22 +1,24 @@
-'use client';
+"use client";
 
-import { usePathname, useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { useLocale } from '@/contexts/LocaleContext';
-import { 
-  Home, 
-  PlusCircle, 
-  Dumbbell, 
+import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
+import { useLocale } from "@/contexts/LocaleContext";
+import {
+  Home,
+  PlusCircle,
+  Database,
+  Dumbbell,
   BookOpen,
-  LogOut 
-} from 'lucide-react';
-import { cn } from '@/lib/utils';
+  LogOut,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const navItems = [
-  { key: 'home', href: '/dashboard', icon: Home },
-  { key: 'add', href: '/dashboard/add', icon: PlusCircle },
-  { key: 'practice', href: '/dashboard/practice', icon: Dumbbell },
-  { key: 'lessons', href: '/dashboard/lessons', icon: BookOpen },
+  { key: "home", href: "/dashboard", icon: Home },
+  { key: "add", href: "/dashboard/add", icon: PlusCircle },
+  { key: "content", href: "/dashboard/content", icon: Database },
+  { key: "practice", href: "/dashboard/practice", icon: Dumbbell },
+  { key: "lessons", href: "/dashboard/lessons", icon: BookOpen },
 ];
 
 export function Navigation() {
@@ -25,13 +27,13 @@ export function Navigation() {
   const router = useRouter();
 
   const handleLogout = async () => {
-    await fetch('/api/auth/logout', { method: 'POST' });
+    await fetch("/api/auth/logout", { method: "POST" });
     clearLocale();
-    router.push('/');
+    router.push("/");
   };
 
   const isActive = (href: string) => {
-    if (href === '/dashboard') {
+    if (href === "/dashboard") {
       return pathname === href;
     }
     return pathname.startsWith(href);
@@ -49,7 +51,7 @@ export function Navigation() {
             </span>
           </Link>
           <p className="text-xs text-franol-muted mt-1">
-            {t('dashboard.portalName')}
+            {t("dashboard.portalName")}
           </p>
         </div>
 
@@ -63,10 +65,10 @@ export function Navigation() {
                 key={item.key}
                 href={item.href}
                 className={cn(
-                  'flex items-center gap-3 px-6 py-3 mx-2 rounded-xl transition-all',
-                  active 
-                    ? 'bg-franol-accent-blue text-white' 
-                    : 'text-franol-muted hover:bg-franol-sand hover:text-franol-text'
+                  "flex items-center gap-3 px-6 py-3 mx-2 rounded-xl transition-all",
+                  active
+                    ? "bg-franol-accent-blue text-white"
+                    : "text-franol-muted hover:bg-franol-sand hover:text-franol-text",
                 )}
               >
                 <Icon size={20} />
@@ -85,7 +87,7 @@ export function Navigation() {
                        transition-all"
           >
             <LogOut size={20} />
-            <span className="font-medium">{t('auth.logout')}</span>
+            <span className="font-medium">{t("auth.logout")}</span>
           </button>
         </div>
       </nav>
@@ -101,14 +103,14 @@ export function Navigation() {
                 key={item.key}
                 href={item.href}
                 className={cn(
-                  'flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all',
-                  active 
-                    ? 'text-franol-accent-blue' 
-                    : 'text-franol-muted'
+                  "flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all",
+                  active ? "text-franol-accent-blue" : "text-franol-muted",
                 )}
               >
                 <Icon size={22} />
-                <span className="text-xs font-medium">{t(`nav.${item.key}`)}</span>
+                <span className="text-xs font-medium">
+                  {t(`nav.${item.key}`)}
+                </span>
               </Link>
             );
           })}
