@@ -122,12 +122,105 @@
     "enter": "Entrar",
     "connecting": "Conectando...",
     "incorrect": "Contraseña incorrecta",
-    "logout": "Cerrar sesión"
+    "logout": "Cerrar sesión",
+    "loggingOut": "Cerrando sesión..."
   },
   "common": {
     "back": "Volver",
     "error": "Ha ocurrido un error",
     "loading": "Cargando...",
     "close": "Cerrar"
+  },
+  "practice": {
+    "title": "Practicar",
+    "subtitle": "Elige tu modo de entrenamiento",
+    "modes": {
+      "classic": "Quiz Clásico",
+      "classicDesc": "Vocabulario y expresiones mezclados",
+      "vocabulary": "Vocabulario",
+      "vocabularyDesc": "Solo vocabulario",
+      "expressions": "Expresiones",
+      "expressionsDesc": "Solo expresiones",
+      "conjugation": "Conjugación",
+      "conjugationDesc": "Verbos a conjugar según un tiempo dado",
+      "discovery": "Descubrimiento",
+      "discoveryDesc": "Nuevo contenido generado por IA",
+      "custom": "Personalizado",
+      "customDesc": "Describe el quiz deseado",
+      "comingSoon": "Próximamente"
+    },
+    "resume": {
+      "title": "Quiz en curso",
+      "button": "Retomar",
+      "dismiss": "Eliminar"
+    },
+    "discovery": {
+      "title": "Modo descubrimiento",
+      "subtitle": "Describe el quiz que quieres, la IA lo genera",
+      "describeQuiz": "Describe tu quiz",
+      "promptPlaceholder": "Ej: 15 palabras sobre cocina, nivel difícil...",
+      "promptRequired": "Por favor describe el quiz deseado",
+      "examples": "Ejemplos",
+      "generating": "Generando...",
+      "start": "Generar el quiz"
+    },
+    "setup": {
+      "title": "Configuración del quiz",
+      "subtitle": "Personaliza tu entrenamiento",
+      "questionCount": "Número de preguntas",
+      "custom": "Personalizado",
+      "format": "Formato",
+      "formatQcm": "Opción múltiple",
+      "formatTranslation": "Traducción",
+      "formatMixed": "Mixto",
+      "category": "Categoría",
+      "allCategories": "Todas las categorías",
+      "direction": "Dirección",
+      "frToEs": "Francés → Español",
+      "esToFr": "Español → Francés",
+      "start": "Comenzar"
+    },
+    "quiz": {
+      "question": "Pregunta",
+      "of": "de",
+      "validate": "Validar",
+      "next": "Siguiente",
+      "correct": "¡Correcto!",
+      "incorrect": "Incorrecto",
+      "correctAnswerWas": "La respuesta correcta era:",
+      "theAnswerIs": "La respuesta:",
+      "typeAnswer": "Escribe tu respuesta...",
+      "conjugate": "Conjuga",
+      "tense": "Tiempo",
+      "pronoun": "Pronombre",
+      "quitConfirm": "¿Realmente quieres salir del quiz? Tu progreso se perderá.",
+      "quit": "Salir",
+      "continue": "Continuar",
+      "explain": "Explicar",
+      "aiExplanation": "Explicación IA"
+    },
+    "results": {
+      "title": "Resultados",
+      "score": "Puntuación",
+      "time": "Tiempo",
+      "errors": "Tus errores",
+      "yourAnswer": "Tu respuesta",
+      "correctAnswer": "Respuesta correcta",
+      "noErrors": "¡Ningún error, bravo!",
+      "retry": "Repetir el mismo quiz",
+      "newQuestions": "Nuevas preguntas",
+      "newQuiz": "Nuevo quiz",
+      "backToHome": "Volver al inicio",
+      "saving": "Guardando...",
+      "saved": "Guardado",
+      "addVocab": "Añadir el vocabulario descubierto",
+      "wordsAvailable": "palabras disponibles",
+      "selected": "seleccionado(s)",
+      "selectAll": "Seleccionar todo",
+      "deselectAll": "Deseleccionar todo",
+      "adding": "Añadiendo...",
+      "addSelected": "Añadir selección",
+      "vocabAdded": "¡Vocabulario añadido con éxito!"
+    }
   }
 }

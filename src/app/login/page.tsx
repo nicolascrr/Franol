@@ -61,13 +61,14 @@ export default function LoginPage() {
         // Récupérer l'URL de redirection depuis les paramètres
         const searchParams = new URLSearchParams(window.location.search);
         const redirectUrl = searchParams.get("redirect") || "/dashboard";
+        // Ne pas remettre isLoading à false, la navigation va démonter le composant
         router.push(redirectUrl);
       } else {
         setError(t("auth.incorrect"));
+        setIsLoading(false);
       }
     } catch (err) {
       setError(t("common.error"));
-    } finally {
       setIsLoading(false);
     }
   };

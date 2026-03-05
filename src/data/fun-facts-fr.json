@@ -1,0 +1,512 @@
+[
+  {
+    "fact": "«Embarazada» signifie «enceinte» en espagnol, pas «embarrassée» — un faux ami classique !",
+    "type": "faux_ami",
+    "keyword": "embarazada"
+  },
+  {
+    "fact": "«Actual» en espagnol veut dire «actuel», pas «réel». Pour dire «réel», on dit «real» ou «verdadero».",
+    "type": "faux_ami",
+    "keyword": "actual"
+  },
+  {
+    "fact": "«Largo» en espagnol signifie «long», pas «large». Pour dire «large», on utilise «ancho».",
+    "type": "faux_ami",
+    "keyword": "largo"
+  },
+  {
+    "fact": "«Éxito» signifie «succès» en espagnol, pas «sortie». «Salida» = sortie.",
+    "type": "faux_ami",
+    "keyword": "éxito"
+  },
+  {
+    "fact": "«Recordar» en espagnol signifie «se souvenir», pas «enregistrer». «Grabar» = enregistrer.",
+    "type": "faux_ami",
+    "keyword": "recordar"
+  },
+  {
+    "fact": "«Molestar» en espagnol = «déranger» ou «ennuyer», sans connotation grave. «Moleste» ne choque pas !",
+    "type": "faux_ami",
+    "keyword": "molestar"
+  },
+  {
+    "fact": "«Asistir» en espagnol = «assister à / être présent», pas «aider». «Ayudar» = aider.",
+    "type": "faux_ami",
+    "keyword": "asistir"
+  },
+  {
+    "fact": "«Pretender» en espagnol = «avoir l'intention de / prétendre à», pas «faire semblant».",
+    "type": "faux_ami",
+    "keyword": "pretender"
+  },
+  {
+    "fact": "«Constipado» en espagnol = «enrhumé», pas «constipé» ! Pour constipé, on dit «estreñido».",
+    "type": "faux_ami",
+    "keyword": "constipado"
+  },
+  {
+    "fact": "«Librería» = librairie en espagnol, pas bibliothèque. «Biblioteca» = bibliothèque.",
+    "type": "faux_ami",
+    "keyword": "librería"
+  },
+  {
+    "fact": "«Simpático» ne signifie pas «sympathique» mais «gentil / sympa». Très courant en espagnol !",
+    "type": "faux_ami",
+    "keyword": "simpático"
+  },
+  {
+    "fact": "«Sensible» en espagnol = «sensible / touché», même sens qu'en français ! Pas un faux ami.",
+    "type": "faux_ami",
+    "keyword": "sensible"
+  },
+  {
+    "fact": "«Hotel», «animal», «hospital», «natural» : des centaines de mots sont identiques en FR et ES !",
+    "type": "mot_identique",
+    "keyword": "hotel"
+  },
+  {
+    "fact": "Les mots en «-tion» en français se disent «-ción» en espagnol : nation/nación, action/acción.",
+    "type": "mot_identique",
+    "keyword": "-tion/-ción"
+  },
+  {
+    "fact": "Les adjectifs en «-al» sont souvent identiques : «final», «general», «original», «normal».",
+    "type": "mot_identique",
+    "keyword": "-al"
+  },
+  {
+    "fact": "«Taxi», «radio», «piano», «video» : ces mots sont universellement identiques dans les deux langues.",
+    "type": "mot_identique",
+    "keyword": "taxi"
+  },
+  {
+    "fact": "«Color» (couleur) se dit «color» en espagnol. Seul l'article change : «el color».",
+    "type": "mot_identique",
+    "keyword": "color"
+  },
+  {
+    "fact": "Les mots en «-tor» en latin donnent «-teur» en français et «-tor» en espagnol : doctor/docteur.",
+    "type": "mot_identique",
+    "keyword": "doctor"
+  },
+  {
+    "fact": "«Capital» (ville capitale) s'écrit pareil en français et en espagnol. La même lettre, le même sens.",
+    "type": "mot_identique",
+    "keyword": "capital"
+  },
+  {
+    "fact": "«Popular», «tropical», «local» : les adjectifs en «-al» fonctionnent dans les deux langues.",
+    "type": "mot_identique",
+    "keyword": "popular"
+  },
+  {
+    "fact": "«Millón», «billón» ressemblent à «million», «billion». Les grands nombres se ressemblent !",
+    "type": "mot_identique",
+    "keyword": "millón"
+  },
+  {
+    "fact": "En chimie et sciences, les termes sont quasi identiques : «microscopio» / «microscope».",
+    "type": "mot_identique",
+    "keyword": "microscopio"
+  },
+  {
+    "fact": "«Livre» et «libro» viennent du latin «liber». Une seule lettre les sépare !",
+    "type": "mot_similaire",
+    "keyword": "libro"
+  },
+  {
+    "fact": "«Père» et «padre», «mère» et «madre» viennent tous du latin «pater» et «mater».",
+    "type": "mot_similaire",
+    "keyword": "padre"
+  },
+  {
+    "fact": "«Fleur» et «flor» viennent du latin «flos/floris». La flore parle encore latin !",
+    "type": "mot_similaire",
+    "keyword": "flor"
+  },
+  {
+    "fact": "«Lune» et «luna» viennent du latin «luna». La lune est identique dans les deux langues !",
+    "type": "mot_similaire",
+    "keyword": "luna"
+  },
+  {
+    "fact": "«Mer» et «mar» viennent du latin «mare». On dit «prendre la mer» / «hacerse a la mar».",
+    "type": "mot_similaire",
+    "keyword": "mar"
+  },
+  {
+    "fact": "«Ami» et «amigo» viennent du latin «amicus». L'amitié unit les deux langues depuis Rome !",
+    "type": "mot_similaire",
+    "keyword": "amigo"
+  },
+  {
+    "fact": "«Feu» et «fuego» viennent du latin «focus». À l'origine, focus désignait le foyer domestique !",
+    "type": "mot_similaire",
+    "keyword": "fuego"
+  },
+  {
+    "fact": "«Eau» et «agua» viennent du latin «aqua». Le français a perdu plusieurs lettres latines !",
+    "type": "mot_similaire",
+    "keyword": "agua"
+  },
+  {
+    "fact": "«Nuit» et «noche» viennent du latin «nox/noctis». La nuit a les mêmes origines !",
+    "type": "mot_similaire",
+    "keyword": "noche"
+  },
+  {
+    "fact": "«Blanc» et «blanco» partagent la même racine germanique «blank» qui signifiait «brillant».",
+    "type": "mot_similaire",
+    "keyword": "blanco"
+  },
+  {
+    "fact": "«Madrugada» en espagnol : ce moment entre minuit et l'aube. En français, pas de mot unique.",
+    "type": "intraduisible",
+    "keyword": "madrugada"
+  },
+  {
+    "fact": "«Sobremesa» en espagnol : le temps passé à table après manger, à converser. Sans équivalent français.",
+    "type": "intraduisible",
+    "keyword": "sobremesa"
+  },
+  {
+    "fact": "«Estrenar» en espagnol : utiliser ou inaugurer quelque chose pour la première fois. Aucun équivalent exact.",
+    "type": "intraduisible",
+    "keyword": "estrenar"
+  },
+  {
+    "fact": "«Vergüenza ajena» : honte ressentie pour quelqu'un d'autre. En français, on dit «honte par procuration».",
+    "type": "intraduisible",
+    "keyword": "vergüenza ajena"
+  },
+  {
+    "fact": "«Añoranza» : mélancolie douce-amère pour quelque chose de perdu. Plus intense que «nostalgie».",
+    "type": "intraduisible",
+    "keyword": "añoranza"
+  },
+  {
+    "fact": "«Tutear» en espagnol : parler à quelqu'un en utilisant «tú». Le français n'a pas de verbe pour ça.",
+    "type": "intraduisible",
+    "keyword": "tutear"
+  },
+  {
+    "fact": "«Madrugar» en espagnol : se lever très tôt le matin. Un seul verbe pour une idée complexe !",
+    "type": "intraduisible",
+    "keyword": "madrugar"
+  },
+  {
+    "fact": "«Friolero» : quelqu'un qui a toujours froid. Le français a «frileux», une exception heureuse !",
+    "type": "intraduisible",
+    "keyword": "friolero"
+  },
+  {
+    "fact": "«Alcool», «algèbre», «azur», «coton» : ces mots français viennent de l'arabe, via l'espagnol !",
+    "type": "etymologie",
+    "keyword": "alcool"
+  },
+  {
+    "fact": "«Chocolat» vient du nahuatl «xocolatl» (eau amère). L'espagnol l'a transmis à toute l'Europe !",
+    "type": "etymologie",
+    "keyword": "chocolat"
+  },
+  {
+    "fact": "«Tomate» vient du nahuatl «tomatl». Les Aztèques ont nommé ce fruit que le monde entier aime !",
+    "type": "etymologie",
+    "keyword": "tomate"
+  },
+  {
+    "fact": "«Tabac» vient de l'espagnol «tabaco», lui-même du taïno, langue des peuples des Caraïbes.",
+    "type": "etymologie",
+    "keyword": "tabac"
+  },
+  {
+    "fact": "«Ouragan» vient de l'espagnol «huracán», qui vient lui-même du taïno «hurakán» (dieu du vent).",
+    "type": "etymologie",
+    "keyword": "ouragan"
+  },
+  {
+    "fact": "«Guacamole» vient du nahuatl : «ahuacatl» (avocat) + «molli» (sauce). Littéralement «sauce avocat».",
+    "type": "etymologie",
+    "keyword": "guacamole"
+  },
+  {
+    "fact": "«Guerrilla» (guérilla) vient de l'espagnol «guerra» (guerre) + diminutif. Une petite guerre !",
+    "type": "etymologie",
+    "keyword": "guerrilla"
+  },
+  {
+    "fact": "«Bizarre» viendrait de l'espagnol «bizarro» (courageux). Le sens a complètement changé en français !",
+    "type": "etymologie",
+    "keyword": "bizarre"
+  },
+  {
+    "fact": "«Ranch» vient de l'espagnol «rancho». L'influence hispanique est immense dans le vocabulaire mondial.",
+    "type": "etymologie",
+    "keyword": "ranch"
+  },
+  {
+    "fact": "«Mosquée» vient de l'arabe «masjid», passé par l'espagnol «mezquita» avant d'arriver en français.",
+    "type": "etymologie",
+    "keyword": "mosquée"
+  },
+  {
+    "fact": "«Avocado» vient du nahuatl «ahuacatl». Les Espagnols l'ont transformé en «aguacate», les Français en «avocat».",
+    "type": "etymologie",
+    "keyword": "avocat"
+  },
+  {
+    "fact": "«Cannibal» vient de l'espagnol «caníbal», issu du mot taïno désignant les Caraïbes.",
+    "type": "etymologie",
+    "keyword": "cannibal"
+  },
+  {
+    "fact": "«Costar un ojo de la cara» = coûter un œil — identique à «coûter les yeux de la tête» en français !",
+    "type": "expression_idiomatique",
+    "keyword": "ojo de la cara"
+  },
+  {
+    "fact": "«Llueve a cántaros» (il pleut à seaux) correspond à «il pleut des cordes» en français.",
+    "type": "expression_idiomatique",
+    "keyword": "llueve a cántaros"
+  },
+  {
+    "fact": "«Estar en las nubes» (être dans les nuages) = «être dans la lune» en français. Même idée !",
+    "type": "expression_idiomatique",
+    "keyword": "estar en las nubes"
+  },
+  {
+    "fact": "«Matar dos pájaros de un tiro» = tuer deux oiseaux d'une pierre. Identique dans les deux langues !",
+    "type": "expression_idiomatique",
+    "keyword": "dos pájaros"
+  },
+  {
+    "fact": "«A buen entendedor, pocas palabras» = à bon entendeur, salut. La sagesse est universelle !",
+    "type": "expression_idiomatique",
+    "keyword": "buen entendedor"
+  },
+  {
+    "fact": "«Poser un lapin» en français = «dejar plantado» en espagnol. Laisser quelqu'un attendre seul.",
+    "type": "expression_idiomatique",
+    "keyword": "lapin"
+  },
+  {
+    "fact": "«Tener pájaros en la cabeza» = avoir des oiseaux dans la tête = être tête en l'air.",
+    "type": "expression_idiomatique",
+    "keyword": "pájaros en la cabeza"
+  },
+  {
+    "fact": "«No hay mal que por bien no venga» = à quelque chose malheur est bon. Proverbe universel !",
+    "type": "expression_idiomatique",
+    "keyword": "no hay mal"
+  },
+  {
+    "fact": "«Avoir le cafard» (être déprimé) n'a pas d'équivalent direct en espagnol. «Estar de bajón» est proche.",
+    "type": "expression_idiomatique",
+    "keyword": "cafard"
+  },
+  {
+    "fact": "«Estar hecho polvo» (être fait poussière) = être épuisé. En français : «être à plat» ou «être vidé».",
+    "type": "expression_idiomatique",
+    "keyword": "hecho polvo"
+  },
+  {
+    "fact": "«Meterse en camisa de once varas» = se mêler d'affaires complexes sans raison valable.",
+    "type": "expression_idiomatique",
+    "keyword": "camisa de once varas"
+  },
+  {
+    "fact": "«Sauter du coq à l'âne» n'a pas d'équivalent imagé en espagnol. On dit simplement «cambiar de tema».",
+    "type": "expression_idiomatique",
+    "keyword": "coq à l'âne"
+  },
+  {
+    "fact": "En Argentine, le «vos» remplace le «tú». C'est le «voseo», une variante propre au Río de la Plata.",
+    "type": "culture",
+    "keyword": "voseo"
+  },
+  {
+    "fact": "L'Académie française existe depuis 1635. La Real Academia Española a été fondée en 1713.",
+    "type": "culture",
+    "keyword": "académie"
+  },
+  {
+    "fact": "L'espagnol est parlé par plus de 500 millions de personnes. Le français par environ 320 millions.",
+    "type": "culture",
+    "keyword": "locuteurs"
+  },
+  {
+    "fact": "Le «¡» et «¿» espagnols signalent dès le début si la phrase est exclamative ou interrogative.",
+    "type": "culture",
+    "keyword": "ponctuation"
+  },
+  {
+    "fact": "En Argentine, le «mate» est une boisson nationale à base d'herbe yerba. Un rituel quotidien !",
+    "type": "culture",
+    "keyword": "mate"
+  },
+  {
+    "fact": "L'espagnol a été fortement influencé par l'arabe pendant 800 ans de présence en Espagne.",
+    "type": "culture",
+    "keyword": "arabe"
+  },
+  {
+    "fact": "En Argentine, «che» est une interjection universelle, comme «hé» ou «dis donc» en français.",
+    "type": "culture",
+    "keyword": "che"
+  },
+  {
+    "fact": "Les Québécois parlent un français influencé par l'anglais, comme les Argentins par l'italien.",
+    "type": "culture",
+    "keyword": "québec"
+  },
+  {
+    "fact": "En espagnol, les jours de la semaine ne prennent pas de majuscule : lunes, martes, miércoles...",
+    "type": "culture",
+    "keyword": "jours"
+  },
+  {
+    "fact": "Le français est langue officielle dans 29 pays. L'espagnol est officiel dans 20 pays.",
+    "type": "culture",
+    "keyword": "langues officielles"
+  },
+  {
+    "fact": "En Espagne, le «vosotros» est utilisé. En Amérique latine, ce pronom a disparu au profit de «ustedes».",
+    "type": "culture",
+    "keyword": "vosotros"
+  },
+  {
+    "fact": "Le «lunfardo» est un argot argentin né au XIXe siècle, influencé par l'italien et l'espagnol.",
+    "type": "culture",
+    "keyword": "lunfardo"
+  },
+  {
+    "fact": "La langue des signes française (LSF) a influencé la langue des signes américaine (ASL) au XIXe s.",
+    "type": "culture",
+    "keyword": "langue des signes"
+  },
+  {
+    "fact": "En espagnol, les nationalités ne prennent pas de majuscule : «soy francés», «soy argentino».",
+    "type": "culture",
+    "keyword": "nationalités"
+  },
+  {
+    "fact": "Le français a emprunté «plaza», «patio», «siesta» à l'espagnol. Les deux langues s'échangent !",
+    "type": "culture",
+    "keyword": "emprunts"
+  },
+  {
+    "fact": "En espagnol, le sujet est souvent omis : «Hablo» = «Je parle». Le verbe se suffit à lui-même !",
+    "type": "grammaire",
+    "keyword": "sujet omis"
+  },
+  {
+    "fact": "L'espagnol possède deux verbes «être» : «ser» (essence) et «estar» (état). Un défi pour les francophones !",
+    "type": "grammaire",
+    "keyword": "ser/estar"
+  },
+  {
+    "fact": "Le genre des mots diffère parfois : «la mer» = «el mar» (masculin en espagnol).",
+    "type": "grammaire",
+    "keyword": "genre"
+  },
+  {
+    "fact": "Le subjonctif est beaucoup plus courant en espagnol qu'en français. «Espero que vengas» !",
+    "type": "grammaire",
+    "keyword": "subjonctif"
+  },
+  {
+    "fact": "L'espagnol n'a pas d'article partitif : «Je mange du pain» = «Como pan» (sans article).",
+    "type": "grammaire",
+    "keyword": "article partitif"
+  },
+  {
+    "fact": "En Argentine, le pretérito indefinido est plus utilisé que le pretérito perfecto compuesto.",
+    "type": "grammaire",
+    "keyword": "pretérito"
+  },
+  {
+    "fact": "Le «ne... pas» français est unique. En espagnol, la négation simple «no» suffit avant le verbe.",
+    "type": "grammaire",
+    "keyword": "négation"
+  },
+  {
+    "fact": "En espagnol, les verbes réfléchis sont très fréquents : «levantarse», «llamarse», «sentirse».",
+    "type": "grammaire",
+    "keyword": "verbes réfléchis"
+  },
+  {
+    "fact": "L'espagnol utilise deux points d'interrogation : «¿Cómo estás?» Pour anticiper la question !",
+    "type": "grammaire",
+    "keyword": "interrogation"
+  },
+  {
+    "fact": "En espagnol, l'adjectif se place généralement après le nom : «casa blanca», «libro interesante».",
+    "type": "grammaire",
+    "keyword": "adjectif"
+  },
+  {
+    "fact": "Le «vous» de politesse existe aussi en espagnol : «usted» (singulier), «ustedes» (pluriel).",
+    "type": "grammaire",
+    "keyword": "usted"
+  },
+  {
+    "fact": "En espagnol, le futur peut être remplacé par «ir + a + infinitif» : «voy a comer» = je vais manger.",
+    "type": "grammaire",
+    "keyword": "futur périphrastique"
+  },
+  {
+    "fact": "En français, le «on» peut désigner «nous». En espagnol, «uno» joue parfois ce rôle.",
+    "type": "grammaire",
+    "keyword": "pronom on"
+  },
+  {
+    "fact": "Le «r» roulé espagnol n'existe pas en français standard. Le «r» français est guttural et unique.",
+    "type": "prononciation",
+    "keyword": "r roulé"
+  },
+  {
+    "fact": "Le «ll» espagnol se prononce «j» (comme «je») en Argentine : «lluvia» se dit /ʒuvia/.",
+    "type": "prononciation",
+    "keyword": "ll argentin"
+  },
+  {
+    "fact": "Le «s» final espagnol se prononce toujours, contrairement au français où il est souvent muet.",
+    "type": "prononciation",
+    "keyword": "s final"
+  },
+  {
+    "fact": "En espagnol, toutes les voyelles se prononcent distinctement. Pas de voyelles muettes comme en français !",
+    "type": "prononciation",
+    "keyword": "voyelles"
+  },
+  {
+    "fact": "Le «u» français (son /y/ comme dans «rue») n'existe pas en espagnol. Un défi pour les hispanophones !",
+    "type": "prononciation",
+    "keyword": "son /y/"
+  },
+  {
+    "fact": "La «jota» espagnole (j/g devant e,i) est un son guttural /x/ absent du français standard.",
+    "type": "prononciation",
+    "keyword": "jota"
+  },
+  {
+    "fact": "En espagnol, l'accent tonique est crucial : «hablo» (je parle, présent) vs «habló» (il parla, passé).",
+    "type": "prononciation",
+    "keyword": "accent tonique"
+  },
+  {
+    "fact": "Le français possède des sons nasaux (an, en, in, on, un) qui n'existent pas en espagnol.",
+    "type": "prononciation",
+    "keyword": "nasales"
+  },
+  {
+    "fact": "En espagnol argentin, le «sh» remplace le «ll» et «y» : «yo» se prononce «sho». Le «sheísmo» !",
+    "type": "prononciation",
+    "keyword": "sheísmo"
+  },
+  {
+    "fact": "Le «e» français a trois prononciations (/e/, /ɛ/, /ə/) selon les accents. En espagnol, une seule.",
+    "type": "prononciation",
+    "keyword": "e français"
+  }
+]

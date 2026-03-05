@@ -1,0 +1,512 @@
+[
+  {
+    "fact": "«Embarrassée» en francés no significa «embarazada»: significa «avergonzada». Un falso amigo clásico.",
+    "type": "faux_ami",
+    "keyword": "embarazada"
+  },
+  {
+    "fact": "«Actuel» en francés significa «actual», pero «actual» en español no se traduce igual. ¡Cuidado!",
+    "type": "faux_ami",
+    "keyword": "actual"
+  },
+  {
+    "fact": "«Large» en francés significa «ancho», no «largo». «Long» en francés = largo. ¡No te confundas!",
+    "type": "faux_ami",
+    "keyword": "largo"
+  },
+  {
+    "fact": "«Sortie» en francés significa «salida», no tiene nada que ver con el éxito. ¡Falso amigo!",
+    "type": "faux_ami",
+    "keyword": "éxito"
+  },
+  {
+    "fact": "«Enregistrer» en francés significa «grabar/registrar», no «recordar». «Se souvenir» = recordar.",
+    "type": "faux_ami",
+    "keyword": "recordar"
+  },
+  {
+    "fact": "«Molester» en francés tiene connotación grave. En español «molestar» es simplemente «déranger».",
+    "type": "faux_ami",
+    "keyword": "molestar"
+  },
+  {
+    "fact": "«Assister» en francés significa «asistir/presenciar», no «ayudar». «Aider» = ayudar.",
+    "type": "faux_ami",
+    "keyword": "asistir"
+  },
+  {
+    "fact": "«Prétendre» en francés significa «pretender/fingir», distinto del español «pretender» (intentar).",
+    "type": "faux_ami",
+    "keyword": "pretender"
+  },
+  {
+    "fact": "«Constipé» en francés significa «estreñido», no «constipado». «Enrhumé» = resfriado.",
+    "type": "faux_ami",
+    "keyword": "constipado"
+  },
+  {
+    "fact": "«Librairie» en francés es librería (no biblioteca). «Bibliothèque» = biblioteca. ¡Ojo!",
+    "type": "faux_ami",
+    "keyword": "librería"
+  },
+  {
+    "fact": "«Sympathique» en francés significa «simpático» pero también «agradable». ¡Casi idéntico!",
+    "type": "faux_ami",
+    "keyword": "simpático"
+  },
+  {
+    "fact": "«Sensible» en francés significa «sensato/razonable» además de «sensible». El contexto importa.",
+    "type": "faux_ami",
+    "keyword": "sensible"
+  },
+  {
+    "fact": "«Hotel», «animal», «hospital», «natural»: cientos de palabras son idénticas en español y francés.",
+    "type": "mot_identique",
+    "keyword": "hotel"
+  },
+  {
+    "fact": "Las palabras en «-ción» en español son «-tion» en francés: nación/nation, acción/action.",
+    "type": "mot_identique",
+    "keyword": "-ción/-tion"
+  },
+  {
+    "fact": "Los adjetivos en «-al» suelen ser idénticos: «final», «general», «original», «normal».",
+    "type": "mot_identique",
+    "keyword": "-al"
+  },
+  {
+    "fact": "«Taxi», «radio», «piano», «video»: estas palabras son universalmente iguales en ambos idiomas.",
+    "type": "mot_identique",
+    "keyword": "taxi"
+  },
+  {
+    "fact": "«Color» se escribe igual en español y francés. Solo cambia el artículo: «el color» / «la couleur».",
+    "type": "mot_identique",
+    "keyword": "color"
+  },
+  {
+    "fact": "Las palabras en «-tor» en latín dan «-teur» en francés y «-tor» en español: doctor/docteur.",
+    "type": "mot_identique",
+    "keyword": "doctor"
+  },
+  {
+    "fact": "«Capital» (ciudad capital) se escribe igual en español y francés. Misma letra, mismo significado.",
+    "type": "mot_identique",
+    "keyword": "capital"
+  },
+  {
+    "fact": "«Popular», «tropical», «local»: los adjetivos en «-al» funcionan en los dos idiomas.",
+    "type": "mot_identique",
+    "keyword": "popular"
+  },
+  {
+    "fact": "«Millón», «billón» se parecen a «million», «billion». ¡Los grandes números son similares!",
+    "type": "mot_identique",
+    "keyword": "millón"
+  },
+  {
+    "fact": "En ciencias, los términos son casi idénticos: «microscopio» / «microscope», «telescopio» / «télescope».",
+    "type": "mot_identique",
+    "keyword": "microscopio"
+  },
+  {
+    "fact": "«Libro» y «livre» vienen del latín «liber». ¡Solo las separa una letra!",
+    "type": "mot_similaire",
+    "keyword": "libro"
+  },
+  {
+    "fact": "«Padre» y «père», «madre» y «mère» vienen del latín «pater» y «mater». La familia habla latín.",
+    "type": "mot_similaire",
+    "keyword": "padre"
+  },
+  {
+    "fact": "«Flor» y «fleur» vienen del latín «flos/floris». ¡La flora sigue hablando latín!",
+    "type": "mot_similaire",
+    "keyword": "flor"
+  },
+  {
+    "fact": "«Luna» y «lune» vienen del latín «luna». ¡La luna es casi idéntica en los dos idiomas!",
+    "type": "mot_similaire",
+    "keyword": "luna"
+  },
+  {
+    "fact": "«Mar» y «mer» vienen del latín «mare». Se dice «hacerse a la mar» / «prendre la mer».",
+    "type": "mot_similaire",
+    "keyword": "mar"
+  },
+  {
+    "fact": "«Amigo» y «ami» vienen del latín «amicus». ¡La amistad une los dos idiomas desde Roma!",
+    "type": "mot_similaire",
+    "keyword": "amigo"
+  },
+  {
+    "fact": "«Fuego» y «feu» vienen del latín «focus». En origen, focus designaba el hogar doméstico.",
+    "type": "mot_similaire",
+    "keyword": "fuego"
+  },
+  {
+    "fact": "«Agua» y «eau» vienen del latín «aqua». El francés perdió varias letras latinas en el camino.",
+    "type": "mot_similaire",
+    "keyword": "agua"
+  },
+  {
+    "fact": "«Noche» y «nuit» vienen del latín «nox/noctis». La noche tiene los mismos orígenes en ambos.",
+    "type": "mot_similaire",
+    "keyword": "noche"
+  },
+  {
+    "fact": "«Blanco» y «blanc» comparten la misma raíz germánica «blank», que significaba «brillante».",
+    "type": "mot_similaire",
+    "keyword": "blanco"
+  },
+  {
+    "fact": "«Madrugada»: ese momento entre la medianoche y el amanecer. En francés no hay una sola palabra.",
+    "type": "intraduisible",
+    "keyword": "madrugada"
+  },
+  {
+    "fact": "«Sobremesa»: el tiempo que se pasa en la mesa después de comer, charlando. Sin equivalente en francés.",
+    "type": "intraduisible",
+    "keyword": "sobremesa"
+  },
+  {
+    "fact": "«Estrenar»: usar o inaugurar algo por primera vez. El francés no tiene un verbo tan específico.",
+    "type": "intraduisible",
+    "keyword": "estrenar"
+  },
+  {
+    "fact": "«Vergüenza ajena»: vergüenza que sentís por otra persona. En francés se dice «honte par procuration».",
+    "type": "intraduisible",
+    "keyword": "vergüenza ajena"
+  },
+  {
+    "fact": "«Añoranza»: melancolía agridulce por algo perdido. Más intensa que «nostalgie» en francés.",
+    "type": "intraduisible",
+    "keyword": "añoranza"
+  },
+  {
+    "fact": "«Tutear»: hablarle a alguien de «tú». El francés no tiene un verbo específico para eso.",
+    "type": "intraduisible",
+    "keyword": "tutear"
+  },
+  {
+    "fact": "«Madrugar»: levantarse muy temprano. Un solo verbo para una idea que el francés expresa con frase.",
+    "type": "intraduisible",
+    "keyword": "madrugar"
+  },
+  {
+    "fact": "«Friolero»: alguien que siempre tiene frío. El francés tiene «frileux», ¡una excepción feliz!",
+    "type": "intraduisible",
+    "keyword": "friolero"
+  },
+  {
+    "fact": "«Alcool», «algèbre», «azur», «coton» en francés vienen del árabe, muchas veces vía el español.",
+    "type": "etymologie",
+    "keyword": "alcool"
+  },
+  {
+    "fact": "«Chocolat» (chocolate) viene del náhuatl «xocolatl» (agua amarga). ¡El español lo difundió al mundo!",
+    "type": "etymologie",
+    "keyword": "chocolat"
+  },
+  {
+    "fact": "«Tomate» viene del náhuatl «tomatl». Los aztecas nombraron esta fruta que hoy todo el mundo ama.",
+    "type": "etymologie",
+    "keyword": "tomate"
+  },
+  {
+    "fact": "«Tabac» (tabaco) en francés viene del español «tabaco», que a su vez viene del taíno caribeño.",
+    "type": "etymologie",
+    "keyword": "tabac"
+  },
+  {
+    "fact": "«Ouragan» (huracán) en francés viene del español «huracán», del taíno «hurakán» (dios del viento).",
+    "type": "etymologie",
+    "keyword": "ouragan"
+  },
+  {
+    "fact": "«Guacamole» viene del náhuatl: «ahuacatl» (palta) + «molli» (salsa). ¡Literalmente «salsa de palta»!",
+    "type": "etymologie",
+    "keyword": "guacamole"
+  },
+  {
+    "fact": "«Guérilla» en francés viene del español «guerra» + diminutivo. ¡Una pequeña guerra!",
+    "type": "etymologie",
+    "keyword": "guerrilla"
+  },
+  {
+    "fact": "«Bizarre» en francés vendría del español «bizarro» (valiente). ¡El sentido cambió totalmente!",
+    "type": "etymologie",
+    "keyword": "bizarre"
+  },
+  {
+    "fact": "«Ranch» en francés viene del español «rancho». La influencia hispana es enorme en el vocabulario mundial.",
+    "type": "etymologie",
+    "keyword": "ranch"
+  },
+  {
+    "fact": "«Mosquée» (mezquita) en francés viene del árabe «masjid», pasó por el español «mezquita».",
+    "type": "etymologie",
+    "keyword": "mosquée"
+  },
+  {
+    "fact": "«Avocat» (palta) en francés viene del náhuatl «ahuacatl». Los españoles lo transformaron en «aguacate».",
+    "type": "etymologie",
+    "keyword": "avocat"
+  },
+  {
+    "fact": "«Cannibal» en francés viene del español «caníbal», que deriva de la palabra taína para los caribes.",
+    "type": "etymologie",
+    "keyword": "cannibal"
+  },
+  {
+    "fact": "«Costar un ojo de la cara» = coûter les yeux de la tête en francés. ¡La misma idea, distintas palabras!",
+    "type": "expression_idiomatique",
+    "keyword": "ojo de la cara"
+  },
+  {
+    "fact": "«Llueve a cántaros» = «il pleut des cordes» (llueve cuerdas) en francés. Cada idioma usa su imagen.",
+    "type": "expression_idiomatique",
+    "keyword": "llueve a cántaros"
+  },
+  {
+    "fact": "«Estar en las nubes» = «être dans la lune» (estar en la luna) en francés. ¡Misma idea, distinto astro!",
+    "type": "expression_idiomatique",
+    "keyword": "estar en las nubes"
+  },
+  {
+    "fact": "«Matar dos pájaros de un tiro» = «tuer deux oiseaux d'une pierre» en francés. ¡Casi idéntica!",
+    "type": "expression_idiomatique",
+    "keyword": "dos pájaros"
+  },
+  {
+    "fact": "«A buen entendedor, pocas palabras» = «à bon entendeur, salut» en francés. Misma sabiduría.",
+    "type": "expression_idiomatique",
+    "keyword": "buen entendedor"
+  },
+  {
+    "fact": "«Dejar plantado» = «poser un lapin» (poner un conejo) en francés. Los idiomas usan animales distintos.",
+    "type": "expression_idiomatique",
+    "keyword": "dejar plantado"
+  },
+  {
+    "fact": "«Tener pájaros en la cabeza» = «avoir des oiseaux dans la tête» en francés. ¡Idéntica expresión!",
+    "type": "expression_idiomatique",
+    "keyword": "pájaros en la cabeza"
+  },
+  {
+    "fact": "«No hay mal que por bien no venga» = «à quelque chose malheur est bon» en francés. Proverbio universal.",
+    "type": "expression_idiomatique",
+    "keyword": "no hay mal"
+  },
+  {
+    "fact": "«Avoir le cafard» (tener la cucaracha) significa estar deprimido en francés. ¡Muy coloquial!",
+    "type": "expression_idiomatique",
+    "keyword": "cafard"
+  },
+  {
+    "fact": "«Estar hecho polvo» = «être à plat» o «être vidé» en francés. El agotamiento se dice distinto.",
+    "type": "expression_idiomatique",
+    "keyword": "hecho polvo"
+  },
+  {
+    "fact": "«Meterse en camisa de once varas» = «chercher des ennuis» en francés. Buscarse problemas sin necesidad.",
+    "type": "expression_idiomatique",
+    "keyword": "camisa de once varas"
+  },
+  {
+    "fact": "«Sauter du coq à l'âne» (saltar del gallo al asno) = cambiar de tema abruptamente en francés.",
+    "type": "expression_idiomatique",
+    "keyword": "coq à l'âne"
+  },
+  {
+    "fact": "En Argentina, el «vos» reemplaza al «tú». Es el «voseo», propio del Río de la Plata.",
+    "type": "culture",
+    "keyword": "voseo"
+  },
+  {
+    "fact": "La Académie française existe desde 1635. La Real Academia Española fue fundada en 1713.",
+    "type": "culture",
+    "keyword": "académie"
+  },
+  {
+    "fact": "El español lo hablan más de 500 millones de personas. El francés, aproximadamente 320 millones.",
+    "type": "culture",
+    "keyword": "locuteurs"
+  },
+  {
+    "fact": "El «¡» y el «¿» en español anticipan desde el principio si la frase es exclamativa o interrogativa.",
+    "type": "culture",
+    "keyword": "ponctuation"
+  },
+  {
+    "fact": "En Argentina, el mate es una bebida nacional con yerba. ¡Un ritual cotidiano sin equivalente en francés!",
+    "type": "culture",
+    "keyword": "mate"
+  },
+  {
+    "fact": "El español fue muy influenciado por el árabe durante 800 años de presencia en la Península Ibérica.",
+    "type": "culture",
+    "keyword": "arabe"
+  },
+  {
+    "fact": "En Argentina, «che» es una interjección universal, como «hé» o «dis donc» en francés.",
+    "type": "culture",
+    "keyword": "che"
+  },
+  {
+    "fact": "Los quebequenses hablan un francés influenciado por el inglés, como los argentinos por el italiano.",
+    "type": "culture",
+    "keyword": "québec"
+  },
+  {
+    "fact": "En español, los días de la semana no llevan mayúscula: lunes, martes, miércoles... Al igual que en francés.",
+    "type": "culture",
+    "keyword": "jours"
+  },
+  {
+    "fact": "El francés es idioma oficial en 29 países. El español lo es en 20 países.",
+    "type": "culture",
+    "keyword": "langues officielles"
+  },
+  {
+    "fact": "En España se usa «vosotros». En Latinoamérica este pronombre desapareció y se usa «ustedes».",
+    "type": "culture",
+    "keyword": "vosotros"
+  },
+  {
+    "fact": "El lunfardo es una jerga argentina del siglo XIX, influenciada por el italiano y el español.",
+    "type": "culture",
+    "keyword": "lunfardo"
+  },
+  {
+    "fact": "La lengua de señas francesa (LSF) influyó en la lengua de señas americana (ASL) en el siglo XIX.",
+    "type": "culture",
+    "keyword": "langue des signes"
+  },
+  {
+    "fact": "En español, las nacionalidades no llevan mayúscula: «soy argentino», «soy francés».",
+    "type": "culture",
+    "keyword": "nationalités"
+  },
+  {
+    "fact": "El francés tomó «plaza», «patio», «siesta» del español. ¡Los dos idiomas se intercambian palabras!",
+    "type": "culture",
+    "keyword": "emprunts"
+  },
+  {
+    "fact": "En español, el sujeto suele omitirse: «Hablo» = «Je parle». ¡El verbo se basta a sí mismo!",
+    "type": "grammaire",
+    "keyword": "sujet omis"
+  },
+  {
+    "fact": "El español tiene dos verbos «ser»: «ser» (esencia) y «estar» (estado). Un desafío para los francófonos.",
+    "type": "grammaire",
+    "keyword": "ser/estar"
+  },
+  {
+    "fact": "El género de las palabras puede diferir: «la mer» en francés = «el mar» (masculino en español).",
+    "type": "grammaire",
+    "keyword": "genre"
+  },
+  {
+    "fact": "El subjuntivo es mucho más frecuente en español que en francés. «Espero que vengas»: ¡imprescindible!",
+    "type": "grammaire",
+    "keyword": "subjonctif"
+  },
+  {
+    "fact": "El español no tiene artículo partitivo: «Je mange du pain» = «Como pan» (sin artículo).",
+    "type": "grammaire",
+    "keyword": "article partitif"
+  },
+  {
+    "fact": "En Argentina, el pretérito indefinido se usa más que el pretérito perfecto compuesto.",
+    "type": "grammaire",
+    "keyword": "pretérito"
+  },
+  {
+    "fact": "El «ne... pas» del francés es único. En español basta con «no» antes del verbo para negar.",
+    "type": "grammaire",
+    "keyword": "négation"
+  },
+  {
+    "fact": "Los verbos reflexivos son muy frecuentes en español: «levantarse», «llamarse», «sentirse».",
+    "type": "grammaire",
+    "keyword": "verbes réfléchis"
+  },
+  {
+    "fact": "El español usa doble interrogación: «¿Cómo estás?». El lector sabe desde el inicio que es pregunta.",
+    "type": "grammaire",
+    "keyword": "interrogation"
+  },
+  {
+    "fact": "En español, el adjetivo va generalmente después del sustantivo: «casa blanca», «libro interesante».",
+    "type": "grammaire",
+    "keyword": "adjectif"
+  },
+  {
+    "fact": "El «usted» (singular) y «ustedes» (plural) son los equivalentes del «vous» de cortesía en francés.",
+    "type": "grammaire",
+    "keyword": "usted"
+  },
+  {
+    "fact": "En español, el futuro puede reemplazarse por «ir + a + infinitivo»: «voy a comer» = je vais manger.",
+    "type": "grammaire",
+    "keyword": "futur périphrastique"
+  },
+  {
+    "fact": "En francés, «on» puede significar «nosotros». En español, «uno» cumple a veces ese papel.",
+    "type": "grammaire",
+    "keyword": "pronom on"
+  },
+  {
+    "fact": "La «r» vibrante española no existe en el francés estándar. La «r» francesa es gutural y única.",
+    "type": "prononciation",
+    "keyword": "r roulé"
+  },
+  {
+    "fact": "En Argentina, la «ll» y la «y» se pronuncian como «sh»: «lluvia» suena /ʒuvia/. ¡El sheísmo!",
+    "type": "prononciation",
+    "keyword": "ll argentin"
+  },
+  {
+    "fact": "La «s» final en español siempre se pronuncia, a diferencia del francés donde suele ser muda.",
+    "type": "prononciation",
+    "keyword": "s final"
+  },
+  {
+    "fact": "En español, todas las vocales se pronuncian claramente. ¡No hay vocales mudas como en francés!",
+    "type": "prononciation",
+    "keyword": "voyelles"
+  },
+  {
+    "fact": "El sonido /y/ del francés («rue», «lune») no existe en español. ¡Un desafío para hispanohablantes!",
+    "type": "prononciation",
+    "keyword": "son /y/"
+  },
+  {
+    "fact": "La «jota» española (j/g ante e,i) es un sonido gutural /x/ que no existe en el francés estándar.",
+    "type": "prononciation",
+    "keyword": "jota"
+  },
+  {
+    "fact": "En español, el acento tónico cambia el significado: «hablo» (presente) vs «habló» (pasado).",
+    "type": "prononciation",
+    "keyword": "accent tonique"
+  },
+  {
+    "fact": "El francés tiene sonidos nasales (an, en, in, on, un) que no existen en español. ¡Todo un desafío!",
+    "type": "prononciation",
+    "keyword": "nasales"
+  },
+  {
+    "fact": "En el español rioplatense, la «ll» y la «y» suenan «sh»: «yo» se pronuncia «sho». ¡El sheísmo!",
+    "type": "prononciation",
+    "keyword": "sheísmo"
+  },
+  {
+    "fact": "La «e» francesa tiene tres pronunciaciones (/e/, /ɛ/, /ə/) según los acentos. En español, solo una.",
+    "type": "prononciation",
+    "keyword": "e français"
+  }
+]

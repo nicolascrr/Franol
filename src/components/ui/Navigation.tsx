@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useLocale } from "@/contexts/LocaleContext";
@@ -10,6 +11,7 @@ import {
   Dumbbell,
   BookOpen,
   LogOut,
+  Loader2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -25,11 +27,26 @@ export function Navigation() {
   const { t, clearLocale } = useLocale();
   const pathname = usePathname();
   const router = useRouter();
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [navigatingTo, setNavigatingTo] = useState<string | null>(null);
+
+  // Réinitialiser navigatingTo quand le pathname change (navigation terminée)
+  useEffect(() => {
+    setNavigatingTo(null);
+  }, [pathname]);
 
   const handleLogout = async () => {
+    setIsLoggingOut(true);
+    localStorage.removeItem("savedQuiz");
     await fetch("/api/auth/logout", { method: "POST" });
     clearLocale();
     router.push("/");
+  };
+
+  const handleNavClick = (href: string) => {
+    if (pathname !== href) {
+      setNavigatingTo(href);
+    }
   };
 
   const isActive = (href: string) => {
@@ -60,18 +77,25 @@ export function Navigation() {
           {navItems.map((item) => {
             const Icon = item.icon;
             const active = isActive(item.href);
+            const isNavigating = navigatingTo === item.href;
             return (
               <Link
                 key={item.key}
                 href={item.href}
+                onClick={() => handleNavClick(item.href)}
                 className={cn(
                   "flex items-center gap-3 px-6 py-3 mx-2 rounded-xl transition-all",
                   active
                     ? "bg-franol-accent-blue text-white"
                     : "text-franol-muted hover:bg-franol-sand hover:text-franol-text",
+                  isNavigating && "opacity-70 pointer-events-none",
                 )}
               >
-                <Icon size={20} />
+                {isNavigating ? (
+                  <Loader2 size={20} className="animate-spin" />
+                ) : (
+                  <Icon size={20} />
+                )}
                 <span className="font-medium">{t(`nav.${item.key}`)}</span>
               </Link>
             );
@@ -82,12 +106,22 @@ export function Navigation() {
         <div className="p-4 border-t border-franol-warm">
           <button
             onClick={handleLogout}
-            className="flex items-center gap-3 px-4 py-3 w-full rounded-xl
-                       text-franol-muted hover:bg-red-50 hover:text-red-600
-                       transition-all"
+            disabled={isLoggingOut}
+            className={cn(
+              "flex items-center gap-3 px-4 py-3 w-full rounded-xl transition-all",
+              isLoggingOut
+                ? "opacity-70 cursor-not-allowed text-franol-muted"
+                : "text-franol-muted hover:bg-red-50 hover:text-red-600",
+            )}
           >
-            <LogOut size={20} />
-            <span className="font-medium">{t("auth.logout")}</span>
+            {isLoggingOut ? (
+              <Loader2 size={20} className="animate-spin" />
+            ) : (
+              <LogOut size={20} />
+            )}
+            <span className="font-medium">
+              {isLoggingOut ? t("auth.loggingOut") : t("auth.logout")}
+            </span>
           </button>
         </div>
       </nav>
@@ -98,16 +132,23 @@ export function Navigation() {
           {navItems.map((item) => {
             const Icon = item.icon;
             const active = isActive(item.href);
+            const isNavigating = navigatingTo === item.href;
             return (
               <Link
                 key={item.key}
                 href={item.href}
+                onClick={() => handleNavClick(item.href)}
                 className={cn(
                   "flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all",
                   active ? "text-franol-accent-blue" : "text-franol-muted",
+                  isNavigating && "opacity-70 pointer-events-none",
                 )}
               >
-                <Icon size={22} />
+                {isNavigating ? (
+                  <Loader2 size={22} className="animate-spin" />
+                ) : (
+                  <Icon size={22} />
+                )}
                 <span className="text-xs font-medium">
                   {t(`nav.${item.key}`)}
                 </span>

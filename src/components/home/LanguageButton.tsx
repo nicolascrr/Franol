@@ -1,5 +1,6 @@
 "use client";
 
+import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface LanguageButtonProps {
@@ -7,6 +8,8 @@ interface LanguageButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
   className?: string;
+  isLoading?: boolean;
+  disabled?: boolean;
 }
 
 export function LanguageButton({
@@ -14,6 +17,8 @@ export function LanguageButton({
   children,
   onClick,
   className,
+  isLoading = false,
+  disabled = false,
 }: LanguageButtonProps) {
   const styles = {
     french: {
@@ -33,10 +38,12 @@ export function LanguageButton({
   };
 
   const style = styles[variant];
+  const isDisabled = isLoading || disabled;
 
   return (
     <button
       onClick={onClick}
+      disabled={isDisabled}
       className={cn(
         "btn-primary",
         style.text,
@@ -45,12 +52,19 @@ export function LanguageButton({
         `shadow-lg ${style.shadow}`,
         `focus:outline-none focus:ring-4 ${style.ring} focus:ring-opacity-50`,
         "min-w-[220px]",
+        isDisabled && "opacity-70 cursor-not-allowed",
         className,
       )}
     >
       <span className="relative z-10 flex items-center justify-center gap-3">
-        {variant === "french" && <span className="text-2xl">🇫🇷</span>}
-        {variant === "spanish" && <span className="text-2xl">🇦🇷</span>}
+        {isLoading ? (
+          <Loader2 className="w-6 h-6 animate-spin" />
+        ) : (
+          <>
+            {variant === "french" && <span className="text-2xl">🇫🇷</span>}
+            {variant === "spanish" && <span className="text-2xl">🇦🇷</span>}
+          </>
+        )}
         <span>{children}</span>
       </span>
     </button>

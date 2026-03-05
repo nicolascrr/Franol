@@ -25,7 +25,7 @@ interface Category {
   id: string;
   name_fr: string;
   name_es: string;
-  type: "vocabulary" | "expression";
+  type: "vocabulary" | "expression" | "conjugation";
   color: string;
   icon: string;
 }
@@ -160,7 +160,7 @@ export default function AddPage() {
 
   // États pour la modale de création de catégorie
   const [showCategoryModal, setShowCategoryModal] = useState(false);
-  const [categoryType, setCategoryType] = useState<"vocabulary" | "expression">(
+  const [categoryType, setCategoryType] = useState<"vocabulary" | "expression" | "conjugation">(
     "vocabulary",
   );
   const [isSavingCategory, setIsSavingCategory] = useState(false);
@@ -199,6 +199,7 @@ export default function AddPage() {
     group_fr: "",
     group_es: "",
     is_irregular: false,
+    category: "",
     notes: "",
   });
 
@@ -290,6 +291,7 @@ export default function AddPage() {
       group_fr: "",
       group_es: "",
       is_irregular: false,
+      category: "",
       notes: "",
     });
   };
@@ -300,7 +302,7 @@ export default function AddPage() {
   };
 
   // Ouvrir la modale de création de catégorie
-  const openCategoryModal = (type: "vocabulary" | "expression") => {
+  const openCategoryModal = (type: "vocabulary" | "expression" | "conjugation") => {
     setCategoryType(type);
     setCategoryForm({ name_fr: "", name_es: "", color: "#10b981" });
     setShowCategoryModal(true);
@@ -338,8 +340,10 @@ export default function AddPage() {
       // Sélectionner automatiquement la nouvelle catégorie
       if (categoryType === "vocabulary") {
         setVocabForm({ ...vocabForm, category: data.id });
-      } else {
+      } else if (categoryType === "expression") {
         setExprForm({ ...exprForm, context: data.id });
+      } else {
+        setVerbForm({ ...verbForm, category: data.id });
       }
 
       closeCategoryModal();
@@ -418,6 +422,7 @@ export default function AddPage() {
         group_fr: verbForm.group_fr || null,
         group_es: verbForm.group_es || null,
         is_irregular: verbForm.is_irregular,
+        category: verbForm.category || null,
         notes: verbForm.notes || null,
       });
 
@@ -1035,6 +1040,41 @@ export default function AddPage() {
 
             <div>
               <label className="block text-sm font-medium text-franol-text mb-2">
+                {t("add.category")}
+              </label>
+              <div className="flex gap-2">
+                <select
+                  value={verbForm.category}
+                  onChange={(e) =>
+                    setVerbForm({ ...verbForm, category: e.target.value })
+                  }
+                  className="flex-1 px-4 py-3 rounded-xl border-2 border-franol-warm
+                             bg-white text-franol-text
+                             focus:border-franol-accent-blue focus:outline-none transition-colors"
+                >
+                  <option value="">{t("add.selectCategory")}</option>
+                  {categories
+                    .filter((c) => c.type === "conjugation")
+                    .map((cat) => (
+                      <option key={cat.id} value={cat.id}>
+                        {locale === "fr" ? cat.name_fr : cat.name_es}
+                      </option>
+                    ))}
+                </select>
+                <button
+                  type="button"
+                  onClick={() => openCategoryModal("conjugation")}
+                  className="px-3 py-3 rounded-xl bg-franol-accent-blue text-white
+                             hover:bg-blue-700 transition-colors flex items-center justify-center"
+                  title={t("add.createCategory")}
+                >
+                  <Plus size={20} />
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-franol-text mb-2">
                 {t("add.notes")}
               </label>
               <textarea
@@ -1191,7 +1231,9 @@ export default function AddPage() {
               <h2 className="text-xl font-display font-bold text-franol-text">
                 {categoryType === "vocabulary"
                   ? t("add.newCategory")
-                  : t("add.newContext")}
+                  : categoryType === "expression"
+                    ? t("add.newContext")
+                    : t("add.newCategory")}
               </h2>
               <button
                 onClick={closeCategoryModal}
@@ -1318,7 +1360,7 @@ export default function AddPage() {
                 {isSavingCategory && (
                   <Loader2 className="w-4 h-4 animate-spin" />
                 )}
-                {categoryType === "vocabulary"
+                {categoryType === "vocabulary" || categoryType === "conjugation"
                   ? t("add.addCategory")
                   : t("add.addContext")}
               </button>

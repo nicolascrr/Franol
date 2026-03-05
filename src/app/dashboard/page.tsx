@@ -1,49 +1,54 @@
-'use client';
+"use client";
 
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { useLocale } from '@/contexts/LocaleContext';
-import { 
-  PlusCircle, 
-  Dumbbell, 
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useLocale } from "@/contexts/LocaleContext";
+import {
+  PlusCircle,
+  Dumbbell,
   BookOpen,
   TrendingUp,
   Target,
   Clock,
-  LogOut
-} from 'lucide-react';
+  LogOut,
+  Loader2,
+} from "lucide-react";
 
 export default function DashboardPage() {
   const { t, clearLocale } = useLocale();
   const router = useRouter();
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const handleLogout = async () => {
-    await fetch('/api/auth/logout', { method: 'POST' });
+    setIsLoggingOut(true);
+    localStorage.removeItem("savedQuiz");
+    await fetch("/api/auth/logout", { method: "POST" });
     clearLocale();
-    router.push('/');
+    router.push("/");
   };
 
   const quickActions = [
     {
-      titleKey: 'addVocabulary',
-      descKey: 'addVocabularyDesc',
-      href: '/dashboard/add',
+      titleKey: "addVocabulary",
+      descKey: "addVocabularyDesc",
+      href: "/dashboard/add",
       icon: PlusCircle,
-      color: 'bg-emerald-500',
+      color: "bg-emerald-500",
     },
     {
-      titleKey: 'practice',
-      descKey: 'practiceDesc',
-      href: '/dashboard/practice',
+      titleKey: "practice",
+      descKey: "practiceDesc",
+      href: "/dashboard/practice",
       icon: Dumbbell,
-      color: 'bg-blue-500',
+      color: "bg-blue-500",
     },
     {
-      titleKey: 'viewLessons',
-      descKey: 'viewLessonsDesc',
-      href: '/dashboard/lessons',
+      titleKey: "viewLessons",
+      descKey: "viewLessonsDesc",
+      href: "/dashboard/lessons",
       icon: BookOpen,
-      color: 'bg-purple-500',
+      color: "bg-purple-500",
     },
   ];
 
@@ -52,11 +57,9 @@ export default function DashboardPage() {
       {/* Header */}
       <header className="mb-8 animate-fade-in">
         <h1 className="text-3xl md:text-4xl font-display font-bold text-franol-text">
-          {t('dashboard.welcome')}
+          {t("dashboard.welcome")}
         </h1>
-        <p className="mt-2 text-franol-muted">
-          {t('dashboard.subtitle')}
-        </p>
+        <p className="mt-2 text-franol-muted">{t("dashboard.subtitle")}</p>
       </header>
 
       {/* Stats rapides */}
@@ -69,15 +72,15 @@ export default function DashboardPage() {
             <div>
               <p className="text-2xl font-bold text-franol-text">0</p>
               <p className="text-sm text-franol-muted">
-                {t('dashboard.wordsLearned')}
+                {t("dashboard.wordsLearned")}
               </p>
             </div>
           </div>
         </div>
 
-        <div 
+        <div
           className="bg-white rounded-2xl p-5 border border-franol-warm animate-slide-up"
-          style={{ animationDelay: '0.1s' }}
+          style={{ animationDelay: "0.1s" }}
         >
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-xl bg-franol-sand">
@@ -86,15 +89,15 @@ export default function DashboardPage() {
             <div>
               <p className="text-2xl font-bold text-franol-text">0%</p>
               <p className="text-sm text-franol-muted">
-                {t('dashboard.successRate')}
+                {t("dashboard.successRate")}
               </p>
             </div>
           </div>
         </div>
 
-        <div 
+        <div
           className="bg-white rounded-2xl p-5 border border-franol-warm animate-slide-up"
-          style={{ animationDelay: '0.2s' }}
+          style={{ animationDelay: "0.2s" }}
         >
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-xl bg-franol-sand">
@@ -103,7 +106,7 @@ export default function DashboardPage() {
             <div>
               <p className="text-2xl font-bold text-franol-text">0</p>
               <p className="text-sm text-franol-muted">
-                {t('dashboard.quizCompleted')}
+                {t("dashboard.quizCompleted")}
               </p>
             </div>
           </div>
@@ -112,9 +115,9 @@ export default function DashboardPage() {
 
       {/* Actions rapides */}
       <h2 className="text-xl font-display font-semibold text-franol-text mb-4">
-        {t('dashboard.quickActions')}
+        {t("dashboard.quickActions")}
       </h2>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {quickActions.map((action, index) => {
           const Icon = action.icon;
@@ -127,8 +130,10 @@ export default function DashboardPage() {
                          transition-all duration-300 animate-slide-up"
               style={{ animationDelay: `${0.3 + index * 0.1}s` }}
             >
-              <div className={`inline-flex p-3 rounded-xl ${action.color} mb-4
-                              group-hover:scale-110 transition-transform`}>
+              <div
+                className={`inline-flex p-3 rounded-xl ${action.color} mb-4
+                              group-hover:scale-110 transition-transform`}
+              >
                 <Icon className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-lg font-semibold text-franol-text mb-1">
@@ -143,19 +148,29 @@ export default function DashboardPage() {
       </div>
 
       {/* Bouton déconnexion - Mobile uniquement */}
-      <div 
+      <div
         className="mt-8 md:hidden animate-fade-in"
-        style={{ animationDelay: '0.6s' }}
+        style={{ animationDelay: "0.6s" }}
       >
         <button
           onClick={handleLogout}
-          className="w-full flex items-center justify-center gap-3 px-6 py-4 
+          disabled={isLoggingOut}
+          className={`w-full flex items-center justify-center gap-3 px-6 py-4
                      bg-white border border-franol-warm rounded-2xl
-                     text-red-600 hover:bg-red-50 hover:border-red-200
-                     transition-all"
+                     transition-all ${
+                       isLoggingOut
+                         ? "opacity-70 cursor-not-allowed text-franol-muted"
+                         : "text-red-600 hover:bg-red-50 hover:border-red-200"
+                     }`}
         >
-          <LogOut size={20} />
-          <span className="font-medium">{t('auth.logout')}</span>
+          {isLoggingOut ? (
+            <Loader2 size={20} className="animate-spin" />
+          ) : (
+            <LogOut size={20} />
+          )}
+          <span className="font-medium">
+            {isLoggingOut ? t("auth.loggingOut") : t("auth.logout")}
+          </span>
         </button>
       </div>
     </div>

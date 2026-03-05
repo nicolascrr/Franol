@@ -20,7 +20,7 @@ interface Category {
   id: string;
   name_fr: string;
   name_es: string;
-  type: "vocabulary" | "expression";
+  type: "vocabulary" | "expression" | "conjugation";
   color: string;
   icon: string;
   created_at?: string;
@@ -70,7 +70,11 @@ type ContentItem =
   | (ExpressionItem & { type: "expression" })
   | (ConjugationItem & { type: "conjugation" });
 
-type DisplayItem = ContentItem | (Category & { type: "category" });
+type CategoryDisplayItem = Omit<Category, "type"> & {
+  type: "category";
+  categoryType: Category["type"];
+};
+type DisplayItem = ContentItem | CategoryDisplayItem;
 
 // Composant pour les tags/chips d'aliases
 function AliasInput({
@@ -157,7 +161,13 @@ export default function ContentPage() {
   // Filtres - Multi-sélection (par défaut tout est sélectionné)
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTypes, setSelectedTypes] = useState<Set<ContentType>>(
-    new Set(["vocabulary", "expressions", "verbs", "categories", "contexts"]),
+    new Set<ContentType>([
+      "vocabulary",
+      "expressions",
+      "verbs",
+      "categories",
+      "contexts",
+    ]),
   );
   const [categoryFilter, setCategoryFilter] = useState("");
   const [contextFilter, setContextFilter] = useState("");
@@ -185,6 +195,16 @@ export default function ContentPage() {
     name_fr: "",
     name_es: "",
     color: "#4F46E5",
+  });
+
+  // Modal création de catégorie (depuis le formulaire d'édition)
+  const [showNewCategoryModal, setShowNewCategoryModal] = useState(false);
+  const [newCategoryType, setNewCategoryType] = useState<"vocabulary" | "expression" | "conjugation">("vocabulary");
+  const [isSavingNewCategory, setIsSavingNewCategory] = useState(false);
+  const [newCategoryForm, setNewCategoryForm] = useState({
+    name_fr: "",
+    name_es: "",
+    color: "#10b981",
   });
 
   // États du formulaire d'édition
@@ -405,8 +425,15 @@ export default function ContentPage() {
 
     items.push(
       ...filteredCategories.map((cat) => ({
-        ...cat,
+        id: cat.id,
+        name_fr: cat.name_fr,
+        name_es: cat.name_es,
+        color: cat.color,
+        icon: cat.icon,
+        created_at: cat.created_at,
+        updated_at: cat.updated_at,
         type: "category" as const,
+        categoryType: cat.type,
       })),
     );
 
@@ -436,9 +463,13 @@ export default function ContentPage() {
     () => categories.filter((c) => c.type === "expression"),
     [categories],
   );
+  const conjugationCategories = useMemo(
+    () => categories.filter((c) => c.type === "conjugation"),
+    [categories],
+  );
 
   // Obtenir la catégorie d'un item
-  const getItemCategory = (item: ContentItem) => {
+  const getItemCategory = (item: ContentItem): Category | null => {
     let categoryId: string | undefined;
     if (item.type === "vocabulary") {
       categoryId = (item as VocabularyItem).category;
@@ -446,7 +477,7 @@ export default function ContentPage() {
       categoryId = (item as ExpressionItem).context;
     }
     if (!categoryId) return null;
-    return categories.find((c) => c.id === categoryId);
+    return categories.find((c) => c.id === categoryId) ?? null;
   };
 
   const clearFilters = () => {
@@ -489,6 +520,7 @@ export default function ContentPage() {
         group_fr: c.group_fr || "",
         group_es: c.group_es || "",
         is_irregular: c.is_irregular || false,
+        category: (c as ConjugationItem & { category?: string }).category || "",
         notes: c.notes || "",
       });
     }
@@ -541,6 +573,7 @@ export default function ContentPage() {
           group_fr: editForm.group_fr || null,
           group_es: editForm.group_es || null,
           is_irregular: editForm.is_irregular,
+          category: editForm.category || null,
           notes: editForm.notes || null,
           updated_at: now,
         };
@@ -654,6 +687,53 @@ export default function ContentPage() {
     }
   };
 
+  // Création de catégorie (depuis le formulaire d'édition)
+  const openNewCategoryModal = (type: "vocabulary" | "expression" | "conjugation") => {
+    setNewCategoryType(type);
+    setNewCategoryForm({ name_fr: "", name_es: "", color: "#10b981" });
+    setShowNewCategoryModal(true);
+  };
+
+  const closeNewCategoryModal = () => {
+    setShowNewCategoryModal(false);
+    setNewCategoryForm({ name_fr: "", name_es: "", color: "#10b981" });
+  };
+
+  const handleCreateNewCategory = async () => {
+    if (!newCategoryForm.name_fr || !newCategoryForm.name_es) return;
+    setIsSavingNewCategory(true);
+
+    try {
+      const { data, error: err } = await supabase
+        .from("categories")
+        .insert({
+          name_fr: newCategoryForm.name_fr,
+          name_es: newCategoryForm.name_es,
+          type: newCategoryType,
+          color: newCategoryForm.color,
+          icon: "tag",
+        })
+        .select()
+        .single();
+
+      if (err) throw err;
+
+      setCategories((prev) => [...prev, data]);
+
+      if (newCategoryType === "expression") {
+        setEditForm((prev) => ({ ...prev, context: data.id }));
+      } else {
+        setEditForm((prev) => ({ ...prev, category: data.id }));
+      }
+
+      closeNewCategoryModal();
+    } catch {
+      setError(t("common.error"));
+    } finally {
+      setIsSavingNewCategory(false);
+    }
+  };
+
   // Suppression de catégorie
   const openDeleteCategoryModal = (category: Category) => {
     setDeletingCategory(category);
@@ -760,7 +840,7 @@ export default function ContentPage() {
                   if (isAll) {
                     // Sélectionner tous les types
                     setSelectedTypes(
-                      new Set([
+                      new Set<ContentType>([
                         "vocabulary",
                         "expressions",
                         "verbs",
@@ -835,7 +915,17 @@ export default function ContentPage() {
             </p>
             {filteredDisplayItems.map((item) => {
               if ("type" in item && item.type === "category") {
-                const category = item as Category & { type: "category" };
+                const catItem = item as CategoryDisplayItem;
+                const category: Category = {
+                  id: catItem.id,
+                  name_fr: catItem.name_fr,
+                  name_es: catItem.name_es,
+                  type: catItem.categoryType,
+                  color: catItem.color,
+                  icon: catItem.icon,
+                  created_at: catItem.created_at,
+                  updated_at: catItem.updated_at,
+                };
                 return (
                   <CategoryCard
                     key={`category-${category.id}`}
@@ -960,22 +1050,33 @@ export default function ContentPage() {
                     <label className="block text-sm font-medium text-franol-text mb-2">
                       {t("add.category")}
                     </label>
-                    <select
-                      value={editForm.category || ""}
-                      onChange={(e) =>
-                        setEditForm({ ...editForm, category: e.target.value })
-                      }
-                      className="w-full px-4 py-3 rounded-xl border-2 border-franol-warm
-                                 bg-white text-franol-text
-                                 focus:border-franol-accent-blue focus:outline-none transition-colors"
-                    >
-                      <option value="">{t("add.selectCategory")}</option>
-                      {vocabularyCategories.map((cat) => (
-                        <option key={cat.id} value={cat.id}>
-                          {locale === "fr" ? cat.name_fr : cat.name_es}
-                        </option>
-                      ))}
-                    </select>
+                    <div className="flex gap-2">
+                      <select
+                        value={editForm.category || ""}
+                        onChange={(e) =>
+                          setEditForm({ ...editForm, category: e.target.value })
+                        }
+                        className="flex-1 px-4 py-3 rounded-xl border-2 border-franol-warm
+                                   bg-white text-franol-text
+                                   focus:border-franol-accent-blue focus:outline-none transition-colors"
+                      >
+                        <option value="">{t("add.selectCategory")}</option>
+                        {vocabularyCategories.map((cat) => (
+                          <option key={cat.id} value={cat.id}>
+                            {locale === "fr" ? cat.name_fr : cat.name_es}
+                          </option>
+                        ))}
+                      </select>
+                      <button
+                        type="button"
+                        onClick={() => openNewCategoryModal("vocabulary")}
+                        className="px-3 py-3 rounded-xl bg-franol-accent-blue text-white
+                                   hover:bg-blue-700 transition-colors flex items-center justify-center"
+                        title={t("add.createCategory")}
+                      >
+                        <Plus size={20} />
+                      </button>
+                    </div>
                   </div>
                 </>
               )}
@@ -1066,22 +1167,33 @@ export default function ContentPage() {
                     <label className="block text-sm font-medium text-franol-text mb-2">
                       {t("add.context")}
                     </label>
-                    <select
-                      value={editForm.context || ""}
-                      onChange={(e) =>
-                        setEditForm({ ...editForm, context: e.target.value })
-                      }
-                      className="w-full px-4 py-3 rounded-xl border-2 border-franol-warm
-                                 bg-white text-franol-text
-                                 focus:border-franol-accent-blue focus:outline-none transition-colors"
-                    >
-                      <option value="">{t("add.selectContext")}</option>
-                      {expressionContexts.map((cat) => (
-                        <option key={cat.id} value={cat.id}>
-                          {locale === "fr" ? cat.name_fr : cat.name_es}
-                        </option>
-                      ))}
-                    </select>
+                    <div className="flex gap-2">
+                      <select
+                        value={editForm.context || ""}
+                        onChange={(e) =>
+                          setEditForm({ ...editForm, context: e.target.value })
+                        }
+                        className="flex-1 px-4 py-3 rounded-xl border-2 border-franol-warm
+                                   bg-white text-franol-text
+                                   focus:border-franol-accent-blue focus:outline-none transition-colors"
+                      >
+                        <option value="">{t("add.selectContext")}</option>
+                        {expressionContexts.map((cat) => (
+                          <option key={cat.id} value={cat.id}>
+                            {locale === "fr" ? cat.name_fr : cat.name_es}
+                          </option>
+                        ))}
+                      </select>
+                      <button
+                        type="button"
+                        onClick={() => openNewCategoryModal("expression")}
+                        className="px-3 py-3 rounded-xl bg-franol-accent-blue text-white
+                                   hover:bg-blue-700 transition-colors flex items-center justify-center"
+                        title={t("add.createCategory")}
+                      >
+                        <Plus size={20} />
+                      </button>
+                    </div>
                   </div>
                 </>
               )}
@@ -1229,6 +1341,38 @@ export default function ContentPage() {
                     >
                       {t("add.isIrregular")}
                     </label>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-franol-text mb-2">
+                      {t("add.category")}
+                    </label>
+                    <div className="flex gap-2">
+                      <select
+                        value={editForm.category || ""}
+                        onChange={(e) =>
+                          setEditForm({ ...editForm, category: e.target.value })
+                        }
+                        className="flex-1 px-4 py-3 rounded-xl border-2 border-franol-warm
+                                   bg-white text-franol-text
+                                   focus:border-franol-accent-blue focus:outline-none transition-colors"
+                      >
+                        <option value="">{t("add.selectCategory")}</option>
+                        {conjugationCategories.map((cat) => (
+                          <option key={cat.id} value={cat.id}>
+                            {locale === "fr" ? cat.name_fr : cat.name_es}
+                          </option>
+                        ))}
+                      </select>
+                      <button
+                        type="button"
+                        onClick={() => openNewCategoryModal("conjugation")}
+                        className="px-3 py-3 rounded-xl bg-franol-accent-blue text-white
+                                   hover:bg-blue-700 transition-colors flex items-center justify-center"
+                        title={t("add.createCategory")}
+                      >
+                        <Plus size={20} />
+                      </button>
+                    </div>
                   </div>
                 </>
               )}
@@ -1477,6 +1621,148 @@ export default function ContentPage() {
           )
         }
       />
+
+      {/* Modal de création de catégorie (depuis le formulaire d'édition) */}
+      {showNewCategoryModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-2xl w-full max-w-md">
+            <div className="flex items-center justify-between p-6 border-b border-franol-warm">
+              <h2 className="text-xl font-display font-bold text-franol-text">
+                {newCategoryType === "expression"
+                  ? t("add.newContext")
+                  : t("add.newCategory")}
+              </h2>
+              <button
+                onClick={closeNewCategoryModal}
+                className="p-2 rounded-lg text-franol-muted hover:text-franol-text
+                           hover:bg-franol-sand transition-colors"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="p-6 space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-franol-text mb-2">
+                  {t("add.categoryNameFr")} *
+                </label>
+                <input
+                  type="text"
+                  value={newCategoryForm.name_fr}
+                  onChange={(e) =>
+                    setNewCategoryForm({
+                      ...newCategoryForm,
+                      name_fr: e.target.value,
+                    })
+                  }
+                  className="w-full px-4 py-3 rounded-xl border-2 border-franol-warm
+                             bg-white text-franol-text
+                             focus:border-franol-accent-blue focus:outline-none transition-colors"
+                  placeholder={
+                    newCategoryType === "vocabulary"
+                      ? locale === "fr"
+                        ? "Ex: Nourriture"
+                        : "Ej: Nourriture"
+                      : locale === "fr"
+                        ? "Ex: Argot"
+                        : "Ej: Argot"
+                  }
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-franol-text mb-2">
+                  {t("add.categoryNameEs")} *
+                </label>
+                <input
+                  type="text"
+                  value={newCategoryForm.name_es}
+                  onChange={(e) =>
+                    setNewCategoryForm({
+                      ...newCategoryForm,
+                      name_es: e.target.value,
+                    })
+                  }
+                  className="w-full px-4 py-3 rounded-xl border-2 border-franol-warm
+                             bg-white text-franol-text
+                             focus:border-franol-accent-blue focus:outline-none transition-colors"
+                  placeholder={
+                    newCategoryType === "vocabulary"
+                      ? locale === "fr"
+                        ? "Ex: Comida"
+                        : "Ej: Comida"
+                      : locale === "fr"
+                        ? "Ex: Jerga"
+                        : "Ej: Jerga"
+                  }
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-franol-text mb-2">
+                  {t("add.categoryColor")}
+                </label>
+                <div className="flex gap-2 items-center">
+                  <input
+                    type="color"
+                    value={newCategoryForm.color}
+                    onChange={(e) =>
+                      setNewCategoryForm({
+                        ...newCategoryForm,
+                        color: e.target.value,
+                      })
+                    }
+                    className="w-16 h-12 rounded-xl border-2 border-franol-warm cursor-pointer"
+                  />
+                  <input
+                    type="text"
+                    value={newCategoryForm.color}
+                    onChange={(e) =>
+                      setNewCategoryForm({
+                        ...newCategoryForm,
+                        color: e.target.value,
+                      })
+                    }
+                    className="flex-1 px-4 py-3 rounded-xl border-2 border-franol-warm
+                               bg-white text-franol-text font-mono text-sm
+                               focus:border-franol-accent-blue focus:outline-none transition-colors"
+                    placeholder="#10b981"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-end gap-3 p-6 border-t border-franol-warm">
+              <button
+                onClick={closeNewCategoryModal}
+                className="px-6 py-2 rounded-xl font-medium text-franol-muted
+                           hover:bg-franol-sand transition-colors"
+              >
+                {t("content.cancel")}
+              </button>
+              <button
+                onClick={handleCreateNewCategory}
+                disabled={
+                  isSavingNewCategory ||
+                  !newCategoryForm.name_fr ||
+                  !newCategoryForm.name_es
+                }
+                className="px-6 py-2 rounded-xl font-medium text-white
+                           bg-franol-accent-blue hover:bg-blue-700
+                           disabled:opacity-50 disabled:cursor-not-allowed
+                           transition-colors flex items-center gap-2"
+              >
+                {isSavingNewCategory && (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                )}
+                {newCategoryType === "expression"
+                  ? t("add.addContext")
+                  : t("add.addCategory")}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

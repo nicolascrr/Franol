@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useLocale } from "@/contexts/LocaleContext";
 import { FlagTicker } from "@/components/home/FlagTicker";
@@ -8,8 +9,10 @@ import { LanguageButton } from "@/components/home/LanguageButton";
 export default function HomePage() {
   const router = useRouter();
   const { setLocale } = useLocale();
+  const [loadingPortal, setLoadingPortal] = useState<"fr" | "es" | null>(null);
 
   const handleSelectPortal = async (locale: "fr" | "es") => {
+    setLoadingPortal(locale);
     setLocale(locale);
 
     // Récupérer l'URL de redirection si elle existe
@@ -76,6 +79,8 @@ export default function HomePage() {
           <LanguageButton
             variant="spanish"
             onClick={() => handleSelectPortal("fr")}
+            isLoading={loadingPortal === "fr"}
+            disabled={loadingPortal !== null}
           >
             Apprendre l'espagnol
           </LanguageButton>
@@ -84,6 +89,8 @@ export default function HomePage() {
           <LanguageButton
             variant="french"
             onClick={() => handleSelectPortal("es")}
+            isLoading={loadingPortal === "es"}
+            disabled={loadingPortal !== null}
           >
             Aprender el francés
           </LanguageButton>

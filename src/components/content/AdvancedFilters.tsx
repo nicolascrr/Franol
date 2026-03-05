@@ -5,7 +5,7 @@ interface Category {
   id: string;
   name_fr: string;
   name_es: string;
-  type: "vocabulary" | "expression";
+  type: "vocabulary" | "expression" | "conjugation";
   color: string;
   icon: string;
 }
