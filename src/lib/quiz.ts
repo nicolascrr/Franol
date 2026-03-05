@@ -1,4 +1,6 @@
-import { supabase } from "./supabase";
+import { createClient } from "./supabase/client";
+
+const supabase = createClient();
 
 // Types
 export type QuizMode = "classic" | "expressions" | "conjugation" | "discovery" | "vocabulary";

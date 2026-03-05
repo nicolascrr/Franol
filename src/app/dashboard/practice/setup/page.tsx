@@ -3,7 +3,9 @@
 import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useLocale } from "@/contexts/LocaleContext";
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/client";
+
+const supabase = createClient();
 import type { QuizMode, QuizFormat, QuizDirection, QuizConfig } from "@/lib/quiz";
 import { ArrowLeft, Play, Loader2 } from "lucide-react";
 

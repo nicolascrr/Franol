@@ -2,7 +2,9 @@
 
 import { useState, useEffect, KeyboardEvent } from "react";
 import { useLocale } from "@/contexts/LocaleContext";
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/client";
+
+const supabase = createClient();
 import {
   BookOpen,
   MessageSquare,

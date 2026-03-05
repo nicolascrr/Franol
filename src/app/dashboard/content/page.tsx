@@ -2,7 +2,9 @@
 
 import { useState, useEffect, useMemo, KeyboardEvent } from "react";
 import { useLocale } from "@/contexts/LocaleContext";
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/client";
+
+const supabase = createClient();
 import { ConfirmModal } from "@/components/ui/ConfirmModal";
 import { AdvancedFilters } from "@/components/content/AdvancedFilters";
 import { ContentCard } from "@/components/content/ContentCard";

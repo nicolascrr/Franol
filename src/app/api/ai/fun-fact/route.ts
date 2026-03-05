@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { getFunFactPrompts, getRandomFactType } from "@/lib/prompts";
 import type { Locale } from "@/lib/prompts";
 
+export const dynamic = 'force-dynamic';
+
 const OPENAI_API_KEY = process.env.API_KEY;
 
 export async function GET(request: NextRequest) {

@@ -5,6 +5,7 @@ import React, {
   useContext,
   useState,
   useCallback,
+  useMemo,
   ReactNode,
   useEffect,
 } from "react";
@@ -81,10 +82,13 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
     [locale],
   );
 
+  const contextValue = useMemo(
+    () => ({ locale, setLocale, t, clearLocale, isLoading }),
+    [locale, setLocale, t, clearLocale, isLoading]
+  );
+
   return (
-    <LocaleContext.Provider
-      value={{ locale, setLocale, t, clearLocale, isLoading }}
-    >
+    <LocaleContext.Provider value={contextValue}>
       {children}
     </LocaleContext.Provider>
   );
