@@ -1,14 +1,7 @@
 import { Calendar, X } from "lucide-react";
 import { useLocale } from "@/contexts/LocaleContext";
-
-interface Category {
-  id: string;
-  name_fr: string;
-  name_es: string;
-  type: "vocabulary" | "expression" | "conjugation";
-  color: string;
-  icon: string;
-}
+import { getLangValue } from "@/lib/lang";
+import type { Category } from "@/types";
 
 interface AdvancedFiltersProps {
   categoryFilter: string;
@@ -37,7 +30,7 @@ export function AdvancedFilters({
   expressionContexts,
   onClear,
 }: AdvancedFiltersProps) {
-  const { locale, t } = useLocale();
+  const { t, sourceLang } = useLocale();
 
   const hasActiveFilters =
     categoryFilter || contextFilter || dateFrom || dateTo;
@@ -75,7 +68,7 @@ export function AdvancedFilters({
             <option value="">{t("content.allCategories")}</option>
             {vocabularyCategories.map((cat) => (
               <option key={cat.id} value={cat.id}>
-                {locale === "fr" ? cat.name_fr : cat.name_es}
+                {getLangValue(cat, "name", sourceLang)}
               </option>
             ))}
           </select>
@@ -96,7 +89,7 @@ export function AdvancedFilters({
             <option value="">{t("content.allContexts")}</option>
             {expressionContexts.map((ctx) => (
               <option key={ctx.id} value={ctx.id}>
-                {locale === "fr" ? ctx.name_fr : ctx.name_es}
+                {getLangValue(ctx, "name", sourceLang)}
               </option>
             ))}
           </select>

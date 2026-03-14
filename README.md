@@ -21,7 +21,7 @@ Variables requises :
 - `NEXT_PUBLIC_SUPABASE_URL` - URL de ton projet Supabase
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY` - Clé publique Supabase
 - `SUPABASE_SERVICE_ROLE_KEY` - Clé secrète Supabase
-- `ANTHROPIC_API_KEY` - Clé API Claude
+- `API_KEY` - Clé API LLM
 - `APP_PASSWORD` - Mot de passe d'accès à l'app
 
 ## 🏃 Lancement

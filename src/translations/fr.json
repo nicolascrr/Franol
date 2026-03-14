@@ -38,6 +38,16 @@
     "group3": "3ème groupe",
     "irregular": "Irrégulier",
     "isIrregular": "Verbe irrégulier",
+    "isReflexiveFr": "Verbe réfléchi (français)",
+    "isReflexiveEs": "Verbe réfléchi (espagnol)",
+    "article": "Article",
+    "articleFr": "Article (français)",
+    "articleEs": "Article (espagnol)",
+    "selectArticle": "Sans article",
+    "articles": {
+      "fr": ["Le", "La", "L'", "Un", "Une", "Du", "Des"],
+      "es": ["El", "La", "Los", "Las", "Un", "Una", "Unos", "Unas"]
+    },
     "addVocabulary": "Ajouter le vocabulaire",
     "addExpression": "Ajouter l'expression",
     "addVerb": "Ajouter le verbe",
@@ -52,7 +62,10 @@
     "categoryColor": "Couleur",
     "addCategory": "Ajouter la catégorie",
     "addContext": "Ajouter le contexte",
-    "createCategory": "Créer une catégorie"
+    "createCategory": "Créer une catégorie",
+    "duplicateWarning": "Doublon(s) détecté(s)",
+    "matchedIn": "Trouvé dans",
+    "addAnyway": "Ajouter quand même"
   },
   "content": {
     "title": "Gérer le contenu",
@@ -64,7 +77,8 @@
       "expressions": "Expressions",
       "verbs": "Verbes",
       "categories": "Catégories",
-      "contexts": "Contextes"
+      "contexts": "Contextes",
+      "toVerify": "À vérifier"
     },
     "allCategories": "Toutes les catégories",
     "allContexts": "Tous les contextes",
@@ -91,7 +105,9 @@
     "confirmDeleteBtn": "Supprimer",
     "createdAt": "Créé le",
     "updatedAt": "Modifié le",
-    "editCategory": "Modifier la catégorie"
+    "editCategory": "Modifier la catégorie",
+    "verified": "Vérifié",
+    "markVerified": "Marquer comme vérifié"
   },
   "dashboard": {
     "welcome": "Bon retour parmi nous !",
@@ -106,7 +122,9 @@
     "practice": "S'entraîner",
     "practiceDesc": "Quiz et exercices",
     "viewLessons": "Voir les cours",
-    "viewLessonsDesc": "Fiches et mémos"
+    "viewLessonsDesc": "Fiches et mémos",
+    "whatsNew": "Nouveautés",
+    "version": "Version"
   },
   "nav": {
     "home": "Accueil",

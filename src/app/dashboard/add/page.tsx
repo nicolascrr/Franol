@@ -1,10 +1,14 @@
 "use client";
 
-import { useState, useEffect, KeyboardEvent } from "react";
+import { useState, useEffect } from "react";
 import { useLocale } from "@/contexts/LocaleContext";
 import { createClient } from "@/lib/supabase/client";
-
-const supabase = createClient();
+import { getLangValue } from "@/lib/lang";
+import { checkDuplicate, type DuplicateMatch } from "@/lib/duplicates";
+import { VocabularyForm } from "@/components/add/VocabularyForm";
+import { ExpressionForm } from "@/components/add/ExpressionForm";
+import { VerbForm } from "@/components/add/VerbForm";
+import { DuplicateWarning } from "@/components/add/DuplicateWarning";
 import {
   BookOpen,
   MessageSquare,
@@ -14,144 +18,25 @@ import {
   X,
   Loader2,
   Check,
-  Pencil,
   Trash2,
   ArrowLeft,
   Database,
 } from "lucide-react";
 import Link from "next/link";
+import type {
+  Category,
+  VocabularyItem,
+  ExpressionItem,
+  ConjugationItem,
+  HistoryItem,
+} from "@/types";
+
+const supabase = createClient();
 
 type Tab = "vocabulary" | "expressions" | "verbs" | "history";
 
-interface Category {
-  id: string;
-  name_fr: string;
-  name_es: string;
-  type: "vocabulary" | "expression" | "conjugation";
-  color: string;
-  icon: string;
-}
-
-interface VocabularyItem {
-  id: string;
-  word_fr: string;
-  word_es: string;
-  aliases_fr: string[];
-  aliases_es: string[];
-  category: string;
-  notes: string;
-  created_at: string;
-  updated_at: string;
-}
-
-interface ExpressionItem {
-  id: string;
-  expression_fr: string;
-  expression_es: string;
-  aliases_fr: string[];
-  aliases_es: string[];
-  context: string;
-  notes: string;
-  created_at: string;
-  updated_at: string;
-}
-
-interface ConjugationItem {
-  id: string;
-  infinitive_fr: string;
-  infinitive_es: string;
-  aliases_fr: string[];
-  aliases_es: string[];
-  group_fr: string;
-  group_es: string;
-  is_irregular: boolean;
-  notes: string;
-  created_at: string;
-  updated_at: string;
-}
-
-type HistoryItem =
-  | (VocabularyItem & { type: "vocabulary" })
-  | (ExpressionItem & { type: "expression" })
-  | (ConjugationItem & { type: "conjugation" });
-
-// Composant pour les tags/chips d'aliases
-function AliasInput({
-  aliases,
-  onAdd,
-  onRemove,
-  placeholder,
-}: {
-  aliases: string[];
-  onAdd: (alias: string) => void;
-  onRemove: (index: number) => void;
-  placeholder: string;
-}) {
-  const [inputValue, setInputValue] = useState("");
-
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && inputValue.trim()) {
-      e.preventDefault();
-      onAdd(inputValue.trim());
-      setInputValue("");
-    }
-  };
-
-  const handleAdd = () => {
-    if (inputValue.trim()) {
-      onAdd(inputValue.trim());
-      setInputValue("");
-    }
-  };
-
-  return (
-    <div className="space-y-2">
-      <div className="flex gap-2">
-        <input
-          type="text"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder={placeholder}
-          className="flex-1 px-4 py-2 rounded-xl border-2 border-franol-warm
-                     bg-white text-franol-text placeholder-franol-muted
-                     focus:border-franol-accent-blue focus:outline-none transition-colors"
-        />
-        <button
-          type="button"
-          onClick={handleAdd}
-          className="px-3 py-2 rounded-xl bg-franol-sand text-franol-text
-                     hover:bg-franol-warm transition-colors"
-        >
-          <Plus size={20} />
-        </button>
-      </div>
-      {aliases.length > 0 && (
-        <div className="flex flex-wrap gap-2">
-          {aliases.map((alias, index) => (
-            <span
-              key={index}
-              className="inline-flex items-center gap-1 px-3 py-1 rounded-full
-                         bg-franol-sand text-franol-text text-sm"
-            >
-              {alias}
-              <button
-                type="button"
-                onClick={() => onRemove(index)}
-                className="hover:text-red-500 transition-colors"
-              >
-                <X size={14} />
-              </button>
-            </span>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
 export default function AddPage() {
-  const { locale, t } = useLocale();
+  const { locale, t, sourceLang } = useLocale();
   const [activeTab, setActiveTab] = useState<Tab>("vocabulary");
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -160,11 +45,16 @@ export default function AddPage() {
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [editingItem, setEditingItem] = useState<HistoryItem | null>(null);
 
+  // États pour la détection de doublons
+  const [duplicates, setDuplicates] = useState<DuplicateMatch[]>([]);
+  const [showDuplicateWarning, setShowDuplicateWarning] = useState(false);
+  const [forceAdd, setForceAdd] = useState(false);
+
   // États pour la modale de création de catégorie
   const [showCategoryModal, setShowCategoryModal] = useState(false);
-  const [categoryType, setCategoryType] = useState<"vocabulary" | "expression" | "conjugation">(
-    "vocabulary",
-  );
+  const [categoryType, setCategoryType] = useState<
+    "vocabulary" | "expression" | "conjugation"
+  >("vocabulary");
   const [isSavingCategory, setIsSavingCategory] = useState(false);
   const [categoryForm, setCategoryForm] = useState({
     name_fr: "",
@@ -176,6 +66,8 @@ export default function AddPage() {
   const [vocabForm, setVocabForm] = useState({
     word_fr: "",
     word_es: "",
+    article_fr: "",
+    article_es: "",
     aliases_fr: [] as string[],
     aliases_es: [] as string[],
     category: "",
@@ -201,6 +93,8 @@ export default function AddPage() {
     group_fr: "",
     group_es: "",
     is_irregular: false,
+    is_reflexive_fr: false,
+    is_reflexive_es: false,
     category: "",
     notes: "",
   });
@@ -272,6 +166,8 @@ export default function AddPage() {
     setVocabForm({
       word_fr: "",
       word_es: "",
+      article_fr: "",
+      article_es: "",
       aliases_fr: [],
       aliases_es: [],
       category: "",
@@ -293,6 +189,8 @@ export default function AddPage() {
       group_fr: "",
       group_es: "",
       is_irregular: false,
+      is_reflexive_fr: false,
+      is_reflexive_es: false,
       category: "",
       notes: "",
     });
@@ -303,8 +201,302 @@ export default function AddPage() {
     setTimeout(() => setSuccess(false), 2000);
   };
 
+  // Helper function to check for duplicates
+  const checkDuplicate = async (
+    type: "vocabulary" | "expression" | "conjugation",
+    wordFr: string,
+    wordEs: string,
+    aliasesFr: string[],
+    aliasesEs: string[],
+  ): Promise<DuplicateMatch[]> => {
+    const matches: DuplicateMatch[] = [];
+
+    // Normalize to lowercase for comparison
+    const normalizedWordFr = wordFr.toLowerCase().trim();
+    const normalizedWordEs = wordEs.toLowerCase().trim();
+    const normalizedAliasesFr = aliasesFr.map((a) => a.toLowerCase().trim());
+    const normalizedAliasesEs = aliasesEs.map((a) => a.toLowerCase().trim());
+
+    try {
+      if (type === "vocabulary") {
+        const { data } = await supabase.from("vocabulary").select("*");
+
+        if (data) {
+          data.forEach((item) => {
+            // Check main word fields
+            if (item.word_fr.toLowerCase().trim() === normalizedWordFr) {
+              matches.push({
+                id: item.id,
+                word_fr: item.word_fr,
+                word_es: item.word_es,
+                matchedField: "word_fr",
+                matchedValue: item.word_fr,
+              });
+            } else if (
+              item.word_es.toLowerCase().trim() === normalizedWordEs
+            ) {
+              matches.push({
+                id: item.id,
+                word_fr: item.word_fr,
+                word_es: item.word_es,
+                matchedField: "word_es",
+                matchedValue: item.word_es,
+              });
+            }
+
+            // Check aliases
+            const itemAliasesFr = (item.aliases_fr || []).map((a: string) =>
+              a.toLowerCase().trim(),
+            );
+            const itemAliasesEs = (item.aliases_es || []).map((a: string) =>
+              a.toLowerCase().trim(),
+            );
+
+            // Check if main word matches any alias
+            if (itemAliasesFr.includes(normalizedWordFr)) {
+              matches.push({
+                id: item.id,
+                word_fr: item.word_fr,
+                word_es: item.word_es,
+                matchedField: "aliases_fr",
+                matchedValue: normalizedWordFr,
+              });
+            }
+            if (itemAliasesEs.includes(normalizedWordEs)) {
+              matches.push({
+                id: item.id,
+                word_fr: item.word_fr,
+                word_es: item.word_es,
+                matchedField: "aliases_es",
+                matchedValue: normalizedWordEs,
+              });
+            }
+
+            // Check if any new alias matches existing word or aliases
+            normalizedAliasesFr.forEach((alias) => {
+              if (
+                item.word_fr.toLowerCase().trim() === alias ||
+                itemAliasesFr.includes(alias)
+              ) {
+                matches.push({
+                  id: item.id,
+                  word_fr: item.word_fr,
+                  word_es: item.word_es,
+                  matchedField: "aliases_fr",
+                  matchedValue: alias,
+                });
+              }
+            });
+
+            normalizedAliasesEs.forEach((alias) => {
+              if (
+                item.word_es.toLowerCase().trim() === alias ||
+                itemAliasesEs.includes(alias)
+              ) {
+                matches.push({
+                  id: item.id,
+                  word_fr: item.word_fr,
+                  word_es: item.word_es,
+                  matchedField: "aliases_es",
+                  matchedValue: alias,
+                });
+              }
+            });
+          });
+        }
+      } else if (type === "expression") {
+        const { data } = await supabase.from("expressions").select("*");
+
+        if (data) {
+          data.forEach((item) => {
+            // Check main expression fields
+            if (
+              item.expression_fr.toLowerCase().trim() === normalizedWordFr
+            ) {
+              matches.push({
+                id: item.id,
+                expression_fr: item.expression_fr,
+                expression_es: item.expression_es,
+                matchedField: "expression_fr",
+                matchedValue: item.expression_fr,
+              });
+            } else if (
+              item.expression_es.toLowerCase().trim() === normalizedWordEs
+            ) {
+              matches.push({
+                id: item.id,
+                expression_fr: item.expression_fr,
+                expression_es: item.expression_es,
+                matchedField: "expression_es",
+                matchedValue: item.expression_es,
+              });
+            }
+
+            // Check aliases
+            const itemAliasesFr = (item.aliases_fr || []).map((a: string) =>
+              a.toLowerCase().trim(),
+            );
+            const itemAliasesEs = (item.aliases_es || []).map((a: string) =>
+              a.toLowerCase().trim(),
+            );
+
+            // Check if main expression matches any alias
+            if (itemAliasesFr.includes(normalizedWordFr)) {
+              matches.push({
+                id: item.id,
+                expression_fr: item.expression_fr,
+                expression_es: item.expression_es,
+                matchedField: "aliases_fr",
+                matchedValue: normalizedWordFr,
+              });
+            }
+            if (itemAliasesEs.includes(normalizedWordEs)) {
+              matches.push({
+                id: item.id,
+                expression_fr: item.expression_fr,
+                expression_es: item.expression_es,
+                matchedField: "aliases_es",
+                matchedValue: normalizedWordEs,
+              });
+            }
+
+            // Check if any new alias matches existing expression or aliases
+            normalizedAliasesFr.forEach((alias) => {
+              if (
+                item.expression_fr.toLowerCase().trim() === alias ||
+                itemAliasesFr.includes(alias)
+              ) {
+                matches.push({
+                  id: item.id,
+                  expression_fr: item.expression_fr,
+                  expression_es: item.expression_es,
+                  matchedField: "aliases_fr",
+                  matchedValue: alias,
+                });
+              }
+            });
+
+            normalizedAliasesEs.forEach((alias) => {
+              if (
+                item.expression_es.toLowerCase().trim() === alias ||
+                itemAliasesEs.includes(alias)
+              ) {
+                matches.push({
+                  id: item.id,
+                  expression_fr: item.expression_fr,
+                  expression_es: item.expression_es,
+                  matchedField: "aliases_es",
+                  matchedValue: alias,
+                });
+              }
+            });
+          });
+        }
+      } else if (type === "conjugation") {
+        const { data } = await supabase.from("conjugations").select("*");
+
+        if (data) {
+          data.forEach((item) => {
+            // Check main infinitive fields
+            if (
+              item.infinitive_fr.toLowerCase().trim() === normalizedWordFr
+            ) {
+              matches.push({
+                id: item.id,
+                infinitive_fr: item.infinitive_fr,
+                infinitive_es: item.infinitive_es,
+                matchedField: "infinitive_fr",
+                matchedValue: item.infinitive_fr,
+              });
+            } else if (
+              item.infinitive_es.toLowerCase().trim() === normalizedWordEs
+            ) {
+              matches.push({
+                id: item.id,
+                infinitive_fr: item.infinitive_fr,
+                infinitive_es: item.infinitive_es,
+                matchedField: "infinitive_es",
+                matchedValue: item.infinitive_es,
+              });
+            }
+
+            // Check aliases
+            const itemAliasesFr = (item.aliases_fr || []).map((a: string) =>
+              a.toLowerCase().trim(),
+            );
+            const itemAliasesEs = (item.aliases_es || []).map((a: string) =>
+              a.toLowerCase().trim(),
+            );
+
+            // Check if main infinitive matches any alias
+            if (itemAliasesFr.includes(normalizedWordFr)) {
+              matches.push({
+                id: item.id,
+                infinitive_fr: item.infinitive_fr,
+                infinitive_es: item.infinitive_es,
+                matchedField: "aliases_fr",
+                matchedValue: normalizedWordFr,
+              });
+            }
+            if (itemAliasesEs.includes(normalizedWordEs)) {
+              matches.push({
+                id: item.id,
+                infinitive_fr: item.infinitive_fr,
+                infinitive_es: item.infinitive_es,
+                matchedField: "aliases_es",
+                matchedValue: normalizedWordEs,
+              });
+            }
+
+            // Check if any new alias matches existing infinitive or aliases
+            normalizedAliasesFr.forEach((alias) => {
+              if (
+                item.infinitive_fr.toLowerCase().trim() === alias ||
+                itemAliasesFr.includes(alias)
+              ) {
+                matches.push({
+                  id: item.id,
+                  infinitive_fr: item.infinitive_fr,
+                  infinitive_es: item.infinitive_es,
+                  matchedField: "aliases_fr",
+                  matchedValue: alias,
+                });
+              }
+            });
+
+            normalizedAliasesEs.forEach((alias) => {
+              if (
+                item.infinitive_es.toLowerCase().trim() === alias ||
+                itemAliasesEs.includes(alias)
+              ) {
+                matches.push({
+                  id: item.id,
+                  infinitive_fr: item.infinitive_fr,
+                  infinitive_es: item.infinitive_es,
+                  matchedField: "aliases_es",
+                  matchedValue: alias,
+                });
+              }
+            });
+          });
+        }
+      }
+    } catch (err) {
+      console.error("Error checking duplicates:", err);
+    }
+
+    // Remove duplicate matches (same id)
+    const uniqueMatches = matches.filter(
+      (match, index, self) => index === self.findIndex((m) => m.id === match.id),
+    );
+
+    return uniqueMatches;
+  };
+
   // Ouvrir la modale de création de catégorie
-  const openCategoryModal = (type: "vocabulary" | "expression" | "conjugation") => {
+  const openCategoryModal = (
+    type: "vocabulary" | "expression" | "conjugation",
+  ) => {
     setCategoryType(type);
     setCategoryForm({ name_fr: "", name_es: "", color: "#10b981" });
     setShowCategoryModal(true);
@@ -327,7 +519,8 @@ export default function AddPage() {
         .insert({
           name_fr: categoryForm.name_fr,
           name_es: categoryForm.name_es,
-          type: categoryType,
+          // Verbs share vocabulary-type categories
+          type: categoryType === "conjugation" ? "vocabulary" : categoryType,
           color: categoryForm.color,
           icon: "tag",
         })
@@ -364,9 +557,29 @@ export default function AddPage() {
     setError("");
 
     try {
+      // Check for duplicates if not forcing add
+      if (!forceAdd) {
+        const foundDuplicates = await checkDuplicate(
+          "vocabulary",
+          vocabForm.word_fr,
+          vocabForm.word_es,
+          vocabForm.aliases_fr,
+          vocabForm.aliases_es,
+        );
+
+        if (foundDuplicates.length > 0) {
+          setDuplicates(foundDuplicates);
+          setShowDuplicateWarning(true);
+          setIsLoading(false);
+          return;
+        }
+      }
+
       const { error: err } = await supabase.from("vocabulary").insert({
         word_fr: vocabForm.word_fr,
         word_es: vocabForm.word_es,
+        article_fr: vocabForm.article_fr || null,
+        article_es: vocabForm.article_es || null,
         aliases_fr: vocabForm.aliases_fr,
         aliases_es: vocabForm.aliases_es,
         category: vocabForm.category || null,
@@ -375,6 +588,9 @@ export default function AddPage() {
 
       if (err) throw err;
       resetForms();
+      setForceAdd(false);
+      setShowDuplicateWarning(false);
+      setDuplicates([]);
       showSuccess();
     } catch {
       setError(t("common.error"));
@@ -390,6 +606,24 @@ export default function AddPage() {
     setError("");
 
     try {
+      // Check for duplicates if not forcing add
+      if (!forceAdd) {
+        const foundDuplicates = await checkDuplicate(
+          "expression",
+          exprForm.expression_fr,
+          exprForm.expression_es,
+          exprForm.aliases_fr,
+          exprForm.aliases_es,
+        );
+
+        if (foundDuplicates.length > 0) {
+          setDuplicates(foundDuplicates);
+          setShowDuplicateWarning(true);
+          setIsLoading(false);
+          return;
+        }
+      }
+
       const { error: err } = await supabase.from("expressions").insert({
         expression_fr: exprForm.expression_fr,
         expression_es: exprForm.expression_es,
@@ -401,6 +635,9 @@ export default function AddPage() {
 
       if (err) throw err;
       resetForms();
+      setForceAdd(false);
+      setShowDuplicateWarning(false);
+      setDuplicates([]);
       showSuccess();
     } catch {
       setError(t("common.error"));
@@ -416,6 +653,24 @@ export default function AddPage() {
     setError("");
 
     try {
+      // Check for duplicates if not forcing add
+      if (!forceAdd) {
+        const foundDuplicates = await checkDuplicate(
+          "conjugation",
+          verbForm.infinitive_fr,
+          verbForm.infinitive_es,
+          verbForm.aliases_fr,
+          verbForm.aliases_es,
+        );
+
+        if (foundDuplicates.length > 0) {
+          setDuplicates(foundDuplicates);
+          setShowDuplicateWarning(true);
+          setIsLoading(false);
+          return;
+        }
+      }
+
       const { error: err } = await supabase.from("conjugations").insert({
         infinitive_fr: verbForm.infinitive_fr,
         infinitive_es: verbForm.infinitive_es,
@@ -424,12 +679,17 @@ export default function AddPage() {
         group_fr: verbForm.group_fr || null,
         group_es: verbForm.group_es || null,
         is_irregular: verbForm.is_irregular,
+        is_reflexive_fr: verbForm.is_reflexive_fr,
+        is_reflexive_es: verbForm.is_reflexive_es,
         category: verbForm.category || null,
         notes: verbForm.notes || null,
       });
 
       if (err) throw err;
       resetForms();
+      setForceAdd(false);
+      setShowDuplicateWarning(false);
+      setDuplicates([]);
       showSuccess();
     } catch {
       setError(t("common.error"));
@@ -476,7 +736,7 @@ export default function AddPage() {
     const groups: { [key: string]: HistoryItem[] } = {};
     items.forEach((item) => {
       const date = new Date(item.created_at).toLocaleDateString(
-        locale === "fr" ? "fr-FR" : "es-ES",
+        sourceLang === "fr" ? "fr-FR" : "es-ES",
         {
           weekday: "long",
           year: "numeric",
@@ -570,550 +830,116 @@ export default function AddPage() {
 
       {/* Formulaire Vocabulaire */}
       {activeTab === "vocabulary" && (
-        <form
+        <VocabularyForm
+          form={vocabForm}
+          categories={categories}
+          sourceLang={sourceLang}
+          isLoading={isLoading}
           onSubmit={handleVocabSubmit}
-          className="space-y-4 animate-fade-in"
-        >
-          <div className="bg-white rounded-2xl p-6 border border-franol-warm space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-franol-text mb-2">
-                  {t("add.wordFr")} *
-                </label>
-                <input
-                  type="text"
-                  value={vocabForm.word_fr}
-                  onChange={(e) =>
-                    setVocabForm({ ...vocabForm, word_fr: e.target.value })
+          onFieldChange={(field, value) =>
+            setVocabForm({ ...vocabForm, [field]: value })
+          }
+          onOpenCategoryModal={() => openCategoryModal("vocabulary")}
+          beforeSubmit={
+            showDuplicateWarning &&
+            duplicates.length > 0 && (
+              <DuplicateWarning
+                duplicates={duplicates}
+                onCancel={() => {
+                  setShowDuplicateWarning(false);
+                  setDuplicates([]);
+                  setForceAdd(false);
+                }}
+                onForceAdd={() => {
+                  setForceAdd(true);
+                  setShowDuplicateWarning(false);
+                  const form = document.querySelector("form");
+                  if (form) {
+                    form.dispatchEvent(
+                      new Event("submit", { cancelable: true, bubbles: true }),
+                    );
                   }
-                  required
-                  className="w-full px-4 py-3 rounded-xl border-2 border-franol-warm
-                             bg-white text-franol-text placeholder-franol-muted
-                             focus:border-franol-accent-blue focus:outline-none transition-colors"
-                  placeholder={t("add.wordFrPlaceholder")}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-franol-text mb-2">
-                  {t("add.wordEs")} *
-                </label>
-                <input
-                  type="text"
-                  value={vocabForm.word_es}
-                  onChange={(e) =>
-                    setVocabForm({ ...vocabForm, word_es: e.target.value })
-                  }
-                  required
-                  className="w-full px-4 py-3 rounded-xl border-2 border-franol-warm
-                             bg-white text-franol-text placeholder-franol-muted
-                             focus:border-franol-accent-blue focus:outline-none transition-colors"
-                  placeholder={t("add.wordEsPlaceholder")}
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-franol-text mb-2">
-                {t("add.aliases")}
-              </label>
-              {locale === "fr" ? (
-                <AliasInput
-                  aliases={vocabForm.aliases_fr}
-                  onAdd={(alias) =>
-                    setVocabForm({
-                      ...vocabForm,
-                      aliases_fr: [...vocabForm.aliases_fr, alias],
-                    })
-                  }
-                  onRemove={(index) =>
-                    setVocabForm({
-                      ...vocabForm,
-                      aliases_fr: vocabForm.aliases_fr.filter(
-                        (_, i) => i !== index,
-                      ),
-                    })
-                  }
-                  placeholder={t("add.aliasPlaceholderVocab")}
-                />
-              ) : (
-                <AliasInput
-                  aliases={vocabForm.aliases_es}
-                  onAdd={(alias) =>
-                    setVocabForm({
-                      ...vocabForm,
-                      aliases_es: [...vocabForm.aliases_es, alias],
-                    })
-                  }
-                  onRemove={(index) =>
-                    setVocabForm({
-                      ...vocabForm,
-                      aliases_es: vocabForm.aliases_es.filter(
-                        (_, i) => i !== index,
-                      ),
-                    })
-                  }
-                  placeholder={t("add.aliasPlaceholderVocab")}
-                />
-              )}
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-franol-text mb-2">
-                {t("add.category")}
-              </label>
-              <div className="flex gap-2">
-                <select
-                  value={vocabForm.category}
-                  onChange={(e) =>
-                    setVocabForm({ ...vocabForm, category: e.target.value })
-                  }
-                  className="flex-1 px-4 py-3 rounded-xl border-2 border-franol-warm
-                             bg-white text-franol-text
-                             focus:border-franol-accent-blue focus:outline-none transition-colors"
-                >
-                  <option value="">{t("add.selectCategory")}</option>
-                  {categories
-                    .filter((c) => c.type === "vocabulary")
-                    .map((cat) => (
-                      <option key={cat.id} value={cat.id}>
-                        {locale === "fr" ? cat.name_fr : cat.name_es}
-                      </option>
-                    ))}
-                </select>
-                <button
-                  type="button"
-                  onClick={() => openCategoryModal("vocabulary")}
-                  className="px-3 py-3 rounded-xl bg-franol-accent-blue text-white
-                             hover:bg-blue-700 transition-colors flex items-center justify-center"
-                  title={t("add.createCategory")}
-                >
-                  <Plus size={20} />
-                </button>
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-franol-text mb-2">
-                {t("add.notes")}
-              </label>
-              <textarea
-                value={vocabForm.notes}
-                onChange={(e) =>
-                  setVocabForm({ ...vocabForm, notes: e.target.value })
-                }
-                rows={3}
-                className="w-full px-4 py-3 rounded-xl border-2 border-franol-warm
-                           bg-white text-franol-text placeholder-franol-muted
-                           focus:border-franol-accent-blue focus:outline-none transition-colors resize-none"
-                placeholder={t("add.notesPlaceholder")}
+                }}
               />
-            </div>
-          </div>
-
-          <button
-            type="submit"
-            disabled={isLoading || !vocabForm.word_fr || !vocabForm.word_es}
-            className="w-full py-3 px-4 rounded-xl font-medium text-white
-                       bg-gradient-to-r from-emerald-500 to-emerald-600
-                       hover:from-emerald-600 hover:to-emerald-700
-                       disabled:opacity-50 disabled:cursor-not-allowed
-                       transition-all flex items-center justify-center gap-2"
-          >
-            {isLoading ? (
-              <Loader2 className="w-5 h-5 animate-spin" />
-            ) : (
-              <>
-                <Plus size={20} />
-                {t("add.addVocabulary")}
-              </>
-            )}
-          </button>
-        </form>
+            )
+          }
+        />
       )}
 
       {/* Formulaire Expressions */}
       {activeTab === "expressions" && (
-        <form onSubmit={handleExprSubmit} className="space-y-4 animate-fade-in">
-          <div className="bg-white rounded-2xl p-6 border border-franol-warm space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-franol-text mb-2">
-                  {t("add.expressionFr")} *
-                </label>
-                <input
-                  type="text"
-                  value={exprForm.expression_fr}
-                  onChange={(e) =>
-                    setExprForm({ ...exprForm, expression_fr: e.target.value })
+        <ExpressionForm
+          form={exprForm}
+          categories={categories}
+          sourceLang={sourceLang}
+          isLoading={isLoading}
+          onSubmit={handleExprSubmit}
+          onFieldChange={(field, value) =>
+            setExprForm({ ...exprForm, [field]: value })
+          }
+          onOpenCategoryModal={() => openCategoryModal("expression")}
+          beforeSubmit={
+            showDuplicateWarning &&
+            duplicates.length > 0 && (
+              <DuplicateWarning
+                duplicates={duplicates}
+                onCancel={() => {
+                  setShowDuplicateWarning(false);
+                  setDuplicates([]);
+                  setForceAdd(false);
+                }}
+                onForceAdd={() => {
+                  setForceAdd(true);
+                  setShowDuplicateWarning(false);
+                  const form = document.querySelector("form");
+                  if (form) {
+                    form.dispatchEvent(
+                      new Event("submit", { cancelable: true, bubbles: true }),
+                    );
                   }
-                  required
-                  className="w-full px-4 py-3 rounded-xl border-2 border-franol-warm
-                             bg-white text-franol-text placeholder-franol-muted
-                             focus:border-franol-accent-blue focus:outline-none transition-colors"
-                  placeholder={t("add.expressionFrPlaceholder")}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-franol-text mb-2">
-                  {t("add.expressionEs")} *
-                </label>
-                <input
-                  type="text"
-                  value={exprForm.expression_es}
-                  onChange={(e) =>
-                    setExprForm({ ...exprForm, expression_es: e.target.value })
-                  }
-                  required
-                  className="w-full px-4 py-3 rounded-xl border-2 border-franol-warm
-                             bg-white text-franol-text placeholder-franol-muted
-                             focus:border-franol-accent-blue focus:outline-none transition-colors"
-                  placeholder={t("add.expressionEsPlaceholder")}
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-franol-text mb-2">
-                {t("add.aliases")}
-              </label>
-              {locale === "fr" ? (
-                <AliasInput
-                  aliases={exprForm.aliases_fr}
-                  onAdd={(alias) =>
-                    setExprForm({
-                      ...exprForm,
-                      aliases_fr: [...exprForm.aliases_fr, alias],
-                    })
-                  }
-                  onRemove={(index) =>
-                    setExprForm({
-                      ...exprForm,
-                      aliases_fr: exprForm.aliases_fr.filter(
-                        (_, i) => i !== index,
-                      ),
-                    })
-                  }
-                  placeholder={t("add.aliasPlaceholderExpr")}
-                />
-              ) : (
-                <AliasInput
-                  aliases={exprForm.aliases_es}
-                  onAdd={(alias) =>
-                    setExprForm({
-                      ...exprForm,
-                      aliases_es: [...exprForm.aliases_es, alias],
-                    })
-                  }
-                  onRemove={(index) =>
-                    setExprForm({
-                      ...exprForm,
-                      aliases_es: exprForm.aliases_es.filter(
-                        (_, i) => i !== index,
-                      ),
-                    })
-                  }
-                  placeholder={t("add.aliasPlaceholderExpr")}
-                />
-              )}
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-franol-text mb-2">
-                {t("add.context")}
-              </label>
-              <div className="flex gap-2">
-                <select
-                  value={exprForm.context}
-                  onChange={(e) =>
-                    setExprForm({ ...exprForm, context: e.target.value })
-                  }
-                  className="flex-1 px-4 py-3 rounded-xl border-2 border-franol-warm
-                             bg-white text-franol-text
-                             focus:border-franol-accent-blue focus:outline-none transition-colors"
-                >
-                  <option value="">{t("add.selectContext")}</option>
-                  {categories
-                    .filter((c) => c.type === "expression")
-                    .map((cat) => (
-                      <option key={cat.id} value={cat.id}>
-                        {locale === "fr" ? cat.name_fr : cat.name_es}
-                      </option>
-                    ))}
-                </select>
-                <button
-                  type="button"
-                  onClick={() => openCategoryModal("expression")}
-                  className="px-3 py-3 rounded-xl bg-franol-accent-blue text-white
-                             hover:bg-blue-700 transition-colors flex items-center justify-center"
-                  title={t("add.createCategory")}
-                >
-                  <Plus size={20} />
-                </button>
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-franol-text mb-2">
-                {t("add.notes")}
-              </label>
-              <textarea
-                value={exprForm.notes}
-                onChange={(e) =>
-                  setExprForm({ ...exprForm, notes: e.target.value })
-                }
-                rows={3}
-                className="w-full px-4 py-3 rounded-xl border-2 border-franol-warm
-                           bg-white text-franol-text placeholder-franol-muted
-                           focus:border-franol-accent-blue focus:outline-none transition-colors resize-none"
-                placeholder={t("add.notesPlaceholder")}
+                }}
               />
-            </div>
-          </div>
-
-          <button
-            type="submit"
-            disabled={
-              isLoading || !exprForm.expression_fr || !exprForm.expression_es
-            }
-            className="w-full py-3 px-4 rounded-xl font-medium text-white
-                       bg-gradient-to-r from-purple-500 to-purple-600
-                       hover:from-purple-600 hover:to-purple-700
-                       disabled:opacity-50 disabled:cursor-not-allowed
-                       transition-all flex items-center justify-center gap-2"
-          >
-            {isLoading ? (
-              <Loader2 className="w-5 h-5 animate-spin" />
-            ) : (
-              <>
-                <Plus size={20} />
-                {t("add.addExpression")}
-              </>
-            )}
-          </button>
-        </form>
+            )
+          }
+        />
       )}
 
       {/* Formulaire Verbes */}
       {activeTab === "verbs" && (
-        <form onSubmit={handleVerbSubmit} className="space-y-4 animate-fade-in">
-          <div className="bg-white rounded-2xl p-6 border border-franol-warm space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-franol-text mb-2">
-                  {t("add.infinitiveFr")} *
-                </label>
-                <input
-                  type="text"
-                  value={verbForm.infinitive_fr}
-                  onChange={(e) =>
-                    setVerbForm({ ...verbForm, infinitive_fr: e.target.value })
+        <VerbForm
+          form={verbForm}
+          categories={categories}
+          sourceLang={sourceLang}
+          isLoading={isLoading}
+          onSubmit={handleVerbSubmit}
+          onFieldChange={(field, value) =>
+            setVerbForm({ ...verbForm, [field]: value })
+          }
+          onOpenCategoryModal={() => openCategoryModal("conjugation")}
+          beforeSubmit={
+            showDuplicateWarning &&
+            duplicates.length > 0 && (
+              <DuplicateWarning
+                duplicates={duplicates}
+                onCancel={() => {
+                  setShowDuplicateWarning(false);
+                  setDuplicates([]);
+                  setForceAdd(false);
+                }}
+                onForceAdd={() => {
+                  setForceAdd(true);
+                  setShowDuplicateWarning(false);
+                  const form = document.querySelector("form");
+                  if (form) {
+                    form.dispatchEvent(
+                      new Event("submit", { cancelable: true, bubbles: true }),
+                    );
                   }
-                  required
-                  className="w-full px-4 py-3 rounded-xl border-2 border-franol-warm
-                             bg-white text-franol-text placeholder-franol-muted
-                             focus:border-franol-accent-blue focus:outline-none transition-colors"
-                  placeholder={t("add.infinitiveFrPlaceholder")}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-franol-text mb-2">
-                  {t("add.infinitiveEs")} *
-                </label>
-                <input
-                  type="text"
-                  value={verbForm.infinitive_es}
-                  onChange={(e) =>
-                    setVerbForm({ ...verbForm, infinitive_es: e.target.value })
-                  }
-                  required
-                  className="w-full px-4 py-3 rounded-xl border-2 border-franol-warm
-                             bg-white text-franol-text placeholder-franol-muted
-                             focus:border-franol-accent-blue focus:outline-none transition-colors"
-                  placeholder={t("add.infinitiveEsPlaceholder")}
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-franol-text mb-2">
-                {t("add.aliases")}
-              </label>
-              {locale === "fr" ? (
-                <AliasInput
-                  aliases={verbForm.aliases_fr}
-                  onAdd={(alias) =>
-                    setVerbForm({
-                      ...verbForm,
-                      aliases_fr: [...verbForm.aliases_fr, alias],
-                    })
-                  }
-                  onRemove={(index) =>
-                    setVerbForm({
-                      ...verbForm,
-                      aliases_fr: verbForm.aliases_fr.filter(
-                        (_, i) => i !== index,
-                      ),
-                    })
-                  }
-                  placeholder={t("add.aliasPlaceholderVerb")}
-                />
-              ) : (
-                <AliasInput
-                  aliases={verbForm.aliases_es}
-                  onAdd={(alias) =>
-                    setVerbForm({
-                      ...verbForm,
-                      aliases_es: [...verbForm.aliases_es, alias],
-                    })
-                  }
-                  onRemove={(index) =>
-                    setVerbForm({
-                      ...verbForm,
-                      aliases_es: verbForm.aliases_es.filter(
-                        (_, i) => i !== index,
-                      ),
-                    })
-                  }
-                  placeholder={t("add.aliasPlaceholderVerb")}
-                />
-              )}
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-franol-text mb-2">
-                  {t("add.groupFr")}
-                </label>
-                <select
-                  value={verbForm.group_fr}
-                  onChange={(e) =>
-                    setVerbForm({ ...verbForm, group_fr: e.target.value })
-                  }
-                  className="w-full px-4 py-3 rounded-xl border-2 border-franol-warm
-                             bg-white text-franol-text
-                             focus:border-franol-accent-blue focus:outline-none transition-colors"
-                >
-                  <option value="">{t("add.selectGroup")}</option>
-                  <option value="1">{t("add.group1")}</option>
-                  <option value="2">{t("add.group2")}</option>
-                  <option value="3">{t("add.group3")}</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-franol-text mb-2">
-                  {t("add.groupEs")}
-                </label>
-                <select
-                  value={verbForm.group_es}
-                  onChange={(e) =>
-                    setVerbForm({ ...verbForm, group_es: e.target.value })
-                  }
-                  className="w-full px-4 py-3 rounded-xl border-2 border-franol-warm
-                             bg-white text-franol-text
-                             focus:border-franol-accent-blue focus:outline-none transition-colors"
-                >
-                  <option value="">{t("add.selectGroup")}</option>
-                  <option value="AR">-AR</option>
-                  <option value="ER">-ER</option>
-                  <option value="IR">-IR</option>
-                  <option value="irregular">{t("add.irregular")}</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <input
-                type="checkbox"
-                id="is_irregular"
-                checked={verbForm.is_irregular}
-                onChange={(e) =>
-                  setVerbForm({ ...verbForm, is_irregular: e.target.checked })
-                }
-                className="w-5 h-5 rounded border-2 border-franol-warm text-franol-accent-blue
-                           focus:ring-franol-accent-blue focus:ring-offset-0"
+                }}
               />
-              <label
-                htmlFor="is_irregular"
-                className="text-sm font-medium text-franol-text"
-              >
-                {t("add.isIrregular")}
-              </label>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-franol-text mb-2">
-                {t("add.category")}
-              </label>
-              <div className="flex gap-2">
-                <select
-                  value={verbForm.category}
-                  onChange={(e) =>
-                    setVerbForm({ ...verbForm, category: e.target.value })
-                  }
-                  className="flex-1 px-4 py-3 rounded-xl border-2 border-franol-warm
-                             bg-white text-franol-text
-                             focus:border-franol-accent-blue focus:outline-none transition-colors"
-                >
-                  <option value="">{t("add.selectCategory")}</option>
-                  {categories
-                    .filter((c) => c.type === "conjugation")
-                    .map((cat) => (
-                      <option key={cat.id} value={cat.id}>
-                        {locale === "fr" ? cat.name_fr : cat.name_es}
-                      </option>
-                    ))}
-                </select>
-                <button
-                  type="button"
-                  onClick={() => openCategoryModal("conjugation")}
-                  className="px-3 py-3 rounded-xl bg-franol-accent-blue text-white
-                             hover:bg-blue-700 transition-colors flex items-center justify-center"
-                  title={t("add.createCategory")}
-                >
-                  <Plus size={20} />
-                </button>
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-franol-text mb-2">
-                {t("add.notes")}
-              </label>
-              <textarea
-                value={verbForm.notes}
-                onChange={(e) =>
-                  setVerbForm({ ...verbForm, notes: e.target.value })
-                }
-                rows={3}
-                className="w-full px-4 py-3 rounded-xl border-2 border-franol-warm
-                           bg-white text-franol-text placeholder-franol-muted
-                           focus:border-franol-accent-blue focus:outline-none transition-colors resize-none"
-                placeholder={t("add.notesPlaceholder")}
-              />
-            </div>
-          </div>
-
-          <button
-            type="submit"
-            disabled={
-              isLoading || !verbForm.infinitive_fr || !verbForm.infinitive_es
-            }
-            className="w-full py-3 px-4 rounded-xl font-medium text-white
-                       bg-gradient-to-r from-blue-500 to-blue-600
-                       hover:from-blue-600 hover:to-blue-700
-                       disabled:opacity-50 disabled:cursor-not-allowed
-                       transition-all flex items-center justify-center gap-2"
-          >
-            {isLoading ? (
-              <Loader2 className="w-5 h-5 animate-spin" />
-            ) : (
-              <>
-                <Plus size={20} />
-                {t("add.addVerb")}
-              </>
-            )}
-          </button>
-        </form>
+            )
+          }
+        />
       )}
 
       {/* Historique */}
@@ -1196,9 +1022,7 @@ export default function AddPage() {
                                       color: category.color,
                                     }}
                                   >
-                                    {locale === "fr"
-                                      ? category.name_fr
-                                      : category.name_es}
+                                    {getLangValue(category, "name", sourceLang)}
                                   </span>
                                 );
                               })()}
@@ -1266,10 +1090,10 @@ export default function AddPage() {
                              focus:border-franol-accent-blue focus:outline-none transition-colors"
                   placeholder={
                     categoryType === "vocabulary"
-                      ? locale === "fr"
+                      ? sourceLang === "fr"
                         ? "Ex: Nourriture"
                         : "Ej: Nourriture"
-                      : locale === "fr"
+                      : sourceLang === "fr"
                         ? "Ex: Argot"
                         : "Ej: Argot"
                   }
@@ -1294,10 +1118,10 @@ export default function AddPage() {
                              focus:border-franol-accent-blue focus:outline-none transition-colors"
                   placeholder={
                     categoryType === "vocabulary"
-                      ? locale === "fr"
+                      ? sourceLang === "fr"
                         ? "Ex: Comida"
                         : "Ej: Comida"
-                      : locale === "fr"
+                      : sourceLang === "fr"
                         ? "Ex: Jerga"
                         : "Ej: Jerga"
                   }

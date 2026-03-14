@@ -9,7 +9,7 @@ import type { PromptPair, QuizPromptParams } from "../types";
 /**
  * Génère le prompt système selon la direction
  */
-function getSystemPrompt(direction: "fr-to-es" | "es-to-fr"): string {
+function getSystemPrompt(direction: string): string {
   const isFrToEs = direction === "fr-to-es";
   const questionLang = isFrToEs ? "français" : "espagnol";
   const answerLang = isFrToEs ? "espagnol" : "français";

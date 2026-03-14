@@ -14,6 +14,7 @@ import {
   LogOut,
   Loader2,
 } from "lucide-react";
+import { Changelog } from "@/components/dashboard/Changelog";
 
 export function DashboardContent() {
   const { t, clearLocale } = useLocale();
@@ -145,6 +146,11 @@ export function DashboardContent() {
             </Link>
           );
         })}
+      </div>
+
+      {/* Changelog */}
+      <div className="mt-8">
+        <Changelog />
       </div>
 
       {/* Bouton déconnexion - Mobile uniquement */}

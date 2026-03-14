@@ -10,6 +10,7 @@ export default function HomePage() {
   const router = useRouter();
   const { setLocale } = useLocale();
   const [loadingPortal, setLoadingPortal] = useState<"fr" | "es" | null>(null);
+  const version = process.env.NEXT_PUBLIC_APP_VERSION || "1.0.0";
 
   const handleSelectPortal = async (locale: "fr" | "es") => {
     setLoadingPortal(locale);
@@ -107,7 +108,9 @@ export default function HomePage() {
 
       {/* Footer discret */}
       <footer className="py-6 text-center">
-        <p className="text-franol-muted text-xs">Fait par Nicolas</p>
+        <p className="text-franol-muted text-xs">
+          © Fait par Nicolas • v{version}
+        </p>
       </footer>
     </main>
   );

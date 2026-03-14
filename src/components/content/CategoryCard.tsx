@@ -1,16 +1,7 @@
 import { Tag, Pencil, Trash2 } from "lucide-react";
 import { useLocale } from "@/contexts/LocaleContext";
-
-interface Category {
-  id: string;
-  name_fr: string;
-  name_es: string;
-  type: "vocabulary" | "expression" | "conjugation";
-  color: string;
-  icon: string;
-  created_at?: string;
-  updated_at?: string;
-}
+import { getLangValue } from "@/lib/lang";
+import type { Category } from "@/types";
 
 interface CategoryCardProps {
   category: Category;
@@ -19,11 +10,11 @@ interface CategoryCardProps {
 }
 
 export function CategoryCard({ category, onEdit, onDelete }: CategoryCardProps) {
-  const { locale, t } = useLocale();
+  const { t, sourceLang, targetLang } = useLocale();
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString(locale === "fr" ? "fr-FR" : "es-ES", {
+    return date.toLocaleDateString(sourceLang === "fr" ? "fr-FR" : "es-ES", {
       year: "numeric",
       month: "short",
       day: "numeric",
@@ -55,11 +46,11 @@ export function CategoryCard({ category, onEdit, onDelete }: CategoryCardProps) 
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2">
               <p className="font-medium text-franol-text">
-                {locale === "fr" ? category.name_fr : category.name_es}
+                {getLangValue(category, "name", sourceLang)}
               </p>
               <span className="text-franol-muted">•</span>
               <p className="text-sm text-franol-muted">
-                {locale === "fr" ? category.name_es : category.name_fr}
+                {getLangValue(category, "name", targetLang)}
               </p>
             </div>
 
@@ -71,9 +62,9 @@ export function CategoryCard({ category, onEdit, onDelete }: CategoryCardProps) 
                   color: category.color,
                 }}
               >
-                {category.type === "vocabulary"
-                  ? t("content.types.categories")
-                  : t("content.types.contexts")}
+              {category.type === "expression"
+                  ? t("content.types.contexts")
+                  : t("content.types.categories")}
               </span>
             </div>
 

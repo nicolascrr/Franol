@@ -52,92 +52,53 @@ export async function getAIExplanation(
   return data.explanation;
 }
 
+/**
+ * Génère un quiz via l'API AI
+ * Note: Le streaming est désactivé côté serveur pour plus de fiabilité
+ */
 export async function generateAIQuizBatchWithStream(
   prompt: string,
   questionCount: number,
   batchIndex: number,
-  direction: "fr-to-es" | "es-to-fr",
+  /** Quiz direction in `{LangCode}-to-{LangCode}` format, e.g. "fr-to-es". */
+  direction: string,
   format: "qcm" | "translation" | "mixed",
   locale: "fr" | "es",
   previousWords: string[] = [],
   callbacks: StreamCallbacks = {},
 ): Promise<AIBatchResult> {
-  const { onProgress, onComplete, onError } = callbacks;
+  const { onComplete, onError } = callbacks;
 
   const response = await fetch("/api/ai/generate-batch", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       prompt,
-      questionCount, // Envoyer le nombre total de questions
+      questionCount,
       batchIndex,
       direction,
       format,
       locale,
       previousWords,
-      stream: true,
+      stream: false, // Désactivé pour plus de fiabilité
     }),
   });
 
   if (!response.ok) {
-    const errorMsg = "Failed to generate batch";
+    const errorMsg = `Failed to generate batch: ${response.status}`;
     onError?.(errorMsg);
     throw new Error(errorMsg);
   }
 
-  const reader = response.body?.getReader();
-  if (!reader) {
-    const errorMsg = "No response body";
+  // Handle non-streaming JSON response
+  const data: AIBatchResult = await response.json();
+
+  if (!data.questions || data.questions.length === 0) {
+    const errorMsg = "No questions returned from AI";
     onError?.(errorMsg);
     throw new Error(errorMsg);
   }
 
-  const decoder = new TextDecoder();
-  let result: AIBatchResult = { questions: [] };
-
-  try {
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-
-      const text = decoder.decode(value);
-      const lines = text.split("\n").filter((line) => line.trim() !== "");
-
-      for (const line of lines) {
-        if (line.startsWith("data: ")) {
-          const data = line.slice(6);
-          try {
-            const parsed = JSON.parse(data);
-
-            if (parsed.error) {
-              onError?.(parsed.error);
-              throw new Error(parsed.error);
-            }
-
-            if (parsed.delta) {
-              onProgress?.(parsed.delta);
-            }
-
-            if (parsed.done) {
-              result = {
-                questions: parsed.questions || [],
-                totalCount: parsed.totalCount,
-              };
-              onComplete?.(result);
-            }
-          } catch (e) {
-            if (e instanceof SyntaxError) {
-              // Ignore JSON parse errors for partial data
-            } else {
-              throw e;
-            }
-          }
-        }
-      }
-    }
-  } finally {
-    reader.releaseLock();
-  }
-
-  return result;
+  onComplete?.(data);
+  return data;
 }

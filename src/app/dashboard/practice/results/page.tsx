@@ -14,6 +14,8 @@ import {
   type QuizResult,
   type QuizQuestion,
 } from "@/lib/quiz";
+import { getLangValue } from "@/lib/lang";
+import { VocabularyModal } from "@/components/practice/VocabularyModal";
 import {
   Loader2,
   RotateCcw,
@@ -30,13 +32,7 @@ import {
   ChevronUp,
   Trash2,
 } from "lucide-react";
-
-interface Category {
-  id: string;
-  name_fr: string;
-  name_es: string;
-  type: string;
-}
+import type { Category } from "@/types";
 
 interface VocabToAdd {
   id: string;
@@ -52,81 +48,6 @@ interface VocabToAdd {
   groupFr: string;
   groupEs: string;
   isIrregular: boolean;
-}
-
-// Composant AliasInput (comme dans la page add)
-function AliasInput({
-  aliases,
-  onAdd,
-  onRemove,
-  placeholder,
-}: {
-  aliases: string[];
-  onAdd: (alias: string) => void;
-  onRemove: (index: number) => void;
-  placeholder: string;
-}) {
-  const [inputValue, setInputValue] = useState("");
-
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && inputValue.trim()) {
-      e.preventDefault();
-      onAdd(inputValue.trim());
-      setInputValue("");
-    }
-  };
-
-  const handleAdd = () => {
-    if (inputValue.trim()) {
-      onAdd(inputValue.trim());
-      setInputValue("");
-    }
-  };
-
-  return (
-    <div className="space-y-2">
-      <div className="flex gap-2">
-        <input
-          type="text"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder={placeholder}
-          className="flex-1 px-3 py-2 rounded-lg border border-franol-warm
-                     bg-white text-sm text-franol-text placeholder-franol-muted
-                     focus:border-orange-400 focus:outline-none transition-colors"
-        />
-        <button
-          type="button"
-          onClick={handleAdd}
-          className="px-2.5 py-2 rounded-lg bg-franol-sand text-franol-text
-                     hover:bg-franol-warm transition-colors"
-        >
-          <Plus size={16} />
-        </button>
-      </div>
-      {aliases.length > 0 && (
-        <div className="flex flex-wrap gap-1.5">
-          {aliases.map((alias, index) => (
-            <span
-              key={index}
-              className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full
-                         bg-franol-sand text-franol-text text-xs"
-            >
-              {alias}
-              <button
-                type="button"
-                onClick={() => onRemove(index)}
-                className="hover:text-red-500 transition-colors"
-              >
-                <X size={12} />
-              </button>
-            </span>
-          ))}
-        </div>
-      )}
-    </div>
-  );
 }
 
 /**
@@ -171,7 +92,7 @@ function guessCategory(
 }
 
 export default function ResultsPage() {
-  const { t, locale } = useLocale();
+  const { t, locale, sourceLang } = useLocale();
   const router = useRouter();
 
   const [result, setResult] = useState<QuizResult | null>(null);
@@ -551,431 +472,26 @@ export default function ResultsPage() {
   return (
     <div className="p-6 md:p-8 max-w-2xl mx-auto">
       {/* Vocabulary Addition Modal */}
-      {showVocabModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-start justify-center z-50 animate-fade-in overflow-y-auto">
-          <div className="bg-franol-cream w-full max-w-2xl min-h-screen sm:min-h-0 sm:my-8 sm:rounded-2xl sm:border sm:border-franol-warm animate-slide-up">
-            {/* Modal Header */}
-            <div className="sticky top-0 bg-gradient-to-r from-orange-50 to-amber-50 border-b border-orange-200 p-4 sm:rounded-t-2xl z-10">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-orange-100 rounded-lg">
-                    <BookPlus size={20} className="text-orange-600" />
-                  </div>
-                  <div>
-                    <h2 className="font-semibold text-franol-text">
-                      {t("practice.results.addVocab")}
-                    </h2>
-                    <p className="text-sm text-franol-muted">
-                      {vocabToAdd.length} {t("practice.results.wordsAvailable")}
-                    </p>
-                  </div>
-                </div>
-                <button
-                  onClick={() => setShowVocabModal(false)}
-                  className="p-2 text-franol-muted hover:text-franol-text
-                            hover:bg-orange-100 rounded-lg transition-colors"
-                >
-                  <X size={20} />
-                </button>
-              </div>
-
-              {/* Selection controls */}
-              <div className="flex items-center justify-between mt-3">
-                <span className="text-sm text-franol-muted">
-                  {selectedCount} {t("practice.results.selected")}
-                </span>
-                <div className="flex gap-2">
-                  <button
-                    onClick={handleSelectAll}
-                    className="text-xs px-3 py-1 rounded-lg bg-white border border-franol-warm
-                              hover:border-orange-400 transition-colors"
-                  >
-                    {t("practice.results.selectAll")}
-                  </button>
-                  <button
-                    onClick={handleDeselectAll}
-                    className="text-xs px-3 py-1 rounded-lg bg-white border border-franol-warm
-                              hover:border-orange-400 transition-colors"
-                  >
-                    {t("practice.results.deselectAll")}
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Modal Body - Vocabulary list */}
-            <div className="p-4 space-y-3">
-              {vocabToAdd.map((vocab) => (
-                <div
-                  key={vocab.id}
-                  className={`bg-white rounded-xl border transition-all ${
-                    vocab.selected
-                      ? "border-orange-300 shadow-sm"
-                      : "border-gray-200 opacity-60"
-                  }`}
-                >
-                  {/* Header row */}
-                  <div className="p-3 flex items-center gap-3">
-                    <input
-                      type="checkbox"
-                      checked={vocab.selected}
-                      onChange={() => handleToggleVocab(vocab.id)}
-                      className="w-5 h-5 rounded border-gray-300 text-orange-500
-                                focus:ring-orange-500 cursor-pointer shrink-0"
-                    />
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <span className="font-medium text-franol-text">
-                          {vocab.wordFr}
-                        </span>
-                        <span className="text-franol-muted">→</span>
-                        <span className="font-medium text-franol-text">
-                          {vocab.wordEs}
-                        </span>
-                        <span
-                          className={`text-xs px-2 py-0.5 rounded-full ${
-                            vocab.type === "expression"
-                              ? "bg-emerald-100 text-emerald-700"
-                              : vocab.type === "conjugation"
-                                ? "bg-purple-100 text-purple-700"
-                                : "bg-blue-100 text-blue-700"
-                          }`}
-                        >
-                          {vocab.type === "expression"
-                            ? t("add.tabs.expressions")
-                            : vocab.type === "conjugation"
-                              ? t("practice.modes.conjugation")
-                              : t("add.tabs.vocabulary")}
-                        </span>
-                      </div>
-                    </div>
-                    <button
-                      onClick={() =>
-                        setExpandedItem(
-                          expandedItem === vocab.id ? null : vocab.id,
-                        )
-                      }
-                      className="p-1.5 text-franol-muted hover:text-franol-text
-                                hover:bg-franol-sand rounded-lg transition-colors"
-                    >
-                      {expandedItem === vocab.id ? (
-                        <ChevronUp size={16} />
-                      ) : (
-                        <ChevronDown size={16} />
-                      )}
-                    </button>
-                    <button
-                      onClick={() => handleRemoveVocab(vocab.id)}
-                      className="p-1.5 text-franol-muted hover:text-red-500
-                                hover:bg-red-50 rounded-lg transition-colors"
-                    >
-                      <Trash2 size={16} />
-                    </button>
-                  </div>
-
-                  {/* Expanded details - Full add form */}
-                  {expandedItem === vocab.id && (
-                    <div className="px-4 pb-4 pt-0 space-y-4 border-t border-gray-100 animate-fade-in">
-                      {/* Type selector */}
-                      <div className="pt-3">
-                        <label className="block text-xs font-medium text-franol-muted mb-1.5">
-                          Type
-                        </label>
-                        <div className="flex gap-2">
-                          <button
-                            onClick={() =>
-                              handleUpdateVocabType(vocab.id, "vocabulary")
-                            }
-                            className={`flex-1 px-3 py-2 text-sm rounded-lg border transition-colors ${
-                              vocab.type === "vocabulary"
-                                ? "bg-blue-100 border-blue-300 text-blue-700 font-medium"
-                                : "bg-white border-franol-warm text-franol-muted hover:border-blue-200"
-                            }`}
-                          >
-                            {t("add.tabs.vocabulary")}
-                          </button>
-                          <button
-                            onClick={() =>
-                              handleUpdateVocabType(vocab.id, "expression")
-                            }
-                            className={`flex-1 px-3 py-2 text-sm rounded-lg border transition-colors ${
-                              vocab.type === "expression"
-                                ? "bg-emerald-100 border-emerald-300 text-emerald-700 font-medium"
-                                : "bg-white border-franol-warm text-franol-muted hover:border-emerald-200"
-                            }`}
-                          >
-                            {t("add.tabs.expressions")}
-                          </button>
-                          <button
-                            onClick={() =>
-                              handleUpdateVocabType(vocab.id, "conjugation")
-                            }
-                            className={`flex-1 px-3 py-2 text-sm rounded-lg border transition-colors ${
-                              vocab.type === "conjugation"
-                                ? "bg-purple-100 border-purple-300 text-purple-700 font-medium"
-                                : "bg-white border-franol-warm text-franol-muted hover:border-purple-200"
-                            }`}
-                          >
-                            {t("practice.modes.conjugation")}
-                          </button>
-                        </div>
-                      </div>
-
-                      {/* Editable word pair */}
-                      <div className="grid grid-cols-2 gap-3">
-                        <div>
-                          <label className="block text-xs font-medium text-franol-muted mb-1.5">
-                            {vocab.type === "conjugation"
-                              ? t("add.infinitiveFr")
-                              : t("add.wordFr")}
-                          </label>
-                          <input
-                            type="text"
-                            value={vocab.wordFr}
-                            onChange={(e) =>
-                              handleUpdateVocab(
-                                vocab.id,
-                                "wordFr",
-                                e.target.value,
-                              )
-                            }
-                            className="w-full px-3 py-2 rounded-lg border border-franol-warm
-                                      bg-white text-sm focus:border-orange-400 focus:outline-none"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-xs font-medium text-franol-muted mb-1.5">
-                            {vocab.type === "conjugation"
-                              ? t("add.infinitiveEs")
-                              : t("add.wordEs")}
-                          </label>
-                          <input
-                            type="text"
-                            value={vocab.wordEs}
-                            onChange={(e) =>
-                              handleUpdateVocab(
-                                vocab.id,
-                                "wordEs",
-                                e.target.value,
-                              )
-                            }
-                            className="w-full px-3 py-2 rounded-lg border border-franol-warm
-                                      bg-white text-sm focus:border-orange-400 focus:outline-none"
-                          />
-                        </div>
-                      </div>
-
-                      {/* Verb-specific fields: Group FR, Group ES, Irregular */}
-                      {vocab.type === "conjugation" && (
-                        <>
-                          <div className="grid grid-cols-2 gap-3">
-                            <div>
-                              <label className="block text-xs font-medium text-franol-muted mb-1.5">
-                                {t("add.groupFr")}
-                              </label>
-                              <select
-                                value={vocab.groupFr}
-                                onChange={(e) =>
-                                  handleUpdateVocab(
-                                    vocab.id,
-                                    "groupFr",
-                                    e.target.value,
-                                  )
-                                }
-                                className="w-full px-3 py-2 rounded-lg border border-franol-warm
-                                          bg-white text-sm focus:border-orange-400 focus:outline-none
-                                          cursor-pointer"
-                              >
-                                <option value="">{t("add.selectGroup")}</option>
-                                <option value="1">{t("add.group1")}</option>
-                                <option value="2">{t("add.group2")}</option>
-                                <option value="3">{t("add.group3")}</option>
-                              </select>
-                            </div>
-                            <div>
-                              <label className="block text-xs font-medium text-franol-muted mb-1.5">
-                                {t("add.groupEs")}
-                              </label>
-                              <select
-                                value={vocab.groupEs}
-                                onChange={(e) =>
-                                  handleUpdateVocab(
-                                    vocab.id,
-                                    "groupEs",
-                                    e.target.value,
-                                  )
-                                }
-                                className="w-full px-3 py-2 rounded-lg border border-franol-warm
-                                          bg-white text-sm focus:border-orange-400 focus:outline-none
-                                          cursor-pointer"
-                              >
-                                <option value="">{t("add.selectGroup")}</option>
-                                <option value="AR">-AR</option>
-                                <option value="ER">-ER</option>
-                                <option value="IR">-IR</option>
-                                <option value="irregular">{t("add.irregular")}</option>
-                              </select>
-                            </div>
-                          </div>
-
-                          <div className="flex items-center gap-3">
-                            <input
-                              type="checkbox"
-                              id={`irregular-${vocab.id}`}
-                              checked={vocab.isIrregular}
-                              onChange={(e) =>
-                                setVocabToAdd((prev) =>
-                                  prev.map((v) =>
-                                    v.id === vocab.id
-                                      ? { ...v, isIrregular: e.target.checked }
-                                      : v,
-                                  ),
-                                )
-                              }
-                              className="w-4 h-4 rounded border-gray-300 text-purple-500
-                                        focus:ring-purple-500 cursor-pointer"
-                            />
-                            <label
-                              htmlFor={`irregular-${vocab.id}`}
-                              className="text-xs font-medium text-franol-muted cursor-pointer"
-                            >
-                              {t("add.isIrregular")}
-                            </label>
-                          </div>
-                        </>
-                      )}
-
-                      {/* Category/Context (not for conjugation) */}
-                      {vocab.type !== "conjugation" && (
-                        <div>
-                          <label className="block text-xs font-medium text-franol-muted mb-1.5">
-                            {vocab.type === "expression"
-                              ? t("add.context")
-                              : t("add.category")}
-                          </label>
-                          <select
-                            value={vocab.category}
-                            onChange={(e) =>
-                              handleUpdateVocab(
-                                vocab.id,
-                                "category",
-                                e.target.value,
-                              )
-                            }
-                            className="w-full px-3 py-2 rounded-lg border border-franol-warm
-                                      bg-white text-sm focus:border-orange-400 focus:outline-none
-                                      cursor-pointer"
-                          >
-                            <option value="">
-                              {vocab.type === "expression"
-                                ? t("add.selectContext")
-                                : t("add.selectCategory")}
-                            </option>
-                            {(vocab.type === "expression"
-                              ? contexts
-                              : categories
-                            ).map((cat) => (
-                              <option key={cat.id} value={cat.id}>
-                                {locale === "fr" ? cat.name_fr : cat.name_es}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                      )}
-
-                      {/* Aliases FR */}
-                      <div>
-                        <label className="block text-xs font-medium text-franol-muted mb-1.5">
-                          {t("add.aliases")} (FR)
-                        </label>
-                        <AliasInput
-                          aliases={vocab.aliasesFr}
-                          onAdd={(alias) =>
-                            handleAddAlias(vocab.id, "aliasesFr", alias)
-                          }
-                          onRemove={(index) =>
-                            handleRemoveAlias(vocab.id, "aliasesFr", index)
-                          }
-                          placeholder={t("add.aliasPlaceholderVocab")}
-                        />
-                      </div>
-
-                      {/* Aliases ES */}
-                      <div>
-                        <label className="block text-xs font-medium text-franol-muted mb-1.5">
-                          {t("add.aliases")} (ES)
-                        </label>
-                        <AliasInput
-                          aliases={vocab.aliasesEs}
-                          onAdd={(alias) =>
-                            handleAddAlias(vocab.id, "aliasesEs", alias)
-                          }
-                          onRemove={(index) =>
-                            handleRemoveAlias(vocab.id, "aliasesEs", index)
-                          }
-                          placeholder={t("add.aliasPlaceholderVocab")}
-                        />
-                      </div>
-
-                      {/* Notes */}
-                      <div>
-                        <label className="block text-xs font-medium text-franol-muted mb-1.5">
-                          {t("add.notes")}
-                        </label>
-                        <input
-                          type="text"
-                          value={vocab.notes}
-                          onChange={(e) =>
-                            handleUpdateVocab(
-                              vocab.id,
-                              "notes",
-                              e.target.value,
-                            )
-                          }
-                          placeholder={t("add.notesPlaceholder")}
-                          className="w-full px-3 py-2 rounded-lg border border-franol-warm
-                                    bg-white text-sm focus:border-orange-400 focus:outline-none"
-                        />
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            {/* Modal Footer - Sticky add button */}
-            <div className="sticky bottom-0 bg-franol-cream border-t border-orange-200 p-4 sm:rounded-b-2xl">
-              {vocabAdded && (
-                <p className="text-center text-sm text-emerald-600 mb-3 animate-fade-in">
-                  <Check size={14} className="inline mr-1" />
-                  {t("practice.results.vocabAdded")}
-                </p>
-              )}
-              <button
-                onClick={handleAddVocabulary}
-                disabled={selectedCount === 0 || isAddingVocab}
-                className="w-full flex items-center justify-center gap-2 px-4 py-3
-                          bg-gradient-to-r from-orange-500 to-amber-500 text-white
-                          font-semibold rounded-xl hover:from-orange-600 hover:to-amber-600
-                          transition-all active:scale-[0.98]
-                          disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isAddingVocab ? (
-                  <>
-                    <Loader2 size={18} className="animate-spin" />
-                    {t("practice.results.adding")}
-                  </>
-                ) : (
-                  <>
-                    <Plus size={18} />
-                    {t("practice.results.addSelected")} ({selectedCount})
-                  </>
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <VocabularyModal
+        show={showVocabModal}
+        vocabToAdd={vocabToAdd}
+        categories={categories}
+        contexts={contexts}
+        sourceLang={sourceLang}
+        isAddingVocab={isAddingVocab}
+        vocabAdded={vocabAdded}
+        onClose={() => setShowVocabModal(false)}
+        onToggleVocab={handleToggleVocab}
+        onRemoveVocab={handleRemoveVocab}
+        onUpdateVocab={handleUpdateVocab}
+        onUpdateVocabType={handleUpdateVocabType}
+        onAddAlias={handleAddAlias}
+        onRemoveAlias={handleRemoveAlias}
+        onSelectAll={handleSelectAll}
+        onDeselectAll={handleDeselectAll}
+        onAddVocabulary={handleAddVocabulary}
+        setVocabToAdd={setVocabToAdd}
+      />
 
       {/* Header */}
       <header className="text-center mb-8 animate-fade-in">

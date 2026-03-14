@@ -9,7 +9,7 @@ import type { PromptPair, QuizPromptParams } from "../types";
 /**
  * Genera el prompt del sistema según la dirección
  */
-function getSystemPrompt(direction: "fr-to-es" | "es-to-fr"): string {
+function getSystemPrompt(direction: string): string {
   // Portail ES: l'utilisateur est argentin et apprend le français
   // es-to-fr = mot en espagnol → réponse en français (direction par défaut)
   // fr-to-es = mot en français → réponse en espagnol
