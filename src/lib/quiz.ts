@@ -1,9 +1,18 @@
-import { supabase } from "./supabase";
+import { createClient } from "./supabase/client";
+import {
+  getLangValue,
+  getLangArray,
+  fromQuizDirection,
+  type LangCode,
+  type QuizDirection,
+} from "./lang";
+
+const supabase = createClient();
 
 // Types
 export type QuizMode = "classic" | "expressions" | "conjugation" | "discovery" | "vocabulary";
 export type QuizFormat = "qcm" | "translation" | "mixed";
-export type QuizDirection = "fr-to-es" | "es-to-fr";
+export type { QuizDirection };
 
 export interface QuizConfig {
   mode: QuizMode;
@@ -80,7 +89,11 @@ export async function generateQuiz(
   config: QuizConfig,
 ): Promise<QuizQuestion[]> {
   const questions: QuizQuestion[] = [];
-  const isSourceFr = config.direction === "fr-to-es";
+  // Derive source/target language from the direction string.
+  // @migration: fromQuizDirection still works after schema normalisation because
+  // the direction string format (e.g. "fr-to-es") is independent of how fields
+  // are stored in the DB.
+  const { source, target } = fromQuizDirection(config.direction);
 
   try {
     if (config.mode === "classic") {
@@ -120,9 +133,9 @@ export async function generateQuiz(
         const question: QuizQuestion = {
           id: vocab.id,
           type: "vocabulary",
-          questionText: isSourceFr ? vocab.word_fr : vocab.word_es,
-          correctAnswer: isSourceFr ? vocab.word_es : vocab.word_fr,
-          aliases: isSourceFr ? vocab.aliases_es || [] : vocab.aliases_fr || [],
+          questionText: getLangValue(vocab, "word", source),
+          correctAnswer: getLangValue(vocab, "word", target),
+          aliases: getLangArray(vocab, "aliases", target),
           format,
         };
 
@@ -131,7 +144,7 @@ export async function generateQuiz(
             vocab.id,
             "vocabulary",
             config.category,
-            isSourceFr ? "es" : "fr",
+            target,
           );
         }
 
@@ -144,9 +157,9 @@ export async function generateQuiz(
         const question: QuizQuestion = {
           id: expr.id,
           type: "expression",
-          questionText: isSourceFr ? expr.expression_fr : expr.expression_es,
-          correctAnswer: isSourceFr ? expr.expression_es : expr.expression_fr,
-          aliases: isSourceFr ? expr.aliases_es || [] : expr.aliases_fr || [],
+          questionText: getLangValue(expr, "expression", source),
+          correctAnswer: getLangValue(expr, "expression", target),
+          aliases: getLangArray(expr, "aliases", target),
           format,
         };
 
@@ -155,7 +168,7 @@ export async function generateQuiz(
             expr.id,
             "expression",
             config.category,
-            isSourceFr ? "es" : "fr",
+            target,
           );
         }
 
@@ -180,9 +193,9 @@ export async function generateQuiz(
         const question: QuizQuestion = {
           id: vocab.id,
           type: "vocabulary",
-          questionText: isSourceFr ? vocab.word_fr : vocab.word_es,
-          correctAnswer: isSourceFr ? vocab.word_es : vocab.word_fr,
-          aliases: isSourceFr ? vocab.aliases_es || [] : vocab.aliases_fr || [],
+          questionText: getLangValue(vocab, "word", source),
+          correctAnswer: getLangValue(vocab, "word", target),
+          aliases: getLangArray(vocab, "aliases", target),
           format,
         };
 
@@ -191,7 +204,7 @@ export async function generateQuiz(
             vocab.id,
             "vocabulary",
             config.category,
-            isSourceFr ? "es" : "fr",
+            target,
           );
         }
 
@@ -216,9 +229,9 @@ export async function generateQuiz(
         const question: QuizQuestion = {
           id: expr.id,
           type: "expression",
-          questionText: isSourceFr ? expr.expression_fr : expr.expression_es,
-          correctAnswer: isSourceFr ? expr.expression_es : expr.expression_fr,
-          aliases: isSourceFr ? expr.aliases_es || [] : expr.aliases_fr || [],
+          questionText: getLangValue(expr, "expression", source),
+          correctAnswer: getLangValue(expr, "expression", target),
+          aliases: getLangArray(expr, "aliases", target),
           format,
         };
 
@@ -227,7 +240,7 @@ export async function generateQuiz(
             expr.id,
             "expression",
             config.category,
-            isSourceFr ? "es" : "fr",
+            target,
           );
         }
 
@@ -246,7 +259,8 @@ export async function generateQuiz(
         const format = getQuestionFormat(config.format);
         const tense = TENSES[Math.floor(Math.random() * TENSES.length)];
         const pronounIndex = Math.floor(Math.random() * PRONOUNS_ES.length);
-        const pronoun = isSourceFr
+        // Source language determines which pronoun set to show as the prompt
+        const pronoun = source === "fr"
           ? PRONOUNS_FR[pronounIndex]
           : PRONOUNS_ES[pronounIndex];
 
@@ -255,9 +269,9 @@ export async function generateQuiz(
         const question: QuizQuestion = {
           id: verb.id,
           type: "conjugation",
-          questionText: isSourceFr ? verb.infinitive_fr : verb.infinitive_es,
-          correctAnswer: isSourceFr ? verb.infinitive_es : verb.infinitive_fr, // Placeholder
-          aliases: isSourceFr ? verb.aliases_es || [] : verb.aliases_fr || [],
+          questionText: getLangValue(verb, "infinitive", source),
+          correctAnswer: getLangValue(verb, "infinitive", target),
+          aliases: getLangArray(verb, "aliases", target),
           format: "translation", // Conjugation is always typed
           tense,
           pronoun,
@@ -285,23 +299,24 @@ function getQuestionFormat(configFormat: QuizFormat): "qcm" | "translation" {
 }
 
 /**
- * Get wrong answers for QCM questions
+ * Get wrong answers for QCM questions.
+ *
+ * @migration
+ *   The `.select(field)` call still uses the flat column name. When moving to
+ *   a normalised schema, this query becomes a JOIN/filter on word_translations.
+ *   The extractField helper already uses getLangValue() so it won't need changing.
  */
 async function getWrongAnswers(
   excludeId: string,
   type: "vocabulary" | "expression",
   category: string | undefined,
-  language: "fr" | "es",
+  language: LangCode,
 ): Promise<string[]> {
   const table = type === "vocabulary" ? "vocabulary" : "expressions";
-  const field =
-    type === "vocabulary"
-      ? language === "es"
-        ? "word_es"
-        : "word_fr"
-      : language === "es"
-        ? "expression_es"
-        : "expression_fr";
+  const fieldBase = type === "vocabulary" ? "word" : "expression";
+  // Column name for the Supabase .select() call — this is the remaining
+  // direct coupling to the flat-column schema.
+  const field = `${fieldBase}_${language}`;
 
   let query = supabase.from(table).select(field).neq("id", excludeId).limit(20);
 
@@ -312,15 +327,8 @@ async function getWrongAnswers(
 
   const { data } = await query;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const extractField = (items: any[]): string[] => {
-    return items.map((item) => {
-      if (type === "vocabulary") {
-        return language === "es" ? item.word_es : item.word_fr;
-      }
-      return language === "es" ? item.expression_es : item.expression_fr;
-    });
-  };
+  const extractField = (items: object[]): string[] =>
+    items.map((item) => getLangValue(item, fieldBase, language));
 
   if (!data || data.length < 3) {
     // Fallback: get any items
@@ -330,11 +338,11 @@ async function getWrongAnswers(
       .neq("id", excludeId)
       .limit(20);
 
-    const items = getRandomItems(fallbackData || [], 3);
+    const items = getRandomItems((fallbackData || []) as object[], 3);
     return extractField(items);
   }
 
-  const items = getRandomItems(data, 3);
+  const items = getRandomItems((data || []) as object[], 3);
   return extractField(items);
 }
 

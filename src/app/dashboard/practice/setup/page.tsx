@@ -3,19 +3,16 @@
 import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useLocale } from "@/contexts/LocaleContext";
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/client";
+
+const supabase = createClient();
 import type { QuizMode, QuizFormat, QuizDirection, QuizConfig } from "@/lib/quiz";
+import type { Category } from "@/types";
+import { getLangValue } from "@/lib/lang";
 import { ArrowLeft, Play, Loader2 } from "lucide-react";
 
-interface Category {
-  id: string;
-  name_fr: string;
-  name_es: string;
-  type: string;
-}
-
 function SetupContent() {
-  const { t, locale } = useLocale();
+  const { t, locale, sourceLang } = useLocale();
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -202,7 +199,7 @@ function SetupContent() {
                 <option value="all">{t("practice.setup.allCategories")}</option>
                 {categories.map((cat) => (
                   <option key={cat.id} value={cat.id}>
-                    {locale === "fr" ? cat.name_fr : cat.name_es}
+                    {getLangValue(cat, "name", sourceLang)}
                   </option>
                 ))}
               </select>

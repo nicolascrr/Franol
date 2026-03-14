@@ -1,30 +1,16 @@
-"use client";
-
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useLocale } from "@/contexts/LocaleContext";
+import type { Metadata } from 'next';
 import { Navigation } from "@/components/ui/Navigation";
+
+export const metadata: Metadata = {
+  title: 'Dashboard - Frañol',
+  description: 'Tableau de bord pour gérer votre apprentissage bilingue',
+};
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { locale, isLoading } = useLocale();
-  const router = useRouter();
-
-  // Rediriger vers l'accueil si pas de locale (mais seulement après le chargement)
-  useEffect(() => {
-    if (!isLoading && !locale) {
-      router.push("/");
-    }
-  }, [locale, isLoading, router]);
-
-  // Ne rien afficher pendant le chargement ou si pas de locale
-  if (isLoading || !locale) {
-    return null;
-  }
-
   return (
     <div className="min-h-screen bg-franol-cream">
       <Navigation />

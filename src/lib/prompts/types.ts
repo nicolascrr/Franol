@@ -13,7 +13,12 @@ export interface QuizPromptParams {
   batchSize?: number;
   batchIndex?: number;
   previousWords?: string[];
-  direction?: "fr-to-es" | "es-to-fr";
+  /**
+   * Quiz direction in `{LangCode}-to-{LangCode}` format, e.g. "fr-to-es".
+   * The prompt builders (fr/quiz.ts, es/quiz.ts) interpret this string to
+   * determine which language is the question language vs. the answer language.
+   */
+  direction?: string;
 }
 
 export interface ExplanationPromptParams {
@@ -21,11 +26,6 @@ export interface ExplanationPromptParams {
   correctAnswer: string;
   userAnswer: string;
   wasCorrect: boolean;
-}
-
-export interface FunFactPromptParams {
-  factType: string;
-  excludeKeywords: string[];
 }
 
 export type Locale = "fr" | "es";

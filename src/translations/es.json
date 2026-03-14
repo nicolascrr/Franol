@@ -38,6 +38,16 @@
     "group3": "3er grupo",
     "irregular": "Irregular",
     "isIrregular": "Verbo irregular",
+    "isReflexiveFr": "Verbo reflexivo (francés)",
+    "isReflexiveEs": "Verbo reflexivo (español)",
+    "article": "Artículo",
+    "articleFr": "Artículo (francés)",
+    "articleEs": "Artículo (español)",
+    "selectArticle": "Sin artículo",
+    "articles": {
+      "fr": ["Le", "La", "L'", "Un", "Une", "Du", "Des"],
+      "es": ["El", "La", "Los", "Las", "Un", "Una", "Unos", "Unas"]
+    },
     "addVocabulary": "Añadir vocabulario",
     "addExpression": "Añadir expresión",
     "addVerb": "Añadir verbo",
@@ -52,7 +62,10 @@
     "categoryColor": "Color",
     "addCategory": "Añadir categoría",
     "addContext": "Añadir contexto",
-    "createCategory": "Crear una categoría"
+    "createCategory": "Crear una categoría",
+    "duplicateWarning": "Duplicado(s) detectado(s)",
+    "matchedIn": "Encontrado en",
+    "addAnyway": "Añadir de todos modos"
   },
   "content": {
     "title": "Gestionar contenido",
@@ -64,7 +77,8 @@
       "expressions": "Expresiones",
       "verbs": "Verbos",
       "categories": "Categorías",
-      "contexts": "Contextos"
+      "contexts": "Contextos",
+      "toVerify": "A verificar"
     },
     "allCategories": "Todas las categorías",
     "allContexts": "Todos los contextos",
@@ -91,7 +105,9 @@
     "confirmDeleteBtn": "Eliminar",
     "createdAt": "Creado el",
     "updatedAt": "Modificado el",
-    "editCategory": "Editar categoría"
+    "editCategory": "Editar categoría",
+    "verified": "Verificado",
+    "markVerified": "Marcar como verificado"
   },
   "dashboard": {
     "welcome": "¡Bienvenido de nuevo!",
@@ -106,7 +122,9 @@
     "practice": "Practicar",
     "practiceDesc": "Quiz y ejercicios",
     "viewLessons": "Ver lecciones",
-    "viewLessonsDesc": "Fichas y resúmenes"
+    "viewLessonsDesc": "Fichas y resúmenes",
+    "whatsNew": "Novedades",
+    "version": "Versión"
   },
   "nav": {
     "home": "Inicio",

@@ -1,74 +1,29 @@
 "use client";
 
-import { useState, useEffect, useMemo, KeyboardEvent } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useLocale } from "@/contexts/LocaleContext";
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/client";
+import { getLangValue } from "@/lib/lang";
+import { AliasInput } from "@/components/forms/AliasInput";
+import type {
+  Category,
+  VocabularyItem,
+  ExpressionItem,
+  ConjugationItem,
+  ContentItem,
+} from "@/types";
+import { ARTICLES_FR, ARTICLES_ES } from "@/lib/constants";
 import { ConfirmModal } from "@/components/ui/ConfirmModal";
 import { AdvancedFilters } from "@/components/content/AdvancedFilters";
 import { ContentCard } from "@/components/content/ContentCard";
 import { CategoryCard } from "@/components/content/CategoryCard";
+import { EditModal } from "@/components/content/EditModal";
 import { Search, X, Loader2, Plus } from "lucide-react";
+import type { LangCode } from "@/lib/lang";
 
-type ContentType =
-  | "vocabulary"
-  | "expressions"
-  | "verbs"
-  | "categories"
-  | "contexts";
+const supabase = createClient();
 
-interface Category {
-  id: string;
-  name_fr: string;
-  name_es: string;
-  type: "vocabulary" | "expression" | "conjugation";
-  color: string;
-  icon: string;
-  created_at?: string;
-  updated_at?: string;
-}
-
-interface VocabularyItem {
-  id: string;
-  word_fr: string;
-  word_es: string;
-  aliases_fr: string[];
-  aliases_es: string[];
-  category: string;
-  notes: string;
-  created_at: string;
-  updated_at: string;
-}
-
-interface ExpressionItem {
-  id: string;
-  expression_fr: string;
-  expression_es: string;
-  aliases_fr: string[];
-  aliases_es: string[];
-  context: string;
-  notes: string;
-  created_at: string;
-  updated_at: string;
-}
-
-interface ConjugationItem {
-  id: string;
-  infinitive_fr: string;
-  infinitive_es: string;
-  aliases_fr: string[];
-  aliases_es: string[];
-  group_fr: string;
-  group_es: string;
-  is_irregular: boolean;
-  notes: string;
-  created_at: string;
-  updated_at: string;
-}
-
-type ContentItem =
-  | (VocabularyItem & { type: "vocabulary" })
-  | (ExpressionItem & { type: "expression" })
-  | (ConjugationItem & { type: "conjugation" });
+type ContentType = "vocabulary" | "expressions" | "verbs" | "categories" | "contexts";
 
 type CategoryDisplayItem = Omit<Category, "type"> & {
   type: "category";
@@ -76,83 +31,8 @@ type CategoryDisplayItem = Omit<Category, "type"> & {
 };
 type DisplayItem = ContentItem | CategoryDisplayItem;
 
-// Composant pour les tags/chips d'aliases
-function AliasInput({
-  aliases,
-  onAdd,
-  onRemove,
-  placeholder,
-}: {
-  aliases: string[];
-  onAdd: (alias: string) => void;
-  onRemove: (index: number) => void;
-  placeholder: string;
-}) {
-  const [inputValue, setInputValue] = useState("");
-
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && inputValue.trim()) {
-      e.preventDefault();
-      onAdd(inputValue.trim());
-      setInputValue("");
-    }
-  };
-
-  const handleAdd = () => {
-    if (inputValue.trim()) {
-      onAdd(inputValue.trim());
-      setInputValue("");
-    }
-  };
-
-  return (
-    <div className="space-y-2">
-      <div className="flex gap-2">
-        <input
-          type="text"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder={placeholder}
-          className="flex-1 px-4 py-2 rounded-xl border-2 border-franol-warm
-                     bg-white text-franol-text placeholder-franol-muted
-                     focus:border-franol-accent-blue focus:outline-none transition-colors"
-        />
-        <button
-          type="button"
-          onClick={handleAdd}
-          className="px-3 py-2 rounded-xl bg-franol-sand text-franol-text
-                     hover:bg-franol-warm transition-colors"
-        >
-          <Plus size={20} />
-        </button>
-      </div>
-      {aliases.length > 0 && (
-        <div className="flex flex-wrap gap-2">
-          {aliases.map((alias, index) => (
-            <span
-              key={index}
-              className="inline-flex items-center gap-1 px-3 py-1 rounded-full
-                         bg-franol-sand text-franol-text text-sm"
-            >
-              {alias}
-              <button
-                type="button"
-                onClick={() => onRemove(index)}
-                className="hover:text-red-500 transition-colors"
-              >
-                <X size={14} />
-              </button>
-            </span>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
 export default function ContentPage() {
-  const { locale, t } = useLocale();
+  const { locale, sourceLang, t } = useLocale();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const [content, setContent] = useState<ContentItem[]>([]);
@@ -173,6 +53,7 @@ export default function ContentPage() {
   const [contextFilter, setContextFilter] = useState("");
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
+  const [showOnlyUnverified, setShowOnlyUnverified] = useState(false);
 
   // Modal édition contenu
   const [editingItem, setEditingItem] = useState<ContentItem | null>(null);
@@ -199,7 +80,9 @@ export default function ContentPage() {
 
   // Modal création de catégorie (depuis le formulaire d'édition)
   const [showNewCategoryModal, setShowNewCategoryModal] = useState(false);
-  const [newCategoryType, setNewCategoryType] = useState<"vocabulary" | "expression" | "conjugation">("vocabulary");
+  const [newCategoryType, setNewCategoryType] = useState<
+    "vocabulary" | "expression" | "conjugation"
+  >("vocabulary");
   const [isSavingNewCategory, setIsSavingNewCategory] = useState(false);
   const [newCategoryForm, setNewCategoryForm] = useState({
     name_fr: "",
@@ -211,6 +94,8 @@ export default function ContentPage() {
   const [editForm, setEditForm] = useState<{
     word_fr?: string;
     word_es?: string;
+    article_fr?: string;
+    article_es?: string;
     expression_fr?: string;
     expression_es?: string;
     infinitive_fr?: string;
@@ -222,6 +107,9 @@ export default function ContentPage() {
     group_fr?: string;
     group_es?: string;
     is_irregular?: boolean;
+    is_reflexive_fr?: boolean;
+    is_reflexive_es?: boolean;
+    verified?: boolean;
     notes: string;
   }>({
     aliases_fr: [],
@@ -334,6 +222,16 @@ export default function ContentPage() {
         if (item.type !== "expression") return false;
       }
 
+      // Filtre par statut de vérification
+      if (showOnlyUnverified) {
+        if (item.type === "vocabulary" && (item as VocabularyItem).verified)
+          return false;
+        if (item.type === "expression" && (item as ExpressionItem).verified)
+          return false;
+        if (item.type === "conjugation" && (item as ConjugationItem).verified)
+          return false;
+      }
+
       // Filtre par plage de dates
       if (dateFrom) {
         const itemDate = new Date(item.created_at);
@@ -390,6 +288,9 @@ export default function ContentPage() {
 
     // Ajouter les catégories/contextes
     const filteredCategories = categories.filter((cat) => {
+      // Ne pas afficher les catégories si on filtre par contenu non vérifié
+      if (showOnlyUnverified) return false;
+
       // Filtre par type sélectionné
       if (cat.type === "vocabulary" && !selectedTypes.has("categories"))
         return false;
@@ -452,6 +353,7 @@ export default function ContentPage() {
     dateFrom,
     dateTo,
     searchQuery,
+    showOnlyUnverified,
   ]);
 
   // Catégories pour les filtres
@@ -495,9 +397,12 @@ export default function ContentPage() {
       setEditForm({
         word_fr: v.word_fr,
         word_es: v.word_es,
+        article_fr: v.article_fr || "",
+        article_es: v.article_es || "",
         aliases_fr: v.aliases_fr || [],
         aliases_es: v.aliases_es || [],
         category: v.category || "",
+        verified: v.verified || false,
         notes: v.notes || "",
       });
     } else if (item.type === "expression") {
@@ -508,6 +413,7 @@ export default function ContentPage() {
         aliases_fr: e.aliases_fr || [],
         aliases_es: e.aliases_es || [],
         context: e.context || "",
+        verified: e.verified || false,
         notes: e.notes || "",
       });
     } else {
@@ -520,7 +426,10 @@ export default function ContentPage() {
         group_fr: c.group_fr || "",
         group_es: c.group_es || "",
         is_irregular: c.is_irregular || false,
-        category: (c as ConjugationItem & { category?: string }).category || "",
+        is_reflexive_fr: c.is_reflexive_fr || false,
+        is_reflexive_es: c.is_reflexive_es || false,
+        category: c.category || "",
+        verified: c.verified || false,
         notes: c.notes || "",
       });
     }
@@ -546,9 +455,12 @@ export default function ContentPage() {
         updateData = {
           word_fr: editForm.word_fr,
           word_es: editForm.word_es,
+          article_fr: editForm.article_fr || null,
+          article_es: editForm.article_es || null,
           aliases_fr: editForm.aliases_fr,
           aliases_es: editForm.aliases_es,
           category: editForm.category || null,
+          verified: editForm.verified || false,
           notes: editForm.notes || null,
           updated_at: now,
         };
@@ -560,6 +472,7 @@ export default function ContentPage() {
           aliases_fr: editForm.aliases_fr,
           aliases_es: editForm.aliases_es,
           context: editForm.context || null,
+          verified: editForm.verified || false,
           notes: editForm.notes || null,
           updated_at: now,
         };
@@ -573,7 +486,10 @@ export default function ContentPage() {
           group_fr: editForm.group_fr || null,
           group_es: editForm.group_es || null,
           is_irregular: editForm.is_irregular,
+          is_reflexive_fr: editForm.is_reflexive_fr || false,
+          is_reflexive_es: editForm.is_reflexive_es || false,
           category: editForm.category || null,
+          verified: editForm.verified || false,
           notes: editForm.notes || null,
           updated_at: now,
         };
@@ -688,7 +604,9 @@ export default function ContentPage() {
   };
 
   // Création de catégorie (depuis le formulaire d'édition)
-  const openNewCategoryModal = (type: "vocabulary" | "expression" | "conjugation") => {
+  const openNewCategoryModal = (
+    type: "vocabulary" | "expression" | "conjugation",
+  ) => {
     setNewCategoryType(type);
     setNewCategoryForm({ name_fr: "", name_es: "", color: "#10b981" });
     setShowNewCategoryModal(true);
@@ -862,6 +780,17 @@ export default function ContentPage() {
               </button>
             );
           })}
+          {/* To verify filter button */}
+          <button
+            onClick={() => setShowOnlyUnverified(!showOnlyUnverified)}
+            className={`px-4 py-2 rounded-xl font-medium text-sm whitespace-nowrap transition-all flex-shrink-0 ${
+              showOnlyUnverified
+                ? "bg-amber-500 text-white"
+                : "bg-white border border-franol-warm text-franol-muted hover:text-franol-text hover:border-amber-500"
+            }`}
+          >
+            {t("content.types.toVerify")}
+          </button>
         </div>
       </div>
 
@@ -953,471 +882,18 @@ export default function ContentPage() {
       </div>
 
       {/* Modal d'édition */}
-      {editingItem && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 overflow-y-auto">
-          <div className="bg-white rounded-2xl w-full max-w-lg my-8 max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between p-6 border-b border-franol-warm sticky top-0 bg-white">
-              <h2 className="text-xl font-display font-bold text-franol-text">
-                {t("content.editTitle")}
-              </h2>
-              <button
-                onClick={closeEditModal}
-                className="p-2 rounded-lg text-franol-muted hover:text-franol-text
-                           hover:bg-franol-sand transition-colors"
-              >
-                <X size={20} />
-              </button>
-            </div>
-
-            <div className="p-6 space-y-4">
-              {editingItem.type === "vocabulary" && (
-                <>
-                  <div>
-                    <label className="block text-sm font-medium text-franol-text mb-2">
-                      {t("add.wordFr")} *
-                    </label>
-                    <input
-                      type="text"
-                      value={editForm.word_fr || ""}
-                      onChange={(e) =>
-                        setEditForm({ ...editForm, word_fr: e.target.value })
-                      }
-                      className="w-full px-4 py-3 rounded-xl border-2 border-franol-warm
-                                 bg-white text-franol-text
-                                 focus:border-franol-accent-blue focus:outline-none transition-colors"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-franol-text mb-2">
-                      {t("add.wordEs")} *
-                    </label>
-                    <input
-                      type="text"
-                      value={editForm.word_es || ""}
-                      onChange={(e) =>
-                        setEditForm({ ...editForm, word_es: e.target.value })
-                      }
-                      className="w-full px-4 py-3 rounded-xl border-2 border-franol-warm
-                                 bg-white text-franol-text
-                                 focus:border-franol-accent-blue focus:outline-none transition-colors"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-franol-text mb-2">
-                      {t("add.aliases")}
-                    </label>
-                    {locale === "fr" ? (
-                      <AliasInput
-                        aliases={editForm.aliases_fr}
-                        onAdd={(alias) =>
-                          setEditForm({
-                            ...editForm,
-                            aliases_fr: [...editForm.aliases_fr, alias],
-                          })
-                        }
-                        onRemove={(index) =>
-                          setEditForm({
-                            ...editForm,
-                            aliases_fr: editForm.aliases_fr.filter(
-                              (_, i) => i !== index,
-                            ),
-                          })
-                        }
-                        placeholder={t("add.aliasPlaceholderVocab")}
-                      />
-                    ) : (
-                      <AliasInput
-                        aliases={editForm.aliases_es}
-                        onAdd={(alias) =>
-                          setEditForm({
-                            ...editForm,
-                            aliases_es: [...editForm.aliases_es, alias],
-                          })
-                        }
-                        onRemove={(index) =>
-                          setEditForm({
-                            ...editForm,
-                            aliases_es: editForm.aliases_es.filter(
-                              (_, i) => i !== index,
-                            ),
-                          })
-                        }
-                        placeholder={t("add.aliasPlaceholderVocab")}
-                      />
-                    )}
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-franol-text mb-2">
-                      {t("add.category")}
-                    </label>
-                    <div className="flex gap-2">
-                      <select
-                        value={editForm.category || ""}
-                        onChange={(e) =>
-                          setEditForm({ ...editForm, category: e.target.value })
-                        }
-                        className="flex-1 px-4 py-3 rounded-xl border-2 border-franol-warm
-                                   bg-white text-franol-text
-                                   focus:border-franol-accent-blue focus:outline-none transition-colors"
-                      >
-                        <option value="">{t("add.selectCategory")}</option>
-                        {vocabularyCategories.map((cat) => (
-                          <option key={cat.id} value={cat.id}>
-                            {locale === "fr" ? cat.name_fr : cat.name_es}
-                          </option>
-                        ))}
-                      </select>
-                      <button
-                        type="button"
-                        onClick={() => openNewCategoryModal("vocabulary")}
-                        className="px-3 py-3 rounded-xl bg-franol-accent-blue text-white
-                                   hover:bg-blue-700 transition-colors flex items-center justify-center"
-                        title={t("add.createCategory")}
-                      >
-                        <Plus size={20} />
-                      </button>
-                    </div>
-                  </div>
-                </>
-              )}
-
-              {editingItem.type === "expression" && (
-                <>
-                  <div>
-                    <label className="block text-sm font-medium text-franol-text mb-2">
-                      {t("add.expressionFr")} *
-                    </label>
-                    <input
-                      type="text"
-                      value={editForm.expression_fr || ""}
-                      onChange={(e) =>
-                        setEditForm({
-                          ...editForm,
-                          expression_fr: e.target.value,
-                        })
-                      }
-                      className="w-full px-4 py-3 rounded-xl border-2 border-franol-warm
-                                 bg-white text-franol-text
-                                 focus:border-franol-accent-blue focus:outline-none transition-colors"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-franol-text mb-2">
-                      {t("add.expressionEs")} *
-                    </label>
-                    <input
-                      type="text"
-                      value={editForm.expression_es || ""}
-                      onChange={(e) =>
-                        setEditForm({
-                          ...editForm,
-                          expression_es: e.target.value,
-                        })
-                      }
-                      className="w-full px-4 py-3 rounded-xl border-2 border-franol-warm
-                                 bg-white text-franol-text
-                                 focus:border-franol-accent-blue focus:outline-none transition-colors"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-franol-text mb-2">
-                      {t("add.aliases")}
-                    </label>
-                    {locale === "fr" ? (
-                      <AliasInput
-                        aliases={editForm.aliases_fr}
-                        onAdd={(alias) =>
-                          setEditForm({
-                            ...editForm,
-                            aliases_fr: [...editForm.aliases_fr, alias],
-                          })
-                        }
-                        onRemove={(index) =>
-                          setEditForm({
-                            ...editForm,
-                            aliases_fr: editForm.aliases_fr.filter(
-                              (_, i) => i !== index,
-                            ),
-                          })
-                        }
-                        placeholder={t("add.aliasPlaceholderExpr")}
-                      />
-                    ) : (
-                      <AliasInput
-                        aliases={editForm.aliases_es}
-                        onAdd={(alias) =>
-                          setEditForm({
-                            ...editForm,
-                            aliases_es: [...editForm.aliases_es, alias],
-                          })
-                        }
-                        onRemove={(index) =>
-                          setEditForm({
-                            ...editForm,
-                            aliases_es: editForm.aliases_es.filter(
-                              (_, i) => i !== index,
-                            ),
-                          })
-                        }
-                        placeholder={t("add.aliasPlaceholderExpr")}
-                      />
-                    )}
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-franol-text mb-2">
-                      {t("add.context")}
-                    </label>
-                    <div className="flex gap-2">
-                      <select
-                        value={editForm.context || ""}
-                        onChange={(e) =>
-                          setEditForm({ ...editForm, context: e.target.value })
-                        }
-                        className="flex-1 px-4 py-3 rounded-xl border-2 border-franol-warm
-                                   bg-white text-franol-text
-                                   focus:border-franol-accent-blue focus:outline-none transition-colors"
-                      >
-                        <option value="">{t("add.selectContext")}</option>
-                        {expressionContexts.map((cat) => (
-                          <option key={cat.id} value={cat.id}>
-                            {locale === "fr" ? cat.name_fr : cat.name_es}
-                          </option>
-                        ))}
-                      </select>
-                      <button
-                        type="button"
-                        onClick={() => openNewCategoryModal("expression")}
-                        className="px-3 py-3 rounded-xl bg-franol-accent-blue text-white
-                                   hover:bg-blue-700 transition-colors flex items-center justify-center"
-                        title={t("add.createCategory")}
-                      >
-                        <Plus size={20} />
-                      </button>
-                    </div>
-                  </div>
-                </>
-              )}
-
-              {editingItem.type === "conjugation" && (
-                <>
-                  <div>
-                    <label className="block text-sm font-medium text-franol-text mb-2">
-                      {t("add.infinitiveFr")} *
-                    </label>
-                    <input
-                      type="text"
-                      value={editForm.infinitive_fr || ""}
-                      onChange={(e) =>
-                        setEditForm({
-                          ...editForm,
-                          infinitive_fr: e.target.value,
-                        })
-                      }
-                      className="w-full px-4 py-3 rounded-xl border-2 border-franol-warm
-                                 bg-white text-franol-text
-                                 focus:border-franol-accent-blue focus:outline-none transition-colors"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-franol-text mb-2">
-                      {t("add.infinitiveEs")} *
-                    </label>
-                    <input
-                      type="text"
-                      value={editForm.infinitive_es || ""}
-                      onChange={(e) =>
-                        setEditForm({
-                          ...editForm,
-                          infinitive_es: e.target.value,
-                        })
-                      }
-                      className="w-full px-4 py-3 rounded-xl border-2 border-franol-warm
-                                 bg-white text-franol-text
-                                 focus:border-franol-accent-blue focus:outline-none transition-colors"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-franol-text mb-2">
-                      {t("add.aliases")}
-                    </label>
-                    {locale === "fr" ? (
-                      <AliasInput
-                        aliases={editForm.aliases_fr}
-                        onAdd={(alias) =>
-                          setEditForm({
-                            ...editForm,
-                            aliases_fr: [...editForm.aliases_fr, alias],
-                          })
-                        }
-                        onRemove={(index) =>
-                          setEditForm({
-                            ...editForm,
-                            aliases_fr: editForm.aliases_fr.filter(
-                              (_, i) => i !== index,
-                            ),
-                          })
-                        }
-                        placeholder={t("add.aliasPlaceholderVerb")}
-                      />
-                    ) : (
-                      <AliasInput
-                        aliases={editForm.aliases_es}
-                        onAdd={(alias) =>
-                          setEditForm({
-                            ...editForm,
-                            aliases_es: [...editForm.aliases_es, alias],
-                          })
-                        }
-                        onRemove={(index) =>
-                          setEditForm({
-                            ...editForm,
-                            aliases_es: editForm.aliases_es.filter(
-                              (_, i) => i !== index,
-                            ),
-                          })
-                        }
-                        placeholder={t("add.aliasPlaceholderVerb")}
-                      />
-                    )}
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-franol-text mb-2">
-                        {t("add.groupFr")}
-                      </label>
-                      <select
-                        value={editForm.group_fr || ""}
-                        onChange={(e) =>
-                          setEditForm({ ...editForm, group_fr: e.target.value })
-                        }
-                        className="w-full px-4 py-3 rounded-xl border-2 border-franol-warm
-                                   bg-white text-franol-text
-                                   focus:border-franol-accent-blue focus:outline-none transition-colors"
-                      >
-                        <option value="">{t("add.selectGroup")}</option>
-                        <option value="1">{t("add.group1")}</option>
-                        <option value="2">{t("add.group2")}</option>
-                        <option value="3">{t("add.group3")}</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-franol-text mb-2">
-                        {t("add.groupEs")}
-                      </label>
-                      <select
-                        value={editForm.group_es || ""}
-                        onChange={(e) =>
-                          setEditForm({ ...editForm, group_es: e.target.value })
-                        }
-                        className="w-full px-4 py-3 rounded-xl border-2 border-franol-warm
-                                   bg-white text-franol-text
-                                   focus:border-franol-accent-blue focus:outline-none transition-colors"
-                      >
-                        <option value="">{t("add.selectGroup")}</option>
-                        <option value="AR">-AR</option>
-                        <option value="ER">-ER</option>
-                        <option value="IR">-IR</option>
-                        <option value="irregular">{t("add.irregular")}</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <input
-                      type="checkbox"
-                      id="edit_is_irregular"
-                      checked={editForm.is_irregular || false}
-                      onChange={(e) =>
-                        setEditForm({
-                          ...editForm,
-                          is_irregular: e.target.checked,
-                        })
-                      }
-                      className="w-5 h-5 rounded border-2 border-franol-warm text-franol-accent-blue
-                                 focus:ring-franol-accent-blue focus:ring-offset-0"
-                    />
-                    <label
-                      htmlFor="edit_is_irregular"
-                      className="text-sm font-medium text-franol-text"
-                    >
-                      {t("add.isIrregular")}
-                    </label>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-franol-text mb-2">
-                      {t("add.category")}
-                    </label>
-                    <div className="flex gap-2">
-                      <select
-                        value={editForm.category || ""}
-                        onChange={(e) =>
-                          setEditForm({ ...editForm, category: e.target.value })
-                        }
-                        className="flex-1 px-4 py-3 rounded-xl border-2 border-franol-warm
-                                   bg-white text-franol-text
-                                   focus:border-franol-accent-blue focus:outline-none transition-colors"
-                      >
-                        <option value="">{t("add.selectCategory")}</option>
-                        {conjugationCategories.map((cat) => (
-                          <option key={cat.id} value={cat.id}>
-                            {locale === "fr" ? cat.name_fr : cat.name_es}
-                          </option>
-                        ))}
-                      </select>
-                      <button
-                        type="button"
-                        onClick={() => openNewCategoryModal("conjugation")}
-                        className="px-3 py-3 rounded-xl bg-franol-accent-blue text-white
-                                   hover:bg-blue-700 transition-colors flex items-center justify-center"
-                        title={t("add.createCategory")}
-                      >
-                        <Plus size={20} />
-                      </button>
-                    </div>
-                  </div>
-                </>
-              )}
-
-              <div>
-                <label className="block text-sm font-medium text-franol-text mb-2">
-                  {t("add.notes")}
-                </label>
-                <textarea
-                  value={editForm.notes || ""}
-                  onChange={(e) =>
-                    setEditForm({ ...editForm, notes: e.target.value })
-                  }
-                  rows={3}
-                  className="w-full px-4 py-3 rounded-xl border-2 border-franol-warm
-                             bg-white text-franol-text
-                             focus:border-franol-accent-blue focus:outline-none transition-colors resize-none"
-                  placeholder={t("add.notesPlaceholder")}
-                />
-              </div>
-            </div>
-
-            <div className="flex items-center justify-end gap-3 p-6 border-t border-franol-warm sticky bottom-0 bg-white">
-              <button
-                onClick={closeEditModal}
-                className="px-6 py-2 rounded-xl font-medium text-franol-muted
-                           hover:bg-franol-sand transition-colors"
-              >
-                {t("content.cancel")}
-              </button>
-              <button
-                onClick={handleSave}
-                disabled={isSaving}
-                className="px-6 py-2 rounded-xl font-medium text-white
-                           bg-franol-accent-blue hover:bg-blue-700
-                           disabled:opacity-50 disabled:cursor-not-allowed
-                           transition-colors flex items-center gap-2"
-              >
-                {isSaving && <Loader2 className="w-4 h-4 animate-spin" />}
-                {t("content.save")}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <EditModal
+        editingItem={editingItem}
+        editForm={editForm}
+        setEditForm={setEditForm}
+        vocabularyCategories={vocabularyCategories}
+        expressionContexts={expressionContexts}
+        sourceLang={sourceLang}
+        isSaving={isSaving}
+        onClose={closeEditModal}
+        onSave={handleSave}
+        onOpenNewCategoryModal={openNewCategoryModal}
+      />
 
       {/* Modal d'édition de catégorie */}
       {editingCategory && (

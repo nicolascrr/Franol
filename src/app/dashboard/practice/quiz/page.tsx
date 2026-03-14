@@ -11,6 +11,7 @@ import {
 } from "@/lib/quiz";
 import { generateAIQuizBatchWithStream, getAIExplanation } from "@/lib/openai";
 import { checkAnswer } from "@/lib/levenshtein";
+import { QuitModal } from "@/components/practice/QuitModal";
 import {
   Loader2,
   Check,
@@ -60,21 +61,27 @@ export default function QuizPage() {
   const funFactFetchedRef = useRef(false);
   const quizLoadedRef = useRef(false);
 
-  // Fetch a fun fact from the AI
+  // Fetch a fun fact from static data
   const fetchFunFact = async () => {
     setIsLoadingFact(true);
     try {
-      const params = new URLSearchParams();
-      if (seenKeywords.length > 0) {
-        params.set("exclude", seenKeywords.join(","));
-      }
-      params.set("locale", locale || "fr");
-      const response = await fetch(`/api/ai/fun-fact?${params.toString()}`);
-      if (response.ok) {
-        const data = await response.json();
-        setCurrentFact(data);
-        if (data.keyword) {
-          setSeenKeywords((prev) => [...prev.slice(-10), data.keyword]);
+      // Dynamically import facts based on locale
+      const facts = locale === "es" 
+        ? (await import("@/data/fun-facts-es.json")).default 
+        : (await import("@/data/fun-facts-fr.json")).default;
+      
+      // Filter out seen keywords
+      const availableFacts = seenKeywords.length > 0
+        ? facts.filter((f: { keyword: string }) => !seenKeywords.includes(f.keyword))
+        : facts;
+      
+      // Pick a random fact
+      if (availableFacts.length > 0) {
+        const randomIndex = Math.floor(Math.random() * availableFacts.length);
+        const selectedFact = availableFacts[randomIndex];
+        setCurrentFact(selectedFact);
+        if (selectedFact.keyword) {
+          setSeenKeywords((prev) => [...prev.slice(-10), selectedFact.keyword]);
         }
       }
     } catch (error) {
@@ -570,35 +577,11 @@ export default function QuizPage() {
 
   return (
     <div className="min-h-screen bg-franol-cream">
-      {/* Quit Modal */}
-      {showQuitModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 animate-fade-in">
-          <div className="bg-white rounded-2xl w-full max-w-md p-6 animate-slide-up">
-            <h3 className="text-lg font-semibold text-franol-text mb-2">
-              {t("practice.quiz.quit")}?
-            </h3>
-            <p className="text-franol-muted mb-6">
-              {t("practice.quiz.quitConfirm")}
-            </p>
-            <div className="flex gap-3">
-              <button
-                onClick={() => setShowQuitModal(false)}
-                className="flex-1 px-4 py-3 rounded-xl bg-franol-sand text-franol-text
-                          font-medium hover:bg-franol-warm transition-colors"
-              >
-                {t("practice.quiz.continue")}
-              </button>
-              <button
-                onClick={handleQuit}
-                className="flex-1 px-4 py-3 rounded-xl bg-red-500 text-white
-                          font-medium hover:bg-red-600 transition-colors"
-              >
-                {t("practice.quiz.quit")}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <QuitModal
+        show={showQuitModal}
+        onClose={() => setShowQuitModal(false)}
+        onConfirm={handleQuit}
+      />
 
       {/* Header */}
       <div className="sticky top-0 bg-franol-cream/95 backdrop-blur-sm border-b border-franol-warm z-40">

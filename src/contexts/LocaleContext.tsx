@@ -5,11 +5,17 @@ import React, {
   useContext,
   useState,
   useCallback,
+  useMemo,
   ReactNode,
   useEffect,
 } from "react";
 import fr from "@/translations/fr.json";
 import es from "@/translations/es.json";
+import {
+  type LangCode,
+  type LanguagePair,
+  LOCALE_TO_LANG_PAIR,
+} from "@/lib/lang";
 
 // Types
 export type Locale = "fr" | "es" | null;
@@ -22,10 +28,23 @@ interface LocaleContextType {
   t: (key: string) => string;
   clearLocale: () => void;
   isLoading: boolean;
+  /**
+   * User's native language (= UI locale when set).
+   * Use with getLangValue(item, "word", sourceLang) to read the source-side field.
+   */
+  sourceLang: LangCode;
+  /**
+   * Language the user is learning (always opposite of sourceLang for current pairs).
+   * Use with getLangValue(item, "word", targetLang) to read the target-side field.
+   */
+  targetLang: LangCode;
 }
 
 // Traductions
 const translations: Record<"fr" | "es", Translations> = { fr, es };
+
+// Fallback language pair when locale is null (not yet chosen)
+const FALLBACK_LANG_PAIR: LanguagePair = LOCALE_TO_LANG_PAIR["fr"];
 
 // Contexte
 const LocaleContext = createContext<LocaleContextType | undefined>(undefined);
@@ -81,10 +100,18 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
     [locale],
   );
 
+  const { source: sourceLang, target: targetLang } = useMemo<LanguagePair>(
+    () => (locale ? LOCALE_TO_LANG_PAIR[locale] : FALLBACK_LANG_PAIR),
+    [locale],
+  );
+
+  const contextValue = useMemo(
+    () => ({ locale, setLocale, t, clearLocale, isLoading, sourceLang, targetLang }),
+    [locale, setLocale, t, clearLocale, isLoading, sourceLang, targetLang],
+  );
+
   return (
-    <LocaleContext.Provider
-      value={{ locale, setLocale, t, clearLocale, isLoading }}
-    >
+    <LocaleContext.Provider value={contextValue}>
       {children}
     </LocaleContext.Provider>
   );

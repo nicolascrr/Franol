@@ -1,57 +1,7 @@
 import { BookOpen, MessageSquare, Languages, Pencil, Trash2 } from "lucide-react";
 import { useLocale } from "@/contexts/LocaleContext";
-
-interface Category {
-  id: string;
-  name_fr: string;
-  name_es: string;
-  type: "vocabulary" | "expression" | "conjugation";
-  color: string;
-  icon: string;
-}
-
-interface VocabularyItem {
-  id: string;
-  word_fr: string;
-  word_es: string;
-  aliases_fr: string[];
-  aliases_es: string[];
-  category: string;
-  notes: string;
-  created_at: string;
-  updated_at: string;
-}
-
-interface ExpressionItem {
-  id: string;
-  expression_fr: string;
-  expression_es: string;
-  aliases_fr: string[];
-  aliases_es: string[];
-  context: string;
-  notes: string;
-  created_at: string;
-  updated_at: string;
-}
-
-interface ConjugationItem {
-  id: string;
-  infinitive_fr: string;
-  infinitive_es: string;
-  aliases_fr: string[];
-  aliases_es: string[];
-  group_fr: string;
-  group_es: string;
-  is_irregular: boolean;
-  notes: string;
-  created_at: string;
-  updated_at: string;
-}
-
-type ContentItem =
-  | (VocabularyItem & { type: "vocabulary" })
-  | (ExpressionItem & { type: "expression" })
-  | (ConjugationItem & { type: "conjugation" });
+import { getLangValue } from "@/lib/lang";
+import type { Category, VocabularyItem, ExpressionItem, ConjugationItem, ContentItem } from "@/types";
 
 interface ContentCardProps {
   item: ContentItem;
@@ -68,11 +18,11 @@ export function ContentCard({
   onEdit,
   onDelete,
 }: ContentCardProps) {
-  const { locale, t } = useLocale();
+  const { t, sourceLang } = useLocale();
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString(locale === "fr" ? "fr-FR" : "es-ES", {
+    return date.toLocaleDateString(sourceLang === "fr" ? "fr-FR" : "es-ES", {
       year: "numeric",
       month: "short",
       day: "numeric",
@@ -144,7 +94,7 @@ export function ContentCard({
                     color: category.color,
                   }}
                 >
-                  {locale === "fr" ? category.name_fr : category.name_es}
+                  {getLangValue(category, "name", sourceLang)}
                 </span>
               )}
               {totalAliases > 0 && (
