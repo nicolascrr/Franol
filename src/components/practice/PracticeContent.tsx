@@ -7,12 +7,12 @@ import {
   Shuffle,
   MessageSquare,
   PenTool,
-  Sparkles,
   Lock,
   Compass,
   BookOpen,
   Play,
   X,
+  Settings,
 } from "lucide-react";
 
 type QuizMode =
@@ -31,7 +31,6 @@ interface ModeCard {
   color: string;
   bgColor: string;
   disabled?: boolean;
-  isAI?: boolean;
 }
 
 interface SavedQuiz {
@@ -129,13 +128,12 @@ export function PracticeContent() {
       icon: Compass,
       color: "text-orange-600",
       bgColor: "bg-orange-100",
-      isAI: true,
     },
     {
       mode: "custom",
       titleKey: "custom",
       descKey: "customDesc",
-      icon: Sparkles,
+      icon: Settings,
       color: "text-amber-600",
       bgColor: "bg-amber-100",
       disabled: true,
@@ -231,18 +229,6 @@ export function PracticeContent() {
                 >
                   <Lock size={12} />
                   {t("practice.modes.comingSoon")}
-                </div>
-              )}
-
-              {/* AI badge */}
-              {card.isAI && (
-                <div
-                  className="absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1
-                             bg-gradient-to-r from-orange-500 to-amber-500 rounded-full
-                             text-xs font-semibold text-white shadow-sm"
-                >
-                  <Sparkles size={12} />
-                  IA
                 </div>
               )}
 

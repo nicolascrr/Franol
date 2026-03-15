@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useCallback } from "react";
 import { ArrowRight } from "lucide-react";
 import factsFr from "@/data/fun-facts-fr.json";
@@ -12,27 +11,25 @@ interface FunFact {
 }
 
 const FACT_TYPE_LABELS_FR: Record<string, string> = {
-  faux_ami: "Faux ami",
-  mot_identique: "Mot identique",
-  mot_similaire: "Mot similaire",
-  intraduisible: "Intraduisible",
+  linguistique: "Linguistique",
   etymologie: "Étymologie",
   expression_idiomatique: "Expression",
+  rioplatense: "Espagnol rioplatense",
+  histoire: "Histoire",
+  apprentissage: "Le saviez-vous ?",
   culture: "Culture",
-  grammaire: "Grammaire",
-  prononciation: "Prononciation",
+  insolite: "Insolite",
 };
 
 const FACT_TYPE_LABELS_ES: Record<string, string> = {
-  faux_ami: "Falso amigo",
-  mot_identique: "Palabra idéntica",
-  mot_similaire: "Palabra similar",
-  intraduisible: "Intraducible",
+  linguistique: "Lingüística",
   etymologie: "Etimología",
   expression_idiomatique: "Expresión",
+  français_et_ses_variantes: "El francés y sus variantes",
+  histoire: "Historia",
+  apprentissage: "¿Sabías que?",
   culture: "Cultura",
-  grammaire: "Gramática",
-  prononciation: "Pronunciación",
+  insolite: "Insólito",
 };
 
 function pickRandom(facts: FunFact[], excludeKeyword?: string): FunFact {
@@ -67,11 +64,10 @@ export default function FunFacts({ locale }: FunFactsProps) {
         className="bg-white rounded-xl p-5 border border-franol-warm shadow-sm animate-fade-in"
       >
         <p className="text-xs font-medium text-franol-muted uppercase tracking-wide mb-3">
-          {labels[current.type] || "Info"}
+          {labels[current.type] ?? "Info"}
         </p>
         <p className="text-franol-text leading-relaxed">{current.fact}</p>
       </div>
-
       <button
         onClick={showNext}
         className="w-full mt-4 px-5 py-2.5 text-sm text-franol-muted

@@ -2,6 +2,7 @@
 
 import { useLocale } from "@/contexts/LocaleContext";
 import { AliasInput } from "@/components/forms/AliasInput";
+import { CustomDropdown } from "@/components/ui/CustomDropdown";
 import type { Category } from "@/types";
 import { getLangValue } from "@/lib/lang";
 import { Plus } from "lucide-react";
@@ -110,41 +111,31 @@ export function VerbForm({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-franol-text mb-2">
-              {t("add.groupFr")}
-            </label>
-            <select
-              value={form.group_fr}
-              onChange={(e) => onFieldChange("group_fr", e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border-2 border-franol-warm
-                          bg-white text-franol-text
-                          focus:border-franol-accent-blue focus:outline-none transition-colors"
-            >
-              <option value="">{t("add.selectGroup")}</option>
-              <option value="1">{t("add.group1")}</option>
-              <option value="2">{t("add.group2")}</option>
-              <option value="3">{t("add.group3")}</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-franol-text mb-2">
-              {t("add.groupEs")}
-            </label>
-            <select
-              value={form.group_es}
-              onChange={(e) => onFieldChange("group_es", e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border-2 border-franol-warm
-                          bg-white text-franol-text
-                          focus:border-franol-accent-blue focus:outline-none transition-colors"
-            >
-              <option value="">{t("add.selectGroup")}</option>
-              <option value="AR">-AR</option>
-              <option value="ER">-ER</option>
-              <option value="IR">-IR</option>
-              <option value="irregular">{t("add.irregular")}</option>
-            </select>
-          </div>
+          <CustomDropdown
+            value={form.group_fr}
+            onChange={(value) => onFieldChange("group_fr", value)}
+            options={[
+              { value: "", label: t("add.selectGroup") },
+              { value: "1", label: t("add.group1") },
+              { value: "2", label: t("add.group2") },
+              { value: "3", label: t("add.group3") },
+            ]}
+            placeholder={t("add.selectGroup")}
+            label={t("add.groupFr")}
+          />
+          <CustomDropdown
+            value={form.group_es}
+            onChange={(value) => onFieldChange("group_es", value)}
+            options={[
+              { value: "", label: t("add.selectGroup") },
+              { value: "AR", label: "-AR" },
+              { value: "ER", label: "-ER" },
+              { value: "IR", label: "-IR" },
+              { value: "irregular", label: t("add.irregular") },
+            ]}
+            placeholder={t("add.selectGroup")}
+            label={t("add.groupEs")}
+          />
         </div>
 
         <div className="flex items-center gap-3">
@@ -195,22 +186,22 @@ export function VerbForm({
             {t("add.category")}
           </label>
           <div className="flex gap-2">
-            <select
+            <CustomDropdown
               value={form.category}
-              onChange={(e) => onFieldChange("category", e.target.value)}
-              className="flex-1 px-4 py-3 rounded-xl border-2 border-franol-warm
-                          bg-white text-franol-text
-                          focus:border-franol-accent-blue focus:outline-none transition-colors"
-            >
-              <option value="">{t("add.selectCategory")}</option>
-              {categories
-                .filter((c) => c.type === "vocabulary")
-                .map((cat) => (
-                  <option key={cat.id} value={cat.id}>
-                    {getLangValue(cat, "name", sourceLang)}
-                  </option>
-                ))}
-            </select>
+              onChange={(value) => onFieldChange("category", value)}
+              options={[
+                { value: "", label: t("add.selectCategory") },
+                ...categories
+                  .filter((c) => c.type === "vocabulary")
+                  .map((cat) => ({
+                    value: cat.id,
+                    label: getLangValue(cat, "name", sourceLang),
+                    color: cat.color,
+                  })),
+              ]}
+              placeholder={t("add.selectCategory")}
+              className="flex-1"
+            />
             <button
               type="button"
               onClick={onOpenCategoryModal}

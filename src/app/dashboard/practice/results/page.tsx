@@ -26,7 +26,6 @@ import {
   Target,
   X,
   Check,
-  Sparkles,
   BookPlus,
   ChevronDown,
   ChevronUp,
@@ -496,17 +495,9 @@ export default function ResultsPage() {
       {/* Header */}
       <header className="text-center mb-8 animate-fade-in">
         <div className="text-6xl mb-4">{emoji}</div>
-        <div className="flex items-center justify-center gap-2">
-          <h1 className="text-3xl md:text-4xl font-display font-bold text-franol-text">
-            {t("practice.results.title")}
-          </h1>
-          {isDiscoveryMode && (
-            <div className="flex items-center gap-1 px-2 py-1 bg-gradient-to-r from-orange-500 to-amber-500 rounded-full text-xs font-semibold text-white">
-              <Sparkles size={12} />
-              IA
-            </div>
-          )}
-        </div>
+        <h1 className="text-3xl md:text-4xl font-display font-bold text-franol-text">
+          {t("practice.results.title")}
+        </h1>
       </header>
 
       {/* Score Card */}

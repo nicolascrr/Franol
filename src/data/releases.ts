@@ -17,7 +17,43 @@ export interface Release {
 
 export const releases: Release[] = [
   {
-    version: "1.0.1",
+    version: "1.1.1",
+    date: "2025-03-15",
+    features: [
+      {
+        title: "New date picker",
+        desc: "Improved date selection in filters with a custom calendar picker that matches Frañol's design",
+        type: "feature",
+      },
+      {
+        title: "Content display adapted to your language",
+        desc: "On the Spanish portal, words now appear as Spanish first then French. On the French portal, it's the opposite",
+        type: "improvement",
+      },
+      {
+        title: "Simpler discovery mode",
+        desc: "Removed AI labels and badges from discovery mode for a cleaner experience — explanations are still available on request",
+        type: "improvement",
+      },
+      {
+        title: "Better dropdown",
+        desc: "Dropdowns are now prettier and match Frañol's design. They include color badges from the corresponding categories and contexts",
+        type: "improvement",
+      },
+      {
+        title: "Better scrollbar styling",
+        desc: "Dropdowns now have a thinner, more elegant scrollbar",
+        type: "improvement",
+      },
+      {
+        title: "Improved fun facts",
+        desc: "The fun facts are now more engaging and varied",
+        type: "improvement",
+      },
+    ],
+  },
+  {
+    version: "1.1.0",
     date: "2025-03-14",
     features: [
       {

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useLocale } from "@/contexts/LocaleContext";
 import type { QuizDirection } from "@/lib/quiz";
-import { ArrowLeft, Loader2, Sparkles } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
 
 /**
  * Parse le prompt utilisateur pour extraire le nombre de questions et le thème nettoyé.
@@ -125,10 +125,6 @@ export function DiscoveryContent() {
           <h1 className="text-3xl md:text-4xl font-display font-bold text-franol-text">
             {t("practice.discovery.title")}
           </h1>
-          <div className="flex items-center gap-1.5 px-3 py-1 bg-gradient-to-r from-orange-500 to-amber-500 rounded-full text-xs font-semibold text-white">
-            <Sparkles size={12} />
-            IA
-          </div>
         </div>
         <p className="mt-2 text-franol-muted">
           {t("practice.discovery.subtitle")}
@@ -240,10 +236,7 @@ export function DiscoveryContent() {
               {t("practice.discovery.generating")}
             </>
           ) : (
-            <>
-              <Sparkles size={20} />
-              {t("practice.discovery.start")}
-            </>
+            t("practice.discovery.start")
           )}
         </button>
       </div>

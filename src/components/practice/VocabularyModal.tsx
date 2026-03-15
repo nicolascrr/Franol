@@ -14,6 +14,7 @@ import {
 import { useLocale } from "@/contexts/LocaleContext";
 import { getLangValue } from "@/lib/lang";
 import { AliasInput } from "@/components/forms/AliasInput";
+import { CustomDropdown } from "@/components/ui/CustomDropdown";
 import type { Category } from "@/types";
 import type { LangCode } from "@/lib/lang";
 
@@ -280,40 +281,38 @@ export function VocabularyModal({
                           <label className="block text-xs font-medium text-franol-muted mb-1.5">
                             {t("add.groupFr")}
                           </label>
-                          <select
+                          <CustomDropdown
                             value={vocab.groupFr}
-                            onChange={(e) =>
-                              onUpdateVocab(vocab.id, "groupFr", e.target.value)
+                            onChange={(value) =>
+                              onUpdateVocab(vocab.id, "groupFr", value)
                             }
-                            className="w-full px-3 py-2 rounded-lg border border-franol-warm
-                                      bg-white text-sm focus:border-orange-400 focus:outline-none
-                                      cursor-pointer"
-                          >
-                            <option value="">{t("add.selectGroup")}</option>
-                            <option value="1">{t("add.group1")}</option>
-                            <option value="2">{t("add.group2")}</option>
-                            <option value="3">{t("add.group3")}</option>
-                          </select>
+                            options={[
+                              { value: "", label: t("add.selectGroup") },
+                              { value: "1", label: t("add.group1") },
+                              { value: "2", label: t("add.group2") },
+                              { value: "3", label: t("add.group3") },
+                            ]}
+                            placeholder={t("add.selectGroup")}
+                          />
                         </div>
                         <div>
                           <label className="block text-xs font-medium text-franol-muted mb-1.5">
                             {t("add.groupEs")}
                           </label>
-                          <select
+                          <CustomDropdown
                             value={vocab.groupEs}
-                            onChange={(e) =>
-                              onUpdateVocab(vocab.id, "groupEs", e.target.value)
+                            onChange={(value) =>
+                              onUpdateVocab(vocab.id, "groupEs", value)
                             }
-                            className="w-full px-3 py-2 rounded-lg border border-franol-warm
-                                      bg-white text-sm focus:border-orange-400 focus:outline-none
-                                      cursor-pointer"
-                          >
-                            <option value="">{t("add.selectGroup")}</option>
-                            <option value="AR">-AR</option>
-                            <option value="ER">-ER</option>
-                            <option value="IR">-IR</option>
-                            <option value="irregular">{t("add.irregular")}</option>
-                          </select>
+                            options={[
+                              { value: "", label: t("add.selectGroup") },
+                              { value: "AR", label: "-AR" },
+                              { value: "ER", label: "-ER" },
+                              { value: "IR", label: "-IR" },
+                              { value: "irregular", label: t("add.irregular") },
+                            ]}
+                            placeholder={t("add.selectGroup")}
+                          />
                         </div>
                       </div>
 
@@ -351,29 +350,34 @@ export function VocabularyModal({
                           ? t("add.context")
                           : t("add.category")}
                       </label>
-                      <select
+                      <CustomDropdown
                         value={vocab.category}
-                        onChange={(e) =>
-                          onUpdateVocab(vocab.id, "category", e.target.value)
+                        onChange={(value) =>
+                          onUpdateVocab(vocab.id, "category", value)
                         }
-                        className="w-full px-3 py-2 rounded-lg border border-franol-warm
-                                  bg-white text-sm focus:border-orange-400 focus:outline-none
-                                  cursor-pointer"
-                      >
-                        <option value="">
-                          {vocab.type === "expression"
+                        options={[
+                          {
+                            value: "",
+                            label:
+                              vocab.type === "expression"
+                                ? t("add.selectContext")
+                                : t("add.selectCategory"),
+                          },
+                          ...(vocab.type === "expression"
+                            ? contexts
+                            : categories
+                          ).map((cat) => ({
+                            value: cat.id,
+                            label: getLangValue(cat, "name", sourceLang),
+                            color: cat.color,
+                          })),
+                        ]}
+                        placeholder={
+                          vocab.type === "expression"
                             ? t("add.selectContext")
-                            : t("add.selectCategory")}
-                        </option>
-                        {(vocab.type === "expression"
-                          ? contexts
-                          : categories
-                        ).map((cat) => (
-                          <option key={cat.id} value={cat.id}>
-                            {getLangValue(cat, "name", sourceLang)}
-                          </option>
-                        ))}
-                      </select>
+                            : t("add.selectCategory")
+                        }
+                      />
                     </div>
                   )}
 

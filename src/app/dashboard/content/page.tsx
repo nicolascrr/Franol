@@ -291,6 +291,9 @@ export default function ContentPage() {
       // Ne pas afficher les catégories si on filtre par contenu non vérifié
       if (showOnlyUnverified) return false;
 
+      // Ne pas afficher les catégories/contextes si un filtre par catégorie ou contexte est actif
+      if (categoryFilter || contextFilter) return false;
+
       // Filtre par type sélectionné
       if (cat.type === "vocabulary" && !selectedTypes.has("categories"))
         return false;
