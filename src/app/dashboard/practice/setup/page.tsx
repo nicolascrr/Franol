@@ -10,6 +10,7 @@ import type { QuizMode, QuizFormat, QuizDirection, QuizConfig } from "@/lib/quiz
 import type { Category } from "@/types";
 import { getLangValue } from "@/lib/lang";
 import { ArrowLeft, Play, Loader2 } from "lucide-react";
+import { CustomDropdown } from "@/components/ui/CustomDropdown";
 
 function SetupContent() {
   const { t, locale, sourceLang } = useLocale();
@@ -189,20 +190,19 @@ function SetupContent() {
                 {t("common.loading")}
               </div>
             ) : (
-              <select
+              <CustomDropdown
                 value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border-2 border-franol-warm
-                          bg-white text-franol-text focus:border-franol-accent-blue
-                          focus:outline-none transition-colors cursor-pointer"
-              >
-                <option value="all">{t("practice.setup.allCategories")}</option>
-                {categories.map((cat) => (
-                  <option key={cat.id} value={cat.id}>
-                    {getLangValue(cat, "name", sourceLang)}
-                  </option>
-                ))}
-              </select>
+                onChange={setCategory}
+                options={[
+                  { value: "all", label: t("practice.setup.allCategories") },
+                  ...categories.map((cat) => ({
+                    value: cat.id,
+                    label: getLangValue(cat, "name", sourceLang),
+                    color: cat.color,
+                  })),
+                ]}
+                placeholder={t("practice.setup.allCategories")}
+              />
             )}
           </div>
         )}

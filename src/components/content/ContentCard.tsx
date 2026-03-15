@@ -55,6 +55,11 @@ export function ContentCard({
   const aliases = getItemAliases();
   const totalAliases = aliases.fr.length + aliases.es.length;
 
+  // On ES portal: show Spanish first, then French
+  // On FR portal: show French first, then Spanish
+  const primaryLabel = sourceLang === "es" ? labels.es : labels.fr;
+  const secondaryLabel = sourceLang === "es" ? labels.fr : labels.es;
+
   return (
     <div
       className="bg-white rounded-xl p-4 border border-franol-warm
@@ -80,9 +85,9 @@ export function ContentCard({
           {/* Contenu */}
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2">
-              <p className="font-medium text-franol-text">{labels.fr}</p>
+              <p className="font-medium text-franol-text">{primaryLabel}</p>
               <span className="text-franol-muted">•</span>
-              <p className="text-franol-muted">{labels.es}</p>
+              <p className="text-franol-muted">{secondaryLabel}</p>
             </div>
 
             <div className="flex flex-wrap items-center gap-2 mt-1">

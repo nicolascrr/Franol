@@ -84,10 +84,10 @@
     "allContexts": "Tous les contextes",
     "filterByCategory": "Filtrer par catégorie",
     "filterByContext": "Filtrer par contexte",
-    "filterByDate": "Filtrer par date",
+    "filterByDateOfBeginning": "Filtrer par date de début",
+    "filterByDateOfEnding": "Filtrer par date de fin",
     "dateRange": "Plage de dates",
-    "from": "Du",
-    "to": "Au",
+    "dateSelecter": "Sélectionner une date",
     "applyFilters": "Appliquer",
     "clearFilters": "Effacer",
     "advancedFilters": "Filtres avancés",
@@ -162,7 +162,7 @@
       "conjugation": "Conjugaison",
       "conjugationDesc": "Verbes à conjuguer selon un temps donné",
       "discovery": "Découverte",
-      "discoveryDesc": "Nouveau contenu généré par l'IA",
+      "discoveryDesc": "Découvrez de nouveaux mots, verbes ou expressions",
       "custom": "Personnalisé",
       "customDesc": "Décrivez le quiz souhaité",
       "comingSoon": "Bientôt disponible"
@@ -174,7 +174,7 @@
     },
     "discovery": {
       "title": "Mode découverte",
-      "subtitle": "Décrivez le quiz que vous voulez, l'IA le génère",
+      "subtitle": "Décrivez le quiz que vous voulez",
       "describeQuiz": "Décrivez votre quiz",
       "promptPlaceholder": "Ex: 15 mots sur la cuisine, niveau difficile...",
       "promptRequired": "Veuillez décrire le quiz souhaité",
@@ -215,7 +215,9 @@
       "quit": "Quitter",
       "continue": "Continuer",
       "explain": "Expliquer",
-      "aiExplanation": "Explication IA"
+      "getExplanation": "Obtenir une explication",
+      "loadingExplanation": "Chargement...",
+      "explanation": "Explication"
     },
     "results": {
       "title": "Résultats",

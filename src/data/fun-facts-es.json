@@ -1,512 +1,1002 @@
 [
   {
-    "fact": "«Embarrassée» en francés no significa «embarazada»: significa «avergonzada». Un falso amigo clásico.",
-    "type": "faux_ami",
-    "keyword": "embarazada"
+    "fact": "El francés tiene 16 vocales distintas, incluyendo vocales nasales como «an», «in» y «on» que no existen en castellano.",
+    "type": "linguistique",
+    "keyword": "vocales nasales"
   },
   {
-    "fact": "«Actuel» en francés significa «actual», pero «actual» en español no se traduce igual. ¡Cuidado!",
-    "type": "faux_ami",
-    "keyword": "actual"
+    "fact": "La vocal francesa «u» no existe en castellano. Se produce redondeando los labios como para decir «o» pero intentando pronunciar «i».",
+    "type": "linguistique",
+    "keyword": "u francesa"
   },
   {
-    "fact": "«Large» en francés significa «ancho», no «largo». «Long» en francés = largo. ¡No te confundas!",
-    "type": "faux_ami",
-    "keyword": "largo"
+    "fact": "La «r» francesa se produce en el fondo de la garganta, cerca de donde se articula la «j» castellana. No es un sonido ajeno para un argentino:.",
+    "type": "linguistique",
+    "keyword": "r gutural francesa"
   },
   {
-    "fact": "«Sortie» en francés significa «salida», no tiene nada que ver con el éxito. ¡Falso amigo!",
-    "type": "faux_ami",
-    "keyword": "éxito"
+    "fact": "En francés, las letras finales de la mayoría de las palabras no se pronuncian. «Vous parlez» se lee «vu parlé».",
+    "type": "linguistique",
+    "keyword": "consonantes finales mudas"
   },
   {
-    "fact": "«Enregistrer» en francés significa «grabar/registrar», no «recordar». «Se souvenir» = recordar.",
-    "type": "faux_ami",
-    "keyword": "recordar"
+    "fact": "La liaison francesa es la pronunciación de una consonante final normalmente muda cuando la palabra siguiente empieza con vocal. «Les amis» no se dice «le ami» sino «lez-ami».",
+    "type": "linguistique",
+    "keyword": "liaison"
   },
   {
-    "fact": "«Molester» en francés tiene connotación grave. En español «molestar» es simplemente «déranger».",
-    "type": "faux_ami",
-    "keyword": "molestar"
+    "fact": "El francés tiene tres acentos escritos que cambian el sonido de la vocal: el acento agudo (é, sonido cerrado), el acento grave (è, sonido abierto) y el acento circunflejo (ê, también abierto).",
+    "type": "linguistique",
+    "keyword": "acentos escritos"
   },
   {
-    "fact": "«Assister» en francés significa «asistir/presenciar», no «ayudar». «Aider» = ayudar.",
-    "type": "faux_ami",
-    "keyword": "asistir"
+    "fact": "El sonido «ou» francés equivale exactamente a la «u» castellana. «Bonjour» se pronuncia «bon-zhur», con una «u» idéntica a la nuestra.",
+    "type": "linguistique",
+    "keyword": "ou francés"
   },
   {
-    "fact": "«Prétendre» en francés significa «pretender/fingir», distinto del español «pretender» (intentar).",
-    "type": "faux_ami",
-    "keyword": "pretender"
+    "fact": "En francés, el grupo «ch» se pronuncia siempre como la «sh» inglesa, nunca como la «ch» castellana de «chocolate». «Chat» (gato) suena «sha», «chemise» (camisa) suena «shemiz».",
+    "type": "linguistique",
+    "keyword": "ch francesa"
   },
   {
-    "fact": "«Constipé» en francés significa «estreñido», no «constipado». «Enrhumé» = resfriado.",
-    "type": "faux_ami",
-    "keyword": "constipado"
+    "fact": "El francés distingue sistemáticamente entre «e» cerrado (é), «e» abierto (è) y «e» mudo o caduc (sin acento). En «parler», la primera «e» es cerrada y la segunda es muda.",
+    "type": "linguistique",
+    "keyword": "e caduc"
   },
   {
-    "fact": "«Librairie» en francés es librería (no biblioteca). «Bibliothèque» = biblioteca. ¡Ojo!",
-    "type": "faux_ami",
-    "keyword": "librería"
+    "fact": "El ritmo del francés es silábico, igual que el castellano: cada sílaba dura aproximadamente lo mismo. Pero el francés agrupa sus sílabas en bloques rítmicos llamados «groupes.",
+    "type": "linguistique",
+    "keyword": "ritmo francés"
   },
   {
-    "fact": "«Sympathique» en francés significa «simpático» pero también «agradable». ¡Casi idéntico!",
-    "type": "faux_ami",
-    "keyword": "simpático"
+    "fact": "En francés, el acento tónico siempre cae en la última sílaba pronunciada del grupo rítmico. Esto es radicalmente diferente al castellano, donde el acento puede estar en cualquier sílaba.",
+    "type": "linguistique",
+    "keyword": "acento tónico"
   },
   {
-    "fact": "«Sensible» en francés significa «sensato/razonable» además de «sensible». El contexto importa.",
-    "type": "faux_ami",
-    "keyword": "sensible"
+    "fact": "El francés tiene una vocal llamada «eu» o «oeu» que tampoco existe en castellano. Se produce redondeando los labios para la «o» y pronunciando la «e» abierta al mismo tiempo.",
+    "type": "linguistique",
+    "keyword": "eu francesa"
   },
   {
-    "fact": "«Hotel», «animal», «hospital», «natural»: cientos de palabras son idénticas en español y francés.",
-    "type": "mot_identique",
-    "keyword": "hotel"
+    "fact": "La nasalización francesa funciona de forma opuesta a lo que un castellanohablante esperaría: la «n» o «m» que sigue a la vocal no se pronuncia, sino que nasaliza la vocal anterior.",
+    "type": "linguistique",
+    "keyword": "nasalización"
   },
   {
-    "fact": "Las palabras en «-ción» en español son «-tion» en francés: nación/nation, acción/action.",
-    "type": "mot_identique",
-    "keyword": "-ción/-tion"
+    "fact": "El francés distingue oralmente entre preguntas y afirmaciones casi exclusivamente por la entonación. «Tu viens» (venís) puede ser afirmación o pregunta según la curva melódica.",
+    "type": "linguistique",
+    "keyword": "entonación interrogativa"
   },
   {
-    "fact": "Los adjetivos en «-al» suelen ser idénticos: «final», «general», «original», «normal».",
-    "type": "mot_identique",
-    "keyword": "-al"
+    "fact": "El sonido «gn» del francés, presente en palabras como «montagne» (montaña) o «cognac», es idéntico a la «ñ» castellana. «Montagne» suena casi igual que «montaña».",
+    "type": "linguistique",
+    "keyword": "gn y ñ"
   },
   {
-    "fact": "«Taxi», «radio», «piano», «video»: estas palabras son universalmente iguales en ambos idiomas.",
-    "type": "mot_identique",
-    "keyword": "taxi"
+    "fact": "El francés usa ampliamente el sonido «j» suave, como el «y» porteño en palabras como «llamar» o «yo». «Journal» (diario), «jardin» (jardín), «je» (yo) usan exactamente ese sonido.",
+    "type": "linguistique",
+    "keyword": "j suave francesa"
   },
   {
-    "fact": "«Color» se escribe igual en español y francés. Solo cambia el artículo: «el color» / «la couleur».",
-    "type": "mot_identique",
-    "keyword": "color"
+    "fact": "El francés tiene dos formas de pronunciar el grupo «ill»: en «fille» (chica) suena «fi-y» con consonante palatal, y en «ville» (ciudad) la «ll» suena «l» simple.",
+    "type": "linguistique",
+    "keyword": "ill francés"
   },
   {
-    "fact": "Las palabras en «-tor» en latín dan «-teur» en francés y «-tor» en español: doctor/docteur.",
-    "type": "mot_identique",
-    "keyword": "doctor"
+    "fact": "En francés, el número de sílabas de una palabra puede cambiar según el contexto. «Maintenant» (ahora) tiene tres sílabas en el habla cuidada pero se reduce a dos en la conversación rápida.",
+    "type": "linguistique",
+    "keyword": "reducción silábica"
   },
   {
-    "fact": "«Capital» (ciudad capital) se escribe igual en español y francés. Misma letra, mismo significado.",
-    "type": "mot_identique",
-    "keyword": "capital"
+    "fact": "Las vocales orales francesas son mucho más tensas y cerradas que las castellanas. Cuando un argentino dice «é», los músculos de la boca están relajados.",
+    "type": "linguistique",
+    "keyword": "tensión articulatoria"
   },
   {
-    "fact": "«Popular», «tropical», «local»: los adjetivos en «-al» funcionan en los dos idiomas.",
-    "type": "mot_identique",
-    "keyword": "popular"
+    "fact": "El francés tiene grupos vocálicos escritos como «eau», «au» o «ai» que se pronuncian como vocales simples. «Eau» suena «o», «au» también suena «o» y «ai» suena «è».",
+    "type": "linguistique",
+    "keyword": "grupos vocálicos"
   },
   {
-    "fact": "«Millón», «billón» se parecen a «million», «billion». ¡Los grandes números son similares!",
-    "type": "mot_identique",
-    "keyword": "millón"
+    "fact": "La entonación del francés québécois es musicalmente muy diferente al francés de París. Los quebequenses alargan las vocales acentuadas y usan patrones melódicos que recuerdan.",
+    "type": "linguistique",
+    "keyword": "entonación quebequense"
   },
   {
-    "fact": "En ciencias, los términos son casi idénticos: «microscopio» / «microscope», «telescopio» / «télescope».",
-    "type": "mot_identique",
-    "keyword": "microscopio"
+    "fact": "El fonema «p» del francés no es aspirado, igual que en castellano. Cuando un anglohablante dice «Paris», produce una pequeña explosión de aire invisible.",
+    "type": "linguistique",
+    "keyword": "p no aspirada"
   },
   {
-    "fact": "«Libro» y «livre» vienen del latín «liber». ¡Solo las separa una letra!",
-    "type": "mot_similaire",
-    "keyword": "libro"
+    "fact": "En francés, las preguntas formales invierten el sujeto y el verbo: «Vous parlez» (hablás) se convierte en «Parlez-vous?» (¿hablás?).",
+    "type": "linguistique",
+    "keyword": "pregunta coloquial"
   },
   {
-    "fact": "«Padre» y «père», «madre» y «mère» vienen del latín «pater» y «mater». La familia habla latín.",
-    "type": "mot_similaire",
-    "keyword": "padre"
+    "fact": "El francés parisino moderno aspira poco y «come» muchas sílabas átonas. «Je ne sais pas» (no sé) se reduce en el habla rápida a algo como «chpako».",
+    "type": "linguistique",
+    "keyword": "contracción hablada"
   },
   {
-    "fact": "«Flor» y «fleur» vienen del latín «flos/floris». ¡La flora sigue hablando latín!",
-    "type": "mot_similaire",
-    "keyword": "flor"
-  },
-  {
-    "fact": "«Luna» y «lune» vienen del latín «luna». ¡La luna es casi idéntica en los dos idiomas!",
-    "type": "mot_similaire",
-    "keyword": "luna"
-  },
-  {
-    "fact": "«Mar» y «mer» vienen del latín «mare». Se dice «hacerse a la mar» / «prendre la mer».",
-    "type": "mot_similaire",
-    "keyword": "mar"
-  },
-  {
-    "fact": "«Amigo» y «ami» vienen del latín «amicus». ¡La amistad une los dos idiomas desde Roma!",
-    "type": "mot_similaire",
-    "keyword": "amigo"
-  },
-  {
-    "fact": "«Fuego» y «feu» vienen del latín «focus». En origen, focus designaba el hogar doméstico.",
-    "type": "mot_similaire",
-    "keyword": "fuego"
-  },
-  {
-    "fact": "«Agua» y «eau» vienen del latín «aqua». El francés perdió varias letras latinas en el camino.",
-    "type": "mot_similaire",
-    "keyword": "agua"
-  },
-  {
-    "fact": "«Noche» y «nuit» vienen del latín «nox/noctis». La noche tiene los mismos orígenes en ambos.",
-    "type": "mot_similaire",
-    "keyword": "noche"
-  },
-  {
-    "fact": "«Blanco» y «blanc» comparten la misma raíz germánica «blank», que significaba «brillante».",
-    "type": "mot_similaire",
-    "keyword": "blanco"
-  },
-  {
-    "fact": "«Madrugada»: ese momento entre la medianoche y el amanecer. En francés no hay una sola palabra.",
-    "type": "intraduisible",
-    "keyword": "madrugada"
-  },
-  {
-    "fact": "«Sobremesa»: el tiempo que se pasa en la mesa después de comer, charlando. Sin equivalente en francés.",
-    "type": "intraduisible",
-    "keyword": "sobremesa"
-  },
-  {
-    "fact": "«Estrenar»: usar o inaugurar algo por primera vez. El francés no tiene un verbo tan específico.",
-    "type": "intraduisible",
-    "keyword": "estrenar"
-  },
-  {
-    "fact": "«Vergüenza ajena»: vergüenza que sentís por otra persona. En francés se dice «honte par procuration».",
-    "type": "intraduisible",
-    "keyword": "vergüenza ajena"
-  },
-  {
-    "fact": "«Añoranza»: melancolía agridulce por algo perdido. Más intensa que «nostalgie» en francés.",
-    "type": "intraduisible",
-    "keyword": "añoranza"
-  },
-  {
-    "fact": "«Tutear»: hablarle a alguien de «tú». El francés no tiene un verbo específico para eso.",
-    "type": "intraduisible",
-    "keyword": "tutear"
-  },
-  {
-    "fact": "«Madrugar»: levantarse muy temprano. Un solo verbo para una idea que el francés expresa con frase.",
-    "type": "intraduisible",
-    "keyword": "madrugar"
-  },
-  {
-    "fact": "«Friolero»: alguien que siempre tiene frío. El francés tiene «frileux», ¡una excepción feliz!",
-    "type": "intraduisible",
-    "keyword": "friolero"
-  },
-  {
-    "fact": "«Alcool», «algèbre», «azur», «coton» en francés vienen del árabe, muchas veces vía el español.",
+    "fact": "«Chocolate» viene del náhuatl «xocolatl», la lengua de los aztecas. Pasó al español en el siglo XVI y desde España viajó al francés como «chocolat».",
     "type": "etymologie",
-    "keyword": "alcool"
+    "keyword": "chocolate"
   },
   {
-    "fact": "«Chocolat» (chocolate) viene del náhuatl «xocolatl» (agua amarga). ¡El español lo difundió al mundo!",
-    "type": "etymologie",
-    "keyword": "chocolat"
-  },
-  {
-    "fact": "«Tomate» viene del náhuatl «tomatl». Los aztecas nombraron esta fruta que hoy todo el mundo ama.",
-    "type": "etymologie",
-    "keyword": "tomate"
-  },
-  {
-    "fact": "«Tabac» (tabaco) en francés viene del español «tabaco», que a su vez viene del taíno caribeño.",
-    "type": "etymologie",
-    "keyword": "tabac"
-  },
-  {
-    "fact": "«Ouragan» (huracán) en francés viene del español «huracán», del taíno «hurakán» (dios del viento).",
-    "type": "etymologie",
-    "keyword": "ouragan"
-  },
-  {
-    "fact": "«Guacamole» viene del náhuatl: «ahuacatl» (palta) + «molli» (salsa). ¡Literalmente «salsa de palta»!",
-    "type": "etymologie",
-    "keyword": "guacamole"
-  },
-  {
-    "fact": "«Guérilla» en francés viene del español «guerra» + diminutivo. ¡Una pequeña guerra!",
-    "type": "etymologie",
-    "keyword": "guerrilla"
-  },
-  {
-    "fact": "«Bizarre» en francés vendría del español «bizarro» (valiente). ¡El sentido cambió totalmente!",
+    "fact": "«Bizarre» en francés viene del español «bizarro», que originalmente significaba «valiente» y «generoso». Cuando la palabra cruzó los Pirineos en el siglo XVI, su.",
     "type": "etymologie",
     "keyword": "bizarre"
   },
   {
-    "fact": "«Ranch» en francés viene del español «rancho». La influencia hispana es enorme en el vocabulario mundial.",
+    "fact": "«Moustique» (mosquito) en francés viene directamente del español «mosquito», diminutivo de «mosca». El francés adoptó la palabra entera con su diminutivo español incluido.",
     "type": "etymologie",
-    "keyword": "ranch"
+    "keyword": "moustique"
   },
   {
-    "fact": "«Mosquée» (mezquita) en francés viene del árabe «masjid», pasó por el español «mezquita».",
+    "fact": "«Guérilla» entró al francés desde el español «guerrilla» (diminutivo de «guerra») durante las guerras napoleónicas en España.",
+    "type": "etymologie",
+    "keyword": "guérilla"
+  },
+  {
+    "fact": "«Alcool» (alcohol) en francés viene del árabe «al-kuhl» a través del español «alcohol». La España medieval, puente entre el mundo árabe y Europa occidental durante ocho siglos,.",
+    "type": "etymologie",
+    "keyword": "alcool"
+  },
+  {
+    "fact": "«Camarade» en francés viene del español «camarada», que designaba a los soldados que compartían la misma habitación («cámara»). Ingresó al francés en el siglo XVI por contacto militar.",
+    "type": "etymologie",
+    "keyword": "camarade"
+  },
+  {
+    "fact": "«Vanille» (vainilla) en francés viene del español «vainilla», diminutivo de «vaina», por la forma de la cápsula. La vainilla es originaria de México y fueron los españoles quienes.",
+    "type": "etymologie",
+    "keyword": "vanille"
+  },
+  {
+    "fact": "«Lasso» en francés viene del español «lazo». Esta palabra, símbolo del gaucho argentino, viajó desde las pampas a través del rodeo americano hasta.",
+    "type": "etymologie",
+    "keyword": "lasso"
+  },
+  {
+    "fact": "«Canyon» en francés viene del español «cañón», aumentativo de «caño» (tubo). La metáfora visual es precisa: un cañón se parece a un enorme tubo excavado en la roca.",
+    "type": "etymologie",
+    "keyword": "canyon"
+  },
+  {
+    "fact": "«Créole» (criollo) en francés viene del español «criollo», que designaba a los españoles nacidos en América. En Argentina, «criollo» conserva el sentido de algo profundamente local y auténtico.",
+    "type": "etymologie",
+    "keyword": "créole"
+  },
+  {
+    "fact": "«Sieste» (siesta) en francés viene del español «siesta», a su vez del latín «sexta hora» (la sexta hora tras el amanecer, o sea el mediodía).",
+    "type": "etymologie",
+    "keyword": "sieste"
+  },
+  {
+    "fact": "«Guitare» en francés viene del español «guitarra», que a su vez viene del griego «kithara» a través del árabe «qitar». La etimología de este instrumento es un mapa de la.",
+    "type": "etymologie",
+    "keyword": "guitare"
+  },
+  {
+    "fact": "«Plaza» en francés es «place» y ambas palabras vienen del latín «platea». Son primas directas, nacidas de la misma raíz.",
+    "type": "etymologie",
+    "keyword": "plaza y place"
+  },
+  {
+    "fact": "«Caramel» en francés tiene exactamente el mismo origen que «caramelo» en español: el latín medieval «calamellus» (cañita de azúcar). Las dos palabras son gemelas lingüísticas.",
+    "type": "etymologie",
+    "keyword": "caramel"
+  },
+  {
+    "fact": "«Bonanza» es una palabra española que entró al inglés, al francés y a casi todos los idiomas del mundo. Significa «prosperidad» o «buena fortuna».",
+    "type": "etymologie",
+    "keyword": "bonanza"
+  },
+  {
+    "fact": "«Patio» en francés viene del español «patio», que a su vez proviene de la arquitectura hispano-morisca. El concepto del espacio interior descubierto como núcleo de la.",
+    "type": "etymologie",
+    "keyword": "patio"
+  },
+  {
+    "fact": "«Savane» (sabana) en francés viene del español «sabana», que a su vez viene de una lengua indígena del Caribe. El español colonial fue el puente por el que el vocabulario.",
+    "type": "etymologie",
+    "keyword": "savane"
+  },
+  {
+    "fact": "«Tabac» (tabaco) en francés viene del español «tabaco», tomado del taíno, lengua del Caribe. Los primeros exploradores españoles adoptaron el nombre.",
+    "type": "etymologie",
+    "keyword": "tabac"
+  },
+  {
+    "fact": "«Haricot» (poroto) en francés viene probablemente del náhuatl «ayacotl» a través del español. El poroto, originario de América, llegó a Europa en el siglo XVI gracias a la expansión española.",
+    "type": "etymologie",
+    "keyword": "haricot"
+  },
+  {
+    "fact": "«Tomate» en francés viene del español «tomate», a su vez del náhuatl «tomatl». El castellano fue el intermediario entre las civilizaciones indígenas americanas y la mesa europea.",
+    "type": "etymologie",
+    "keyword": "tomate"
+  },
+  {
+    "fact": "«Alcool» (alcohol) y «algèbre» (álgebra) y «algorithme» (algoritmo) en francés comparten el mismo origen: son palabras árabes que llegaron al francés a través del español medieval.",
+    "type": "etymologie",
+    "keyword": "palabras árabes"
+  },
+  {
+    "fact": "«Maïs» (maíz) en francés viene del español «maíz», tomado del taíno «mahiz». El maíz es originario de Mesoamérica y su nombre viajó con la planta: de las lenguas indígenas.",
+    "type": "etymologie",
+    "keyword": "maïs"
+  },
+  {
+    "fact": "«Embargo» en francés, inglés, alemán y casi todos los idiomas del mundo viene del español «embargar» (bloquear, detener), a su vez del latín tardío.",
+    "type": "etymologie",
+    "keyword": "embargo"
+  },
+  {
+    "fact": "«Gauche» en francés significa «izquierda» pero también «torpe» y «desgarbado». En castellano, «zurdo» tiene a veces connotación de astucia.",
+    "type": "etymologie",
+    "keyword": "gauche"
+  },
+  {
+    "fact": "«Mosquée» (mezquita) en francés viene del español «mezquita», que a su vez viene del árabe «masjid». España fue el filtro principal por el que la arquitectura y el.",
     "type": "etymologie",
     "keyword": "mosquée"
   },
   {
-    "fact": "«Avocat» (palta) en francés viene del náhuatl «ahuacatl». Los españoles lo transformaron en «aguacate».",
-    "type": "etymologie",
-    "keyword": "avocat"
-  },
-  {
-    "fact": "«Cannibal» en francés viene del español «caníbal», que deriva de la palabra taína para los caribes.",
-    "type": "etymologie",
-    "keyword": "cannibal"
-  },
-  {
-    "fact": "«Costar un ojo de la cara» = coûter les yeux de la tête en francés. ¡La misma idea, distintas palabras!",
+    "fact": "El equivalente francés de «tener fiaca» es «avoir la flemme». «Flemme» viene del griego «phlegma» (flema, humor corporal asociado a la lentitud).",
     "type": "expression_idiomatique",
-    "keyword": "ojo de la cara"
+    "keyword": "avoir la flemme"
   },
   {
-    "fact": "«Llueve a cántaros» = «il pleut des cordes» (llueve cuerdas) en francés. Cada idioma usa su imagen.",
+    "fact": "«Coûter les yeux de la tête» (costar los ojos de la cara) es la versión francesa de «costar un ojo de la cara». La hipérbole es idéntica: un precio tan absurdamente alto que.",
     "type": "expression_idiomatique",
-    "keyword": "llueve a cántaros"
+    "keyword": "coûter les yeux"
   },
   {
-    "fact": "«Estar en las nubes» = «être dans la lune» (estar en la luna) en francés. ¡Misma idea, distinto astro!",
+    "fact": "«Entre le marteau et l'enclume» (entre el martillo y el yunque) es el equivalente de «estar entre la espada y la pared». El español elige armas, el francés elige herramientas.",
     "type": "expression_idiomatique",
-    "keyword": "estar en las nubes"
+    "keyword": "marteau et enclume"
   },
   {
-    "fact": "«Matar dos pájaros de un tiro» = «tuer deux oiseaux d'une pierre» en francés. ¡Casi idéntica!",
+    "fact": "«Avoir le cafard» significa estar deprimido, melancólico, con el ánimo por el suelo. «Cafard» es la cucaracha en francés.",
     "type": "expression_idiomatique",
-    "keyword": "dos pájaros"
+    "keyword": "avoir le cafard"
   },
   {
-    "fact": "«A buen entendedor, pocas palabras» = «à bon entendeur, salut» en francés. Misma sabiduría.",
+    "fact": "«Avoir du pain sur la planche» significa tener mucho trabajo por delante. Literalmente «tener pan en la tabla», imagen de un panadero con masa por trabajar.",
     "type": "expression_idiomatique",
-    "keyword": "buen entendedor"
+    "keyword": "pain sur la planche"
   },
   {
-    "fact": "«Dejar plantado» = «poser un lapin» (poner un conejo) en francés. Los idiomas usan animales distintos.",
+    "fact": "«Chercher midi à quatorze heures» (buscar el mediodía a las dos de la tarde) significa complicar innecesariamente algo simple. Es el equivalente de «buscarle la quinta pata al gato».",
     "type": "expression_idiomatique",
-    "keyword": "dejar plantado"
+    "keyword": "chercher midi"
   },
   {
-    "fact": "«Tener pájaros en la cabeza» = «avoir des oiseaux dans la tête» en francés. ¡Idéntica expresión!",
+    "fact": "«Poser un lapin» literalmente significa «poner un conejo» pero quiere decir dejar plantado a alguien, no aparecer a una cita. No tiene equivalente directo en castellano rioplatense.",
     "type": "expression_idiomatique",
-    "keyword": "pájaros en la cabeza"
+    "keyword": "poser un lapin"
   },
   {
-    "fact": "«No hay mal que por bien no venga» = «à quelque chose malheur est bon» en francés. Proverbio universal.",
+    "fact": "«Casser les pieds» (romper los pies) significa molestar, irritar, agotar la paciencia de alguien. Su equivalente argentino sería «romper las pelotas» o «joder» con un registro más elevado.",
     "type": "expression_idiomatique",
-    "keyword": "no hay mal"
+    "keyword": "casser les pieds"
   },
   {
-    "fact": "«Avoir le cafard» (tener la cucaracha) significa estar deprimido en francés. ¡Muy coloquial!",
+    "fact": "«C'est la croix et la bannière» (es la cruz y el estandarte) significa que algo es enormemente complicado de lograr. Viene de la dificultad de organizar una.",
     "type": "expression_idiomatique",
-    "keyword": "cafard"
+    "keyword": "croix et bannière"
   },
   {
-    "fact": "«Estar hecho polvo» = «être à plat» o «être vidé» en francés. El agotamiento se dice distinto.",
+    "fact": "«Tomber dans les pommes» (caer en las manzanas) significa desmayarse. No existe una explicación etimológica definitiva: algunos creen que «pommes» es una deformación de.",
     "type": "expression_idiomatique",
-    "keyword": "hecho polvo"
+    "keyword": "tomber dans les pommes"
   },
   {
-    "fact": "«Meterse en camisa de once varas» = «chercher des ennuis» en francés. Buscarse problemas sin necesidad.",
+    "fact": "«Appeler un chat un chat» (llamar a un gato un gato) equivale exactamente al argentino «llamar las cosas por su nombre» o «hablar sin pelos en la lengua». Las dos expresiones valoran la franqueza.",
     "type": "expression_idiomatique",
-    "keyword": "camisa de once varas"
+    "keyword": "appeler un chat un chat"
   },
   {
-    "fact": "«Sauter du coq à l'âne» (saltar del gallo al asno) = cambiar de tema abruptamente en francés.",
+    "fact": "«Avoir le cœur sur la main» (tener el corazón en la mano) describe a alguien generoso y abierto emocionalmente. En argentino, la persona equivalente «tiene buena onda» o «es re copada».",
     "type": "expression_idiomatique",
-    "keyword": "coq à l'âne"
+    "keyword": "cœur sur la main"
   },
   {
-    "fact": "En Argentina, el «vos» reemplaza al «tú». Es el «voseo», propio del Río de la Plata.",
-    "type": "culture",
-    "keyword": "voseo"
+    "fact": "«Ça ne casse pas trois pattes à un canard» (no le rompe tres patas a un pato) significa que algo no es para tanto, que no es impresionante. Es el equivalente de «no es la gran cosa».",
+    "type": "expression_idiomatique",
+    "keyword": "trois pattes canard"
   },
   {
-    "fact": "La Académie française existe desde 1635. La Real Academia Española fue fundada en 1713.",
-    "type": "culture",
-    "keyword": "académie"
+    "fact": "«Avoir d'autres chats à fouetter» (tener otros gatos que azotar) equivale a «tener cosas más importantes que hacer». En argentino, «tener mejores cosas en qué gastar el tiempo».",
+    "type": "expression_idiomatique",
+    "keyword": "autres chats à fouetter"
   },
   {
-    "fact": "El español lo hablan más de 500 millones de personas. El francés, aproximadamente 320 millones.",
-    "type": "culture",
-    "keyword": "locuteurs"
+    "fact": "«Mettre son grain de sel» (poner su granito de sal) significa intervenir en una conversación sin haber sido invitado a hacerlo, dar su opinión sin que nadie la pidiera.",
+    "type": "expression_idiomatique",
+    "keyword": "grain de sel"
   },
   {
-    "fact": "El «¡» y el «¿» en español anticipan desde el principio si la frase es exclamativa o interrogativa.",
-    "type": "culture",
-    "keyword": "ponctuation"
+    "fact": "«Revenons à nos moutons» (volvamos a nuestras ovejas) significa retomar el tema principal después de una digresión. Viene de una farsa francesa del siglo XV en la que un juicio.",
+    "type": "expression_idiomatique",
+    "keyword": "revenons à nos moutons"
   },
   {
-    "fact": "En Argentina, el mate es una bebida nacional con yerba. ¡Un ritual cotidiano sin equivalente en francés!",
-    "type": "culture",
-    "keyword": "mate"
+    "fact": "«Faire la grasse matinée» (hacer la mañana grasosa) significa quedarse durmiendo hasta tarde el fin de semana. En argentino, «quedarse en la cama hasta tarde» o «dormir hasta las doñas».",
+    "type": "expression_idiomatique",
+    "keyword": "grasse matinée"
   },
   {
-    "fact": "El español fue muy influenciado por el árabe durante 800 años de presencia en la Península Ibérica.",
-    "type": "culture",
-    "keyword": "arabe"
+    "fact": "«Ne pas y aller par quatre chemins» (no ir por cuatro caminos) significa ser directo, decir las cosas sin rodeos. Su equivalente argentino sería «ir al grano» o «no andar con vueltas».",
+    "type": "expression_idiomatique",
+    "keyword": "quatre chemins"
   },
   {
-    "fact": "En Argentina, «che» es una interjección universal, como «hé» o «dis donc» en francés.",
-    "type": "culture",
-    "keyword": "che"
+    "fact": "«Perdre la boule» (perder la bola) significa perder la razón, enloquecer. En argentino, «perder la cabeza» o «desvariar». La «boule» en francés coloquial es la cabeza, igual que en el lunfardo «la bocha».",
+    "type": "expression_idiomatique",
+    "keyword": "perdre la boule"
   },
   {
-    "fact": "Los quebequenses hablan un francés influenciado por el inglés, como los argentinos por el italiano.",
-    "type": "culture",
-    "keyword": "québec"
+    "fact": "«Avoir la gueule de bois» (tener la cara de madera) significa tener resaca después de beber. El equivalente argentino es «estar crudo» o «estar con el chupetín».",
+    "type": "expression_idiomatique",
+    "keyword": "gueule de bois"
   },
   {
-    "fact": "En español, los días de la semana no llevan mayúscula: lunes, martes, miércoles... Al igual que en francés.",
-    "type": "culture",
-    "keyword": "jours"
+    "fact": "«C'est une autre paire de manches» (eso es otro par de mangas) significa que algo es completamente distinto, una situación de diferente naturaleza.",
+    "type": "expression_idiomatique",
+    "keyword": "paire de manches"
   },
   {
-    "fact": "El francés es idioma oficial en 29 países. El español lo es en 20 países.",
-    "type": "culture",
-    "keyword": "langues officielles"
+    "fact": "«Prendre ses jambes à son cou» (tomar las piernas en el cuello) significa salir corriendo a toda velocidad, escapar. En argentino, «salir rajando» o «tomar el portante».",
+    "type": "expression_idiomatique",
+    "keyword": "prendre ses jambes"
   },
   {
-    "fact": "En España se usa «vosotros». En Latinoamérica este pronombre desapareció y se usa «ustedes».",
-    "type": "culture",
-    "keyword": "vosotros"
+    "fact": "«Faire d'une pierre deux coups» (hacer de una piedra dos golpes) equivale exactamente al castellano «matar dos pájaros de un tiro». La lógica es idéntica: una sola acción con doble resultado.",
+    "type": "expression_idiomatique",
+    "keyword": "deux coups"
   },
   {
-    "fact": "El lunfardo es una jerga argentina del siglo XIX, influenciada por el italiano y el español.",
-    "type": "culture",
-    "keyword": "lunfardo"
+    "fact": "«À bon entendeur salut» (al buen entendedor, salud) es el equivalente exacto del proverbio «a buen entendedor, pocas palabras». El francés añade «salud» como despedida solemne; el.",
+    "type": "expression_idiomatique",
+    "keyword": "bon entendeur"
   },
   {
-    "fact": "La lengua de señas francesa (LSF) influyó en la lengua de señas americana (ASL) en el siglo XIX.",
-    "type": "culture",
-    "keyword": "langue des signes"
+    "fact": "«Vouloir le beurre et l'argent du beurre» (querer la mantequilla y el dinero de la mantequilla) describe a quien quiere todo sin ceder nada. En argentino, «querer la chancha y los veinte».",
+    "type": "expression_idiomatique",
+    "keyword": "beurre et argent"
   },
   {
-    "fact": "En español, las nacionalidades no llevan mayúscula: «soy argentino», «soy francés».",
-    "type": "culture",
-    "keyword": "nationalités"
+    "fact": "«Coup de foudre» (golpe de rayo) describe el enamoramiento instantáneo, el amor a primera vista. No tiene equivalente metafórico directo en el castellano rioplatense, donde se diría.",
+    "type": "expression_idiomatique",
+    "keyword": "coup de foudre"
   },
   {
-    "fact": "El francés tomó «plaza», «patio», «siesta» del español. ¡Los dos idiomas se intercambian palabras!",
-    "type": "culture",
-    "keyword": "emprunts"
+    "fact": "«On n'est pas sorti de l'auberge» (no salimos de la posada) significa que la situación difícil está lejos de resolverse. En argentino, «estamos en el horno» o «hay palo».",
+    "type": "expression_idiomatique",
+    "keyword": "auberge"
   },
   {
-    "fact": "En español, el sujeto suele omitirse: «Hablo» = «Je parle». ¡El verbo se basta a sí mismo!",
-    "type": "grammaire",
-    "keyword": "sujet omis"
+    "fact": "«Ménager la chèvre et le chou» (cuidar la cabra y el repollo) significa intentar quedar bien con todos y no tomar partido. En argentino, «jugar para los dos lados» o «no mojarse».",
+    "type": "expression_idiomatique",
+    "keyword": "chèvre et chou"
   },
   {
-    "fact": "El español tiene dos verbos «ser»: «ser» (esencia) y «estar» (estado). Un desafío para los francófonos.",
-    "type": "grammaire",
-    "keyword": "ser/estar"
+    "fact": "«Il ne faut pas vendre la peau de l'ours avant de l'avoir tué» es el equivalente exacto del refrán castellano «no hay que vender la piel del oso antes de cazarlo».",
+    "type": "expression_idiomatique",
+    "keyword": "peau de l'ours"
   },
   {
-    "fact": "El género de las palabras puede diferir: «la mer» en francés = «el mar» (masculino en español).",
-    "type": "grammaire",
-    "keyword": "genre"
+    "fact": "«L'habit ne fait pas le moine» (el hábito no hace al monje) es exactamente el mismo refrán que en castellano: «el hábito no hace al monje».",
+    "type": "expression_idiomatique",
+    "keyword": "habit moine"
   },
   {
-    "fact": "El subjuntivo es mucho más frecuente en español que en francés. «Espero que vengas»: ¡imprescindible!",
-    "type": "grammaire",
+    "fact": "En Francia, el uso del «tu» y del «vous» (tuteo y ustedeo) es un código social complejo y delicado. Tutear a alguien antes de que la relación lo autorice puede ofender.",
+    "type": "français_et_ses_variantes",
+    "keyword": "tu vs vous"
+  },
+  {
+    "fact": "El francés de Bélgica tiene palabras propias que ni los franceses ni los québécois usan. «Septante» (setenta) y «nonante» (noventa) en lugar del famoso «soixante-dix» y «quatre-vingt-dix» franceses.",
+    "type": "français_et_ses_variantes",
+    "keyword": "números belgas"
+  },
+  {
+    "fact": "El sistema numérico del francés de Francia para el 70, 80 y 90 es matemáticamente irregular: «soixante-dix» es literalmente «sesenta y diez», «quatre-vingts» es «cuatro veintes» y «quatre-vingt-dix» es «cuatro veintes y diez».",
+    "type": "français_et_ses_variantes",
+    "keyword": "números franceses"
+  },
+  {
+    "fact": "El francés québécois conserva palabras y pronunciaciones del francés del siglo XVII que Francia abandonó hace mucho. «Char» (carro, auto), «blonde» (novia), «tiguidou» (todo bien).",
+    "type": "français_et_ses_variantes",
+    "keyword": "conservadurismo québécois"
+  },
+  {
+    "fact": "El «joual» es el dialecto popular del Quebec, tan diferente del francés parisino que los propios franceses a veces no lo entienden. Combina inglés y francés con fonología propia.",
+    "type": "français_et_ses_variantes",
+    "keyword": "joual"
+  },
+  {
+    "fact": "El francés de Suiza tiene también sus peculiaridades: «huitante» para ochenta, «déjeuner» para el desayuno (en Francia es el almuerzo) y «souper» para la cena (en Francia, el «souper» es una comida tardía o informal).",
+    "type": "français_et_ses_variantes",
+    "keyword": "francés suizo"
+  },
+  {
+    "fact": "El francés africano, hablado en países como Senegal, Costa de Marfil o Camerún, tiene características propias que lo diferencian del francés europeo.",
+    "type": "français_et_ses_variantes",
+    "keyword": "francés africano"
+  },
+  {
+    "fact": "El francés de Bélgica usa el término «drache» para la lluvia intensa. Este regionalismo flamenco que se coló en el francés belga no existe en ninguna otra variante del francés.",
+    "type": "français_et_ses_variantes",
+    "keyword": "drache belga"
+  },
+  {
+    "fact": "En francés québécois, los insultos más fuertes son palabras religiosas: «tabernac», «câlice», «ostie» (tabernáculo, cáliz, hostia). Este sistema de blasfemia religiosa llamado «sacres» es.",
+    "type": "français_et_ses_variantes",
+    "keyword": "sacres québécois"
+  },
+  {
+    "fact": "El francés parisino contemporáneo incorporó el «verlan», un argot que invierte las sílabas de las palabras, igual que el vesre del lunfardo porteño. «L'envers» (al revés) se convirtió en «verlan».",
+    "type": "français_et_ses_variantes",
+    "keyword": "verlan"
+  },
+  {
+    "fact": "El francés tiene una Academia oficial, la «Académie française», fundada en 1635, que intenta regular la evolución del idioma y resistir los anglicismos.",
+    "type": "français_et_ses_variantes",
+    "keyword": "Académie française"
+  },
+  {
+    "fact": "El «argot» francés tiene una tradición tan rica como el lunfardo porteño. «Bouquin» (libro), «boulot» (trabajo), «frangin» (hermano) son palabras del argot que hoy.",
+    "type": "français_et_ses_variantes",
+    "keyword": "argot francés"
+  },
+  {
+    "fact": "En la variante africana del francés, especialmente en Camerún, es común usar un pronombre de tercera persona como marcador de énfasis: «Moi je suis venu, lui il est parti» donde el francés estándar omitiría parte de esa repetición.",
+    "type": "français_et_ses_variantes",
+    "keyword": "doble sujeto"
+  },
+  {
+    "fact": "El francés de la Reunión, isla francesa en el océano Índico, convive con el créole réunionnais, una lengua derivada del francés mezclada con malgache, tamil y portugués.",
+    "type": "français_et_ses_variantes",
+    "keyword": "créole réunionnais"
+  },
+  {
+    "fact": "El francés canadiense tiene un sistema de expresión del tiempo verbal presente muy diferente al parisino. «J'ai vu» (he visto) se usa en el francés europeo para el pasado reciente,.",
+    "type": "français_et_ses_variantes",
+    "keyword": "pasado québécois"
+  },
+  {
+    "fact": "El francés es co-oficial con el alemán, el italiano y el romanche en Suiza. Esta convivencia de cuatro lenguas nacionales en un país pequeño tiene un efecto concreto sobre los.",
+    "type": "français_et_ses_variantes",
+    "keyword": "Suiza multilingüe"
+  },
+  {
+    "fact": "El francés estándar tal como se enseña en las escuelas no lo habla nadie de forma natural. El francés real, cotidiano y hablado, incluye contracciones, elisiones y.",
+    "type": "français_et_ses_variantes",
+    "keyword": "francés oral vs escrito"
+  },
+  {
+    "fact": "El francés es lengua oficial en 29 países, siendo el idioma con más países oficiales del mundo después del inglés. Aprender francés no solo da acceso a Francia: desbloquea Bélgica,.",
+    "type": "français_et_ses_variantes",
+    "keyword": "francofonía"
+  },
+  {
+    "fact": "En el francés oral moderno de París, el «ne» de la negación casi siempre desaparece en la conversación. «Je ne sais pas» se convierte en «je sais pas» y «il ne vient pas» en «il vient pas».",
+    "type": "français_et_ses_variantes",
+    "keyword": "ne de negación"
+  },
+  {
+    "fact": "El criollo haitiano, aunque derivado principalmente del francés, no es mutuamente inteligible con él. Tiene gramática propia, vocabulario africano y una fonología radicalmente distinta.",
+    "type": "français_et_ses_variantes",
+    "keyword": "criollo haitiano"
+  },
+  {
+    "fact": "Carlos Gardel, el máximo ícono del tango mundial, es reclamado por Argentina, Uruguay y Francia. Probablemente nació en Toulouse alrededor de 1890 y emigró de niño a Buenos Aires.",
+    "type": "histoire",
+    "keyword": "Gardel Toulouse"
+  },
+  {
+    "fact": "Buenos Aires fue apodada «el París de América del Sur» a fines del siglo XIX con razón concreta: el gobierno argentino contrató arquitectos y urbanistas franceses para remodelar la ciudad.",
+    "type": "histoire",
+    "keyword": "Buenos Aires París"
+  },
+  {
+    "fact": "Los ideales de la Revolución Francesa influyeron profundamente en los libertadores argentinos. San Martín y Belgrano habían leído a Rousseau, Voltaire y Montesquieu.",
+    "type": "histoire",
+    "keyword": "Ilustración francesa"
+  },
+  {
+    "fact": "Julio Cortázar vivió en París durante más de treinta años, desde 1951 hasta su muerte en 1984. Trabajaba como traductor para la UNESCO y escribía sus obras en castellano desde su ciudad de adopción.",
+    "type": "histoire",
+    "keyword": "Cortázar París"
+  },
+  {
+    "fact": "Jorge Luis Borges estudió en Ginebra durante la Primera Guerra Mundial y dominaba el francés, el alemán y el inglés con fluidez. Fue reconocido en Francia antes de ser plenamente valorado en Argentina.",
+    "type": "histoire",
+    "keyword": "Borges Europa"
+  },
+  {
+    "fact": "Entre 1850 y 1950, más de 200.000 franceses inmigraron a la Argentina. La provincia de Buenos Aires tuvo colonias francesas enteras y ciudades como Pigüé fueron fundadas por familias del Aveyron.",
+    "type": "histoire",
+    "keyword": "inmigración francesa"
+  },
+  {
+    "fact": "El tango nació en los conventillos porteños pero fue París quien le dio respetabilidad social. En la década de 1910, los salones parisinos se volvieron locos por este género.",
+    "type": "histoire",
+    "keyword": "tango y París"
+  },
+  {
+    "fact": "Eva Perón realizó en 1947 un viaje triunfal por Europa que incluyó una escala en Francia. Recibida por personalidades políticas y culturales francesas, su visita marcó la imagen internacional del peronismo.",
+    "type": "histoire",
+    "keyword": "Evita en Europa"
+  },
+  {
+    "fact": "Durante la última dictadura militar argentina (1976-1983), miles de argentinos se exiliaron en Francia. París se convirtió en uno de los principales centros de la resistencia cultural argentina en el exterior.",
+    "type": "histoire",
+    "keyword": "exilio argentino en París"
+  },
+  {
+    "fact": "El Malbec, la uva emblema de la Argentina, viene de Cahors, en el suroeste de Francia. Introducido en Mendoza en el siglo XIX por el agrónomo Michel Pouget, encontró.",
+    "type": "histoire",
+    "keyword": "Malbec Cahors"
+  },
+  {
+    "fact": "La Alianza Francesa de Buenos Aires, fundada en 1893, es una de las más antiguas y grandes del mundo. Buenos Aires concentra una de las mayores cantidades de aprendices de.",
+    "type": "histoire",
+    "keyword": "Alianza Francesa"
+  },
+  {
+    "fact": "La final de la Copa del Mundo 2022 entre Argentina y Francia es considerada una de las más grandes de la historia. Argentina ganó en penales tras una remontada épica de Francia.",
+    "type": "histoire",
+    "keyword": "Copa del Mundo 2022"
+  },
+  {
+    "fact": "Los Vascos constituyen una de las primeras y más influyentes comunidades de inmigración europea en Argentina. Llegaron desde el siglo XVIII y dejaron su huella en el.",
+    "type": "histoire",
+    "keyword": "vascos argentinos"
+  },
+  {
+    "fact": "El filósofo francés Jacques Derrida y el psicoanalista Jacques Lacan tuvieron enorme influencia en la intelectualidad argentina.",
+    "type": "histoire",
+    "keyword": "psicoanálisis lacaniano"
+  },
+  {
+    "fact": "El guaraní fue la lengua de los pueblos originarios del Río de la Plata y sigue siendo co-oficial en Paraguay. En el norte argentino todavía se habla y deja rastros en el vocabulario.",
+    "type": "histoire",
+    "keyword": "guaraní supervivencia"
+  },
+  {
+    "fact": "El nombre «Argentina» viene del latín «argentum» (plata). Los conquistadores españoles creyeron que la región era rica en plata, basándose en rumores sobre montañas plateadas.",
+    "type": "histoire",
+    "keyword": "nombre Argentina"
+  },
+  {
+    "fact": "Para memorizar los géneros en francés, una regla práctica cubre alrededor del 85% de los casos: las terminaciones «-tion», «-sion», «-ure», «-ette», «-ance» son casi siempre femeninas; las terminaciones «-ment», «-age», «-oir», «-eau» son casi siempre masculinas.",
+    "type": "apprentissage",
+    "keyword": "género francés terminaciones"
+  },
+  {
+    "fact": "El francés tiene dos verbos para «ser»: «être» (ser/estar) y el verbo «avoir» (tener) que se usa donde el castellano diría «tener». «J'ai froid» es literalmente «tengo frío» y no «estoy frío».",
+    "type": "apprentissage",
+    "keyword": "être vs avoir"
+  },
+  {
+    "fact": "Para dominar el passé composé francés (equivalente al pretérito indefinido castellano), hay que memorizar que la mayoría de los verbos se conjugan con «avoir» como auxiliar pero los verbos de movimiento y cambio de estado usan «être».",
+    "type": "apprentissage",
+    "keyword": "passé composé"
+  },
+  {
+    "fact": "El imparfait francés (imperfecto) funciona exactamente igual que el imperfecto castellano: describe acciones habituales en el pasado o estados continuos. «Je mangeais» equivale a «comía».",
+    "type": "apprentissage",
+    "keyword": "imparfait"
+  },
+  {
+    "fact": "Los verbos franceses del primer grupo (-er) son más del 90% de todos los verbos existentes y su conjugación en presente es completamente regular. «Parler», «aimer», «regarder» siguen siempre el mismo patrón.",
+    "type": "apprentissage",
+    "keyword": "verbos -er"
+  },
+  {
+    "fact": "El subjonctif francés se usa en contextos similares al subjuntivo castellano: duda, deseo, emoción, necesidad. «Je veux que tu viennes» equivale a «quiero que vengas».",
+    "type": "apprentissage",
     "keyword": "subjonctif"
   },
   {
-    "fact": "El español no tiene artículo partitivo: «Je mange du pain» = «Como pan» (sin artículo).",
-    "type": "grammaire",
-    "keyword": "article partitif"
+    "fact": "Los adjetivos en francés van después del sustantivo en la mayoría de los casos, al revés que en castellano. «Une voiture rouge» (un auto rojo) sigue el orden sustantivo-adjetivo, igual que el castellano.",
+    "type": "apprentissage",
+    "keyword": "posición del adjetivo"
   },
   {
-    "fact": "En Argentina, el pretérito indefinido se usa más que el pretérito perfecto compuesto.",
-    "type": "grammaire",
-    "keyword": "pretérito"
+    "fact": "La diferencia entre «c'est» y «il est» en francés equivale parcialmente a «es» vs «está» en castellano pero con lógica propia. «C'est un médecin» (es un médico, con artículo) vs «il.",
+    "type": "apprentissage",
+    "keyword": "c'est vs il est"
   },
   {
-    "fact": "El «ne... pas» del francés es único. En español basta con «no» antes del verbo para negar.",
-    "type": "grammaire",
-    "keyword": "négation"
+    "fact": "Para aprender vocabulario francés de forma eficiente, se recomienda no traducir al castellano sino crear asociaciones directas entre la palabra francesa y su imagen o concepto.",
+    "type": "apprentissage",
+    "keyword": "pensar en francés"
   },
   {
-    "fact": "Los verbos reflexivos son muy frecuentes en español: «levantarse», «llamarse», «sentirse».",
-    "type": "grammaire",
-    "keyword": "verbes réfléchis"
+    "fact": "El francés y el castellano comparten entre el 70 y el 80% de vocabulario de origen latino común. Un argentino puede comprender un texto francés escrito con un grado de.",
+    "type": "apprentissage",
+    "keyword": "vocabulario compartido"
   },
   {
-    "fact": "El español usa doble interrogación: «¿Cómo estás?». El lector sabe desde el inicio que es pregunta.",
-    "type": "grammaire",
-    "keyword": "interrogation"
+    "fact": "El condicional francés se forma añadiendo terminaciones al infinitivo completo, igual que en castellano. «Je parlerais» equivale a «hablaría».",
+    "type": "apprentissage",
+    "keyword": "condicional francés"
   },
   {
-    "fact": "En español, el adjetivo va generalmente después del sustantivo: «casa blanca», «libro interesante».",
-    "type": "grammaire",
-    "keyword": "adjectif"
+    "fact": "Mirar series y películas francesas con subtítulos en francés (no en castellano) es una de las técnicas más documentadas para acelerar el aprendizaje.",
+    "type": "apprentissage",
+    "keyword": "series francesas"
   },
   {
-    "fact": "El «usted» (singular) y «ustedes» (plural) son los equivalentes del «vous» de cortesía en francés.",
-    "type": "grammaire",
-    "keyword": "usted"
+    "fact": "El futuro simple francés se forma añadiendo las terminaciones «-ai, -as, -a, -ons, -ez, -ont» al infinitivo. «Je parlerai» (hablaré).",
+    "type": "apprentissage",
+    "keyword": "futuro simple"
   },
   {
-    "fact": "En español, el futuro puede reemplazarse por «ir + a + infinitivo»: «voy a comer» = je vais manger.",
-    "type": "grammaire",
-    "keyword": "futur périphrastique"
+    "fact": "Para no confundir «savoir» y «connaître» (los dos equivalentes de «saber/conocer»), la regla es: «savoir» para habilidades y hechos (sé nadar, sé que es verdad) y «connaître» para personas, lugares y obras (conozco a Juan, conozco París).",
+    "type": "apprentissage",
+    "keyword": "savoir vs connaître"
   },
   {
-    "fact": "En francés, «on» puede significar «nosotros». En español, «uno» cumple a veces ese papel.",
-    "type": "grammaire",
-    "keyword": "pronom on"
+    "fact": "El «shadowing» (sombra fonética) consiste en repetir en voz alta lo que se escucha en la lengua meta, en tiempo real. Para el francés, escuchar podcasts para estudiantes intermedios y.",
+    "type": "apprentissage",
+    "keyword": "shadowing francés"
   },
   {
-    "fact": "La «r» vibrante española no existe en el francés estándar. La «r» francesa es gutural y única.",
-    "type": "prononciation",
-    "keyword": "r roulé"
+    "fact": "Los pronombres personales tónicos del francés (moi, toi, lui, elle, nous, vous, eux, elles) se usan en contextos que no existen en castellano: después de preposiciones, en comparaciones y en frases sin verbo.",
+    "type": "apprentissage",
+    "keyword": "pronombres tónicos"
   },
   {
-    "fact": "En Argentina, la «ll» y la «y» se pronuncian como «sh»: «lluvia» suena /ʒuvia/. ¡El sheísmo!",
-    "type": "prononciation",
-    "keyword": "ll argentin"
+    "fact": "Llevar un diario personal en francés, aunque sea con frases simples, es una de las prácticas más efectivas para consolidar la producción escrita.",
+    "type": "apprentissage",
+    "keyword": "diario en francés"
   },
   {
-    "fact": "La «s» final en español siempre se pronuncia, a diferencia del francés donde suele ser muda.",
-    "type": "prononciation",
-    "keyword": "s final"
+    "fact": "Los números en francés son regulares hasta el 69 y luego se vuelven matemáticos: 70 es «soixante-dix» (60+10), 80 es «quatre-vingts» (4x20) y 90 es «quatre-vingt-dix» (4x20+10).",
+    "type": "apprentissage",
+    "keyword": "números vigesimales"
   },
   {
-    "fact": "En español, todas las vocales se pronuncian claramente. ¡No hay vocales mudas como en francés!",
-    "type": "prononciation",
-    "keyword": "voyelles"
+    "fact": "El español es la segunda lengua más hablada del mundo en número de hablantes nativos, con unos 500 millones de personas. El francés tiene alrededor de 80 millones de hablantes nativos.",
+    "type": "insolite",
+    "keyword": "hablantes mundiales"
   },
   {
-    "fact": "El sonido /y/ del francés («rue», «lune») no existe en español. ¡Un desafío para hispanohablantes!",
-    "type": "prononciation",
-    "keyword": "son /y/"
+    "fact": "El francés es co-oficial de 29 países, lo que lo convierte en el idioma con más países oficiales del mundo después del inglés. La francofonía incluye Europa, África, América del Norte, el Caribe y el Pacífico.",
+    "type": "insolite",
+    "keyword": "francés oficial 29 países"
   },
   {
-    "fact": "La «jota» española (j/g ante e,i) es un sonido gutural /x/ que no existe en el francés estándar.",
-    "type": "prononciation",
-    "keyword": "jota"
+    "fact": "El francés y el castellano son ambas lenguas romances derivadas del latín vulgar, pero divergieron hace más de mil años.",
+    "type": "insolite",
+    "keyword": "latín vulgar"
   },
   {
-    "fact": "En español, el acento tónico cambia el significado: «hablo» (presente) vs «habló» (pasado).",
-    "type": "prononciation",
-    "keyword": "accent tonique"
+    "fact": "El «je ne sais quoi» (un no sé qué) es una expresión francesa adoptada directamente por el inglés y por muchos otros idiomas para describir una cualidad indefinible y encantadora.",
+    "type": "insolite",
+    "keyword": "je ne sais quoi"
   },
   {
-    "fact": "El francés tiene sonidos nasales (an, en, in, on, un) que no existen en español. ¡Todo un desafío!",
-    "type": "prononciation",
-    "keyword": "nasales"
+    "fact": "Don Quijote de Cervantes (1605) fue traducido al francés en 1614, apenas nueve años después de su publicación. Fue uno de los primeros «best-sellers» internacionales de la historia moderna.",
+    "type": "insolite",
+    "keyword": "Quijote en Francia"
   },
   {
-    "fact": "En el español rioplatense, la «ll» y la «y» suenan «sh»: «yo» se pronuncia «sho». ¡El sheísmo!",
-    "type": "prononciation",
-    "keyword": "sheísmo"
+    "fact": "La Argentina tiene la quinta comunidad judía más grande del mundo y Buenos Aires una de las gastronomías más diversas de América Latina. La diversidad inmigratoria argentina, con italianos,.",
+    "type": "insolite",
+    "keyword": "diversidad gastronómica"
   },
   {
-    "fact": "La «e» francesa tiene tres pronunciaciones (/e/, /ɛ/, /ə/) según los acentos. En español, solo una.",
-    "type": "prononciation",
-    "keyword": "e français"
+    "fact": "El francés fue la lengua diplomática mundial por excelencia desde el siglo XVII hasta bien entrado el siglo XX. El Tratado de Versalles (1919) fue redactado en francés.",
+    "type": "insolite",
+    "keyword": "francés diplomático"
+  },
+  {
+    "fact": "La Revolución Francesa introdujo en el vocabulario político mundial conceptos que usamos en castellano sin saber que vienen del francés: «izquierda» y «derecha» como posiciones políticas nacieron en la Asamble",
+    "type": "insolite",
+    "keyword": "izquierda y derecha"
+  },
+  {
+    "fact": "El sistema métrico decimal fue inventado en Francia durante la Revolución y adoptado como estándar internacional. Argentina lo adoptó en el siglo XIX, igual que la mayor parte del mundo.",
+    "type": "insolite",
+    "keyword": "sistema métrico"
+  },
+  {
+    "fact": "La palabra «tango» tiene etimología disputada. Algunos la asocian con el africano «tamgu» (tambor), otros con el latín «tangere» (tocar) y otros con una onomatopeya de.",
+    "type": "insolite",
+    "keyword": "etimología tango"
+  },
+  {
+    "fact": "El idioma francés tiene más de 60.000 palabras en el diccionario oficial, pero un hablante nativo culto usa habitualmente alrededor de 3.000 en su vida cotidiana.",
+    "type": "insolite",
+    "keyword": "palabras necesarias"
+  },
+  {
+    "fact": "La «Académie française» tiene 40 miembros llamados «les Immortels» (los Inmortales). Fue fundada en 1635 por el Cardenal Richelieu.",
+    "type": "insolite",
+    "keyword": "Académie Immortels"
+  },
+  {
+    "fact": "El verlan, el argot parisino que invierte las sílabas, desarrolló el mismo mecanismo que el vesre porteño de forma completamente independiente.",
+    "type": "insolite",
+    "keyword": "verlan y vesre"
+  },
+  {
+    "fact": "El «café» tiene la misma etimología en francés y en castellano: el árabe «qahwa», que pasó por el turco «kahve» y llegó al español y al francés en el siglo XVII casi simultáneamente.",
+    "type": "insolite",
+    "keyword": "café etimología"
+  },
+  {
+    "fact": "La Argentina es el país hispanohablante con mayor cantidad de europeos no ibéricos por habitante. Italianos, alemanes, judíos del este de Europa, árabes: esta mezcla produce una identidad.",
+    "type": "insolite",
+    "keyword": "identidad mixta"
+  },
+  {
+    "fact": "El francés es la única lengua romance que usó sistemáticamente el subjuntivo imperfecto en el habla cotidiana hasta bien entrado el siglo XX.",
+    "type": "insolite",
+    "keyword": "subjuntivo imperfecto"
+  },
+  {
+    "fact": "La expresión «hors d'œuvre» (fuera de la obra), que designa los entremeses en la cocina francesa, fue adoptada en inglés como «hors d'oeuvre» sin modificación alguna.",
+    "type": "insolite",
+    "keyword": "francés en inglés"
+  },
+  {
+    "fact": "Argentina fue el primer país de América Latina en legalizar el matrimonio igualitario, en 2010. Francia lo hizo en 2013.",
+    "type": "insolite",
+    "keyword": "matrimonio igualitario"
+  },
+  {
+    "fact": "El nombre «Buenos Aires» viene de «Nuestra Señora del Buen Ayre», advocación mariana popular entre los marineros genoveses del siglo XVI.",
+    "type": "insolite",
+    "keyword": "nombre Buenos Aires"
+  },
+  {
+    "fact": "El idioma francés produce en promedio 7,18 sílabas por segundo en el habla normal, contra 7,82 del español. El español es ligeramente más veloz pero transmite más información por sílaba.",
+    "type": "insolite",
+    "keyword": "velocidad fonética"
+  },
+  {
+    "fact": "La Torre Eiffel fue considerada un horror arquitectónico por la mayoría de los intelectuales parisinos cuando fue inaugurada en 1889. Se planeaba demolerla al finalizar la Exposición Universal.",
+    "type": "insolite",
+    "keyword": "Torre Eiffel"
+  },
+  {
+    "fact": "El spanglish estadounidense y el franglais parisino son dos respuestas a la misma presión del inglés global, pero con resultados muy diferentes. El spanglish mezcla gramática; el franglais incorpora léxico sin cambiar la estructura.",
+    "type": "insolite",
+    "keyword": "anglicismos"
+  },
+  {
+    "fact": "El término «paparazzo» (fotógrafo de celebridades) viene del italiano a través del francés. Pero fue el cine francés de la Nouvelle Vague el que lo popularizó internacionalmente.",
+    "type": "insolite",
+    "keyword": "Nouvelle Vague"
+  },
+  {
+    "fact": "Los artículos partitivos del francés («du», «de la», «des») no tienen equivalente en castellano y son uno de los desafíos más frecuentes para argentinos.",
+    "type": "apprentissage",
+    "keyword": "artículo partitivo"
+  },
+  {
+    "fact": "El orden de los pronombres átonos en francés sigue una secuencia fija: me/te/se/nous/vous antes de le/la/les, y ambos antes de lui/leur. «Il me le donne» (me lo da) respeta ese orden.",
+    "type": "apprentissage",
+    "keyword": "orden de pronombres"
+  },
+  {
+    "fact": "«Naïf» en francés (ingenuo, inocente, sin malicia) fue adoptado por el inglés y por el castellano para describir un estilo artístico específico: la pintura naïve, de trazo directo y colores planos, sin perspectiva académica.",
+    "type": "etymologie",
+    "keyword": "naïf"
+  },
+  {
+    "fact": "Francia tiene el mayor número de premios Nobel de Literatura del mundo, con 16 laureados. Argentina tiene un laureado, Jorge Luis Borges... salvo que en realidad nunca lo recibió.",
+    "type": "insolite",
+    "keyword": "Nobel de Borges"
+  },
+  {
+    "fact": "La baguette francesa fue inscrita en el patrimonio cultural inmaterial de la UNESCO en 2022. No es solo pan: es un ritual diario.",
+    "type": "culture",
+    "keyword": "baguette"
+  },
+  {
+    "fact": "El croissant, símbolo de la pastelería francesa, tiene origen austriaco. Fue introducido en París en el siglo XIX.",
+    "type": "culture",
+    "keyword": "croissant"
+  },
+  {
+    "fact": "Francia tiene más de 1.200 variedades de queso reconocidas. El general De Gaulle lo usó como metáfora política: «¿Cómo gobernar un país que.",
+    "type": "culture",
+    "keyword": "quesos franceses"
+  },
+  {
+    "fact": "El café en Francia se pide «un café» y llega un espresso corto y fuerte, sin leche. Si querés leche, pedís «un café au lait» o «un crème».",
+    "type": "culture",
+    "keyword": "café francés"
+  },
+  {
+    "fact": "La chanson française es un género musical único: prioriza la letra por encima de todo. Jacques Brel, Georges Brassens y Édith Piaf son sus figuras mayores.",
+    "type": "culture",
+    "keyword": "chanson française"
+  },
+  {
+    "fact": "Édith Piaf es el símbolo musical más exportado de Francia. «Non, je ne regrette rien» es reconocida globalmente.",
+    "type": "culture",
+    "keyword": "Édith Piaf"
+  },
+  {
+    "fact": "El impressionismo nació en Francia en la década de 1870 con Monet, Renoir y Degas. El nombre viene de una crítica burlona a «Impression, soleil levant» de Monet.",
+    "type": "culture",
+    "keyword": "impresionismo"
+  },
+  {
+    "fact": "El Louvre es el museo más visitado del mundo, con más de 9 millones de visitantes por año. Alberga la Mona Lisa, la Venus de Milo y la Victoria de Samotracia.",
+    "type": "culture",
+    "keyword": "Louvre"
+  },
+  {
+    "fact": "La moda francesa domina el mundo del lujo desde el siglo XVII, cuando Luis XIV convirtió Versalles en la capital de la elegancia europea.",
+    "type": "culture",
+    "keyword": "moda francesa"
+  },
+  {
+    "fact": "El cine francés inventó el lenguaje cinematográfico moderno con la Nouvelle Vague en los años 60. Godard, Truffaut y Rohmer rompieron todas las convenciones narrativas.",
+    "type": "culture",
+    "keyword": "Nouvelle Vague"
+  },
+  {
+    "fact": "El rugby es en el sur de Francia lo que el fútbol es en Argentina: una pasión identitaria de clase trabajadora.",
+    "type": "culture",
+    "keyword": "rugby francés"
+  },
+  {
+    "fact": "Los bistrots son el equivalente francés del café de barrio porteño: un mostrador, el dueño que conoce a todos y conversaciones sobre política.",
+    "type": "culture",
+    "keyword": "bistrot"
+  },
+  {
+    "fact": "La gastronomía francesa fue la primera en ser inscrita en el patrimonio cultural inmaterial de la UNESCO en 2010.",
+    "type": "culture",
+    "keyword": "gastronomía patrimonio"
+  },
+  {
+    "fact": "El Tour de France es la carrera ciclista más famosa del mundo y un evento cultural nacional. Durante tres semanas de julio, millones de franceses.",
+    "type": "culture",
+    "keyword": "Tour de France"
+  },
+  {
+    "fact": "Versalles fue la residencia real de Luis XIV, quien trasladó toda la corte allí en 1682. Su construcción redefinió la arquitectura del poder en Europa entera.",
+    "type": "culture",
+    "keyword": "Versalles"
+  },
+  {
+    "fact": "El existencialismo francés de Jean-Paul Sartre y Simone de Beauvoir nació en los cafés de Saint-Germain-des-Prés después de la Segunda Guerra Mundial.",
+    "type": "culture",
+    "keyword": "existencialismo"
+  },
+  {
+    "fact": "El Moulin Rouge, inaugurado en 1889 en Montmartre, inventó el espectáculo de cabaret moderno. Sus bailarinas del can-can escandalizaron a.",
+    "type": "culture",
+    "keyword": "Moulin Rouge"
+  },
+  {
+    "fact": "La cocina francesa tiene cinco «sauces mères» (salsas madres) de las que derivan cientos de preparaciones: béchamel, velouté, espagnole, hollandaise y tomate.",
+    "type": "culture",
+    "keyword": "salsas madres"
+  },
+  {
+    "fact": "La Torre Eiffel fue construida como estructura temporal para la Exposición Universal de 1889 y debía ser demolida en 1909. Fue salvada porque servía como antena de radio.",
+    "type": "culture",
+    "keyword": "Torre Eiffel"
+  },
+  {
+    "fact": "El Festival de Cannes es el evento cinematográfico más influyente del mundo. La Palme d'Or es el premio más codiciado del cine de autor.",
+    "type": "culture",
+    "keyword": "Cannes"
+  },
+  {
+    "fact": "El vino es en Francia una institución cultural, geográfica y casi religiosa. Cada región tiene su denominación de origen: Bordeaux, Bourgogne, Champagne, Alsace.",
+    "type": "culture",
+    "keyword": "vino francés"
+  },
+  {
+    "fact": "Marcel Proust escribió «En busca del tiempo perdido» en siete volúmenes entre 1913 y 1927. Es considerada una de las obras más grandes de la literatura occidental.",
+    "type": "culture",
+    "keyword": "Proust"
+  },
+  {
+    "fact": "El Barrio Latino (Quartier Latin) de París es históricamente el barrio de los estudiantes y la bohemia intelectual.",
+    "type": "culture",
+    "keyword": "Barrio Latino"
+  },
+  {
+    "fact": "El «apéro» (apéritif) es un ritual social francés: una copa de vino, pastis o champagne con aceitunas o charcutería antes de cenar.",
+    "type": "culture",
+    "keyword": "apéro"
+  },
+  {
+    "fact": "Coco Chanel revolucionó la moda femenina en los años 1920 liberando a las mujeres del corsé. Inventó el «little black dress», las joyas de fantasía y el perfume Chanel N°5.",
+    "type": "culture",
+    "keyword": "Coco Chanel"
+  },
+  {
+    "fact": "La bande dessinée (historieta) es en Francia y Bélgica un arte considerado «novena arte». Tintín, Astérix y Lucky Luke son personajes de cultura popular tan.",
+    "type": "culture",
+    "keyword": "bande dessinée"
+  },
+  {
+    "fact": "El Quartier de Montmartre fue el centro del arte mundial entre 1890 y 1930. Picasso pintó allí las Demoiselles d'Avignon. Toulouse-Lautrec inmortalizó el Moulin Rouge.",
+    "type": "culture",
+    "keyword": "Montmartre"
+  },
+  {
+    "fact": "El champagne solo puede llamarse así si viene de la región de Champagne en Francia. Todo lo demás es «espumante» o «cava». Esta denominación de origen está protegida internacionalmente desde 1891.",
+    "type": "culture",
+    "keyword": "champagne"
+  },
+  {
+    "fact": "El «déjeuner» (almuerzo) es la comida más importante del día en la Francia tradicional. Hasta hace pocas décadas, los negocios cerraban dos horas al.",
+    "type": "culture",
+    "keyword": "déjeuner"
+  },
+  {
+    "fact": "Victor Hugo es el escritor francés más leído del mundo. «Los Miserables» y «Notre-Dame de París» fueron traducidos a más de 60 idiomas.",
+    "type": "culture",
+    "keyword": "Victor Hugo"
+  },
+  {
+    "fact": "La pétanque es el juego nacional del sur de Francia: bolas de metal lanzadas sobre tierra para acercarse al cochonnet.",
+    "type": "culture",
+    "keyword": "pétanque"
+  },
+  {
+    "fact": "La Revolución Francesa de 1789 introdujo en el vocabulario político mundial los conceptos de «libertad, igualdad, fraternidad» y las nociones modernas de izquierda y derecha.",
+    "type": "culture",
+    "keyword": "Revolución Francesa"
+  },
+  {
+    "fact": "Los mercados de productores (marchés) son un pilar de la vida cotidiana francesa. Cada barrio tiene el suyo, una o dos veces por semana.",
+    "type": "culture",
+    "keyword": "marchés"
+  },
+  {
+    "fact": "El Palais Royal, el Centre Pompidou y la Pyramide du Louvre son ejemplos de cómo Francia integra la arquitectura contemporánea más audaz en su patrimonio histórico.",
+    "type": "culture",
+    "keyword": "arquitectura francesa"
+  },
+  {
+    "fact": "Albert Camus ganó el Premio Nobel de Literatura en 1957. Su novela «El extranjero» abre con una frase que es una de las más comentadas de la literatura del siglo XX: «Aujourd'hui, maman est morte».",
+    "type": "culture",
+    "keyword": "Camus"
+  },
+  {
+    "fact": "El «cinéma d'auteur» francés define al director como el verdadero autor de una película, por encima del guionista o del productor.",
+    "type": "culture",
+    "keyword": "cinéma d'auteur"
+  },
+  {
+    "fact": "Saint-Exupéry escribió «El Principito» en Nueva York en 1942, durante su exilio de la Francia ocupada. Es el libro en francés más traducido del mundo, con más de 300 idiomas.",
+    "type": "culture",
+    "keyword": "El Principito"
+  },
+  {
+    "fact": "La gastronomía francesa distingue entre «haute cuisine» (cocina de alta gama, compleja y técnica) y «cuisine du terroir» (cocina regional, simple y de temporada).",
+    "type": "culture",
+    "keyword": "terroir"
+  },
+  {
+    "fact": "El sistema de Grands Écoles, paralelo a las universidades, forma a la élite política, técnica y empresarial francesa. Polytechnique, ENA (rebautizada INSP), Sciences Po: estas.",
+    "type": "culture",
+    "keyword": "Grandes Écoles"
+  },
+  {
+    "fact": "El «savoir-vivre» francés es un conjunto de reglas implícitas sobre cómo comportarse en sociedad: cómo saludar, cómo comer, cómo hablar en público.",
+    "type": "culture",
+    "keyword": "savoir-vivre"
   }
 ]

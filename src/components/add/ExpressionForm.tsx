@@ -2,6 +2,7 @@
 
 import { useLocale } from "@/contexts/LocaleContext";
 import { AliasInput } from "@/components/forms/AliasInput";
+import { CustomDropdown } from "@/components/ui/CustomDropdown";
 import type { Category } from "@/types";
 import { getLangValue } from "@/lib/lang";
 import { Plus } from "lucide-react";
@@ -108,31 +109,31 @@ export function ExpressionForm({
           <label className="block text-sm font-medium text-franol-text mb-2">
             {t("add.context")}
           </label>
-          <div className="flex gap-2">
-            <select
+          <div className="flex gap-2 items-stretch">
+            <CustomDropdown
               value={form.context}
-              onChange={(e) => onFieldChange("context", e.target.value)}
-              className="flex-1 px-4 py-3 rounded-xl border-2 border-franol-warm
-                         bg-white text-franol-text
-                         focus:border-franol-accent-blue focus:outline-none transition-colors"
-            >
-              <option value="">{t("add.selectContext")}</option>
-              {categories
-                .filter((c) => c.type === "expression")
-                .map((cat) => (
-                  <option key={cat.id} value={cat.id}>
-                    {getLangValue(cat, "name", sourceLang)}
-                  </option>
-                ))}
-            </select>
+              onChange={(value) => onFieldChange("context", value)}
+              options={[
+                { value: "", label: t("add.selectContext") },
+                ...categories
+                  .filter((c) => c.type === "expression")
+                  .map((cat) => ({
+                    value: cat.id,
+                    label: getLangValue(cat, "name", sourceLang),
+                    color: cat.color,
+                  })),
+              ]}
+              placeholder={t("add.selectContext")}
+              className="flex-1"
+            />
             <button
               type="button"
               onClick={onOpenCategoryModal}
-              className="px-3 py-3 rounded-xl bg-franol-accent-blue text-white
+              className="px-3.5 py-2.5 rounded-xl bg-franol-accent-blue text-white
                          hover:bg-blue-700 transition-colors flex items-center justify-center"
               title={t("add.createCategory")}
             >
-              <Plus size={20} />
+              <Plus size={18} />
             </button>
           </div>
         </div>

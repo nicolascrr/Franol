@@ -1,512 +1,1002 @@
 [
   {
-    "fact": "«Embarazada» signifie «enceinte» en espagnol, pas «embarrassée» — un faux ami classique !",
-    "type": "faux_ami",
-    "keyword": "embarazada"
+    "fact": "L'espagnol possède seulement 5 sons vocaliques, toujours prononcés de la même manière quelle que soit leur position dans le mot.",
+    "type": "linguistique",
+    "keyword": "voyelles espagnoles"
   },
   {
-    "fact": "«Actual» en espagnol veut dire «actuel», pas «réel». Pour dire «réel», on dit «real» ou «verdadero».",
-    "type": "faux_ami",
-    "keyword": "actual"
+    "fact": "En espagnol, toutes les consonnes en fin de mot se prononcent. Quand vous lisez «verdad», le «d» final.",
+    "type": "linguistique",
+    "keyword": "consonnes finales"
   },
   {
-    "fact": "«Largo» en espagnol signifie «long», pas «large». Pour dire «large», on utilise «ancho».",
-    "type": "faux_ami",
-    "keyword": "largo"
+    "fact": "L'espagnol est une langue à rythme syllabique : chaque syllabe dure à peu près le même temps.",
+    "type": "linguistique",
+    "keyword": "rythme syllabique"
   },
   {
-    "fact": "«Éxito» signifie «succès» en espagnol, pas «sortie». «Salida» = sortie.",
-    "type": "faux_ami",
-    "keyword": "éxito"
+    "fact": "En espagnol, les mots sont accentués sur l'avant-dernière syllabe par défaut. Quand ce n'est pas le cas, un accent écrit l'indique toujours.",
+    "type": "linguistique",
+    "keyword": "accentuation espagnole"
   },
   {
-    "fact": "«Recordar» en espagnol signifie «se souvenir», pas «enregistrer». «Grabar» = enregistrer.",
-    "type": "faux_ami",
-    "keyword": "recordar"
+    "fact": "Le «r» simple espagnol se produit en frappant la langue une seule fois contre les alvéoles, juste derrière les dents du haut.",
+    "type": "linguistique",
+    "keyword": "r simple espagnol"
   },
   {
-    "fact": "«Molestar» en espagnol = «déranger» ou «ennuyer», sans connotation grave. «Moleste» ne choque pas !",
-    "type": "faux_ami",
-    "keyword": "molestar"
+    "fact": "Le «rr» double espagnol est une vibration rapide de la langue contre le palais, répétée plusieurs fois.",
+    "type": "linguistique",
+    "keyword": "rr double"
   },
   {
-    "fact": "«Asistir» en espagnol = «assister à / être présent», pas «aider». «Ayudar» = aider.",
-    "type": "faux_ami",
-    "keyword": "asistir"
+    "fact": "En Argentine, les lettres «ll» et «y» se prononcent toutes deux comme un son voisé proche du «j» de «journal», parfois noté «sh» ou «dj».",
+    "type": "linguistique",
+    "keyword": "sheísmo argentin"
   },
   {
-    "fact": "«Pretender» en espagnol = «avoir l'intention de / prétendre à», pas «faire semblant».",
-    "type": "faux_ami",
-    "keyword": "pretender"
+    "fact": "En espagnol, les lettres «b» et «v» se prononcent exactement pareil. La distinction graphique est purement historique et n'a aucune valeur phonétique.",
+    "type": "linguistique",
+    "keyword": "b et v espagnols"
   },
   {
-    "fact": "«Constipado» en espagnol = «enrhumé», pas «constipé» ! Pour constipé, on dit «estreñido».",
-    "type": "faux_ami",
-    "keyword": "constipado"
+    "fact": "Le «h» est toujours muet en espagnol, sans exception. «Hablar» se prononce «ablar».",
+    "type": "linguistique",
+    "keyword": "h muet espagnol"
   },
   {
-    "fact": "«Librería» = librairie en espagnol, pas bibliothèque. «Biblioteca» = bibliothèque.",
-    "type": "faux_ami",
-    "keyword": "librería"
+    "fact": "L'accent tonique espagnol obéit à deux règles : on accentue la dernière syllabe si le mot finit par une consonne autre que «n» ou «s», et l'avant-dernière syllabe dans tous les autres cas.",
+    "type": "linguistique",
+    "keyword": "règle accent tonique"
   },
   {
-    "fact": "«Simpático» ne signifie pas «sympathique» mais «gentil / sympa». Très courant en espagnol !",
-    "type": "faux_ami",
-    "keyword": "simpático"
+    "fact": "L'espagnol forme naturellement des diphtongues quand les voyelles «i» ou «u» côtoient une autre voyelle.",
+    "type": "linguistique",
+    "keyword": "diphtongues espagnoles"
   },
   {
-    "fact": "«Sensible» en espagnol = «sensible / touché», même sens qu'en français ! Pas un faux ami.",
-    "type": "faux_ami",
-    "keyword": "sensible"
+    "fact": "En Espagne, le «c» devant «e» et «i» et la lettre «z» se prononcent comme le «th» anglais de «think».",
+    "type": "linguistique",
+    "keyword": "seseo argentin"
   },
   {
-    "fact": "«Hotel», «animal», «hospital», «natural» : des centaines de mots sont identiques en FR et ES !",
-    "type": "mot_identique",
-    "keyword": "hotel"
+    "fact": "En espagnol argentin, le «s» en fin de syllabe ou de mot s'aspire souvent et devient un son proche du «h» anglais.",
+    "type": "linguistique",
+    "keyword": "aspiration du s"
   },
   {
-    "fact": "Les mots en «-tion» en français se disent «-ción» en espagnol : nation/nación, action/acción.",
-    "type": "mot_identique",
-    "keyword": "-tion/-ción"
+    "fact": "L'espagnol ne connaît pas le phénomène de liaison tel qu'il existe en français. Chaque mot se lit selon sa forme propre.",
+    "type": "linguistique",
+    "keyword": "sinalefa et liaisons"
   },
   {
-    "fact": "Les adjectifs en «-al» sont souvent identiques : «final», «general», «original», «normal».",
-    "type": "mot_identique",
-    "keyword": "-al"
+    "fact": "En espagnol, les nationalités, les jours de la semaine et les mois ne prennent pas de majuscule. On écrit «francés», «lunes» et «enero».",
+    "type": "linguistique",
+    "keyword": "majuscules espagnoles"
   },
   {
-    "fact": "«Taxi», «radio», «piano», «video» : ces mots sont universellement identiques dans les deux langues.",
-    "type": "mot_identique",
-    "keyword": "taxi"
+    "fact": "En espagnol, le tilde (accent écrit) ne change jamais la prononciation d'un mot. Il sert uniquement à distinguer deux mots homophones à l'écrit.",
+    "type": "linguistique",
+    "keyword": "tilde et homophonie"
   },
   {
-    "fact": "«Color» (couleur) se dit «color» en espagnol. Seul l'article change : «el color».",
-    "type": "mot_identique",
-    "keyword": "color"
+    "fact": "Le son «ch» espagnol est identique au «ch» français de «chat». Il n'a donc aucune difficulté pour un francophone.",
+    "type": "linguistique",
+    "keyword": "ch espagnol français"
   },
   {
-    "fact": "Les mots en «-tor» en latin donnent «-teur» en français et «-tor» en espagnol : doctor/docteur.",
-    "type": "mot_identique",
-    "keyword": "doctor"
+    "fact": "La lettre «ñ» représente le son «gn» de l'italien, identique à celui du mot français «agneau». Elle n'est pas difficile à prononcer pour un francophone.",
+    "type": "linguistique",
+    "keyword": "ñ espagnole"
   },
   {
-    "fact": "«Capital» (ville capitale) s'écrit pareil en français et en espagnol. La même lettre, le même sens.",
-    "type": "mot_identique",
-    "keyword": "capital"
+    "fact": "Le «j» espagnol n'est pas le «j» français. C'est un son guttural produit au fond de la gorge, proche du «ch» allemand de «Bach».",
+    "type": "linguistique",
+    "keyword": "j guttural espagnol"
   },
   {
-    "fact": "«Popular», «tropical», «local» : les adjectifs en «-al» fonctionnent dans les deux langues.",
-    "type": "mot_identique",
-    "keyword": "popular"
+    "fact": "Les consonnes «p», «t» et «k» espagnoles ne sont jamais aspirées, tout comme en français.",
+    "type": "linguistique",
+    "keyword": "occlusives non aspirées"
   },
   {
-    "fact": "«Millón», «billón» ressemblent à «million», «billion». Les grands nombres se ressemblent !",
-    "type": "mot_identique",
-    "keyword": "millón"
+    "fact": "En espagnol, la lettre «e» en fin de mot se prononce toujours clairement, comme un «é» bref. En français, ce «e» final est souvent muet.",
+    "type": "linguistique",
+    "keyword": "e final espagnol"
   },
   {
-    "fact": "En chimie et sciences, les termes sont quasi identiques : «microscopio» / «microscope».",
-    "type": "mot_identique",
-    "keyword": "microscopio"
+    "fact": "L'espagnol argentin a une prosodie chantante, souvent comparée à l'italien. Cette musicalité vient de l'immigration massive d'Italiens du sud à la fin du XIXe siècle.",
+    "type": "linguistique",
+    "keyword": "prosodie porteña"
   },
   {
-    "fact": "«Livre» et «libro» viennent du latin «liber». Une seule lettre les sépare !",
-    "type": "mot_similaire",
-    "keyword": "libro"
+    "fact": "L'intonation d'une question en espagnol monte puis redescend sur le dernier mot, contrairement au français où elle monte jusqu'à la fin.",
+    "type": "linguistique",
+    "keyword": "intonation interrogative"
   },
   {
-    "fact": "«Père» et «padre», «mère» et «madre» viennent tous du latin «pater» et «mater».",
-    "type": "mot_similaire",
-    "keyword": "padre"
+    "fact": "L'espagnol n'admet pas les groupes «sp», «st» ou «sc» en début de mot sans voyelle initiale. C'est pourquoi un hispanophone dira «esport» et non «sport».",
+    "type": "linguistique",
+    "keyword": "groupes consonantiques initiaux"
   },
   {
-    "fact": "«Fleur» et «flor» viennent du latin «flos/floris». La flore parle encore latin !",
-    "type": "mot_similaire",
-    "keyword": "flor"
-  },
-  {
-    "fact": "«Lune» et «luna» viennent du latin «luna». La lune est identique dans les deux langues !",
-    "type": "mot_similaire",
-    "keyword": "luna"
-  },
-  {
-    "fact": "«Mer» et «mar» viennent du latin «mare». On dit «prendre la mer» / «hacerse a la mar».",
-    "type": "mot_similaire",
-    "keyword": "mar"
-  },
-  {
-    "fact": "«Ami» et «amigo» viennent du latin «amicus». L'amitié unit les deux langues depuis Rome !",
-    "type": "mot_similaire",
-    "keyword": "amigo"
-  },
-  {
-    "fact": "«Feu» et «fuego» viennent du latin «focus». À l'origine, focus désignait le foyer domestique !",
-    "type": "mot_similaire",
-    "keyword": "fuego"
-  },
-  {
-    "fact": "«Eau» et «agua» viennent du latin «aqua». Le français a perdu plusieurs lettres latines !",
-    "type": "mot_similaire",
-    "keyword": "agua"
-  },
-  {
-    "fact": "«Nuit» et «noche» viennent du latin «nox/noctis». La nuit a les mêmes origines !",
-    "type": "mot_similaire",
-    "keyword": "noche"
-  },
-  {
-    "fact": "«Blanc» et «blanco» partagent la même racine germanique «blank» qui signifiait «brillant».",
-    "type": "mot_similaire",
-    "keyword": "blanco"
-  },
-  {
-    "fact": "«Madrugada» en espagnol : ce moment entre minuit et l'aube. En français, pas de mot unique.",
-    "type": "intraduisible",
-    "keyword": "madrugada"
-  },
-  {
-    "fact": "«Sobremesa» en espagnol : le temps passé à table après manger, à converser. Sans équivalent français.",
-    "type": "intraduisible",
-    "keyword": "sobremesa"
-  },
-  {
-    "fact": "«Estrenar» en espagnol : utiliser ou inaugurer quelque chose pour la première fois. Aucun équivalent exact.",
-    "type": "intraduisible",
-    "keyword": "estrenar"
-  },
-  {
-    "fact": "«Vergüenza ajena» : honte ressentie pour quelqu'un d'autre. En français, on dit «honte par procuration».",
-    "type": "intraduisible",
-    "keyword": "vergüenza ajena"
-  },
-  {
-    "fact": "«Añoranza» : mélancolie douce-amère pour quelque chose de perdu. Plus intense que «nostalgie».",
-    "type": "intraduisible",
-    "keyword": "añoranza"
-  },
-  {
-    "fact": "«Tutear» en espagnol : parler à quelqu'un en utilisant «tú». Le français n'a pas de verbe pour ça.",
-    "type": "intraduisible",
-    "keyword": "tutear"
-  },
-  {
-    "fact": "«Madrugar» en espagnol : se lever très tôt le matin. Un seul verbe pour une idée complexe !",
-    "type": "intraduisible",
-    "keyword": "madrugar"
-  },
-  {
-    "fact": "«Friolero» : quelqu'un qui a toujours froid. Le français a «frileux», une exception heureuse !",
-    "type": "intraduisible",
-    "keyword": "friolero"
-  },
-  {
-    "fact": "«Alcool», «algèbre», «azur», «coton» : ces mots français viennent de l'arabe, via l'espagnol !",
-    "type": "etymologie",
-    "keyword": "alcool"
-  },
-  {
-    "fact": "«Chocolat» vient du nahuatl «xocolatl» (eau amère). L'espagnol l'a transmis à toute l'Europe !",
+    "fact": "Le mot «chocolat» vient du náhuatl «xocolatl», la langue des Aztèques. Il est passé en espagnol sous la forme «chocolate» avant.",
     "type": "etymologie",
     "keyword": "chocolat"
   },
   {
-    "fact": "«Tomate» vient du nahuatl «tomatl». Les Aztèques ont nommé ce fruit que le monde entier aime !",
+    "fact": "«Tomate» vient du náhuatl «tomatl». C'est encore l'espagnol qui a transmis ce mot à toute l'Europe après la conquête du Mexique.",
     "type": "etymologie",
     "keyword": "tomate"
   },
   {
-    "fact": "«Tabac» vient de l'espagnol «tabaco», lui-même du taïno, langue des peuples des Caraïbes.",
+    "fact": "«Tabac» vient de l'espagnol «tabaco», lui-même issu de l'arawak, la langue des peuples des Caraïbes. Les premiers explorateurs espagnols ont.",
     "type": "etymologie",
     "keyword": "tabac"
   },
   {
-    "fact": "«Ouragan» vient de l'espagnol «huracán», qui vient lui-même du taïno «hurakán» (dieu du vent).",
-    "type": "etymologie",
-    "keyword": "ouragan"
-  },
-  {
-    "fact": "«Guacamole» vient du nahuatl : «ahuacatl» (avocat) + «molli» (sauce). Littéralement «sauce avocat».",
-    "type": "etymologie",
-    "keyword": "guacamole"
-  },
-  {
-    "fact": "«Guerrilla» (guérilla) vient de l'espagnol «guerra» (guerre) + diminutif. Une petite guerre !",
-    "type": "etymologie",
-    "keyword": "guerrilla"
-  },
-  {
-    "fact": "«Bizarre» viendrait de l'espagnol «bizarro» (courageux). Le sens a complètement changé en français !",
+    "fact": "«Bizarre» vient de l'espagnol «bizarro», qui signifiait à l'origine «courageux» et «élégant». Entré en français au XVIe siècle, son sens a dérivé vers «étrange».",
     "type": "etymologie",
     "keyword": "bizarre"
   },
   {
-    "fact": "«Ranch» vient de l'espagnol «rancho». L'influence hispanique est immense dans le vocabulaire mondial.",
+    "fact": "«Moustique» vient de l'espagnol «mosquito», diminutif de «mosca» (la mouche). Le suffixe diminutif espagnol «ito» était si expressif que le.",
     "type": "etymologie",
-    "keyword": "ranch"
+    "keyword": "moustique"
   },
   {
-    "fact": "«Mosquée» vient de l'arabe «masjid», passé par l'espagnol «mezquita» avant d'arriver en français.",
+    "fact": "Le mot «embargo» est entré dans presque toutes les langues du monde via l'espagnol. Il vient du verbe «embargar» (saisir, bloquer), lui-même issu du latin tardif.",
+    "type": "etymologie",
+    "keyword": "embargo"
+  },
+  {
+    "fact": "«Guérilla» vient de l'espagnol «guerrilla», diminutif de «guerra» (la guerre). Le mot a été introduit dans les langues européennes lors des.",
+    "type": "etymologie",
+    "keyword": "guérilla"
+  },
+  {
+    "fact": "Le mot «patio» désigne la cour intérieure d'une maison. L'espagnol l'avait hérité de l'arabe via l'architecture hispano-mauresque.",
+    "type": "etymologie",
+    "keyword": "patio"
+  },
+  {
+    "fact": "«Canyon» vient de l'espagnol «cañón», augmentatif de «caño» (tuyau). La métaphore visuelle est limpide : un canyon ressemble à un.",
+    "type": "etymologie",
+    "keyword": "canyon"
+  },
+  {
+    "fact": "«Camarade» vient de l'espagnol «camarada», qui désignait les soldats partageant la même chambre («cámara»).",
+    "type": "etymologie",
+    "keyword": "camarade"
+  },
+  {
+    "fact": "«Savane» vient de l'espagnol «sabana», lui-même emprunté à une langue amérindienne des Caraïbes. Le mot désignait les grandes plaines herbeuses découvertes par les explorateurs.",
+    "type": "etymologie",
+    "keyword": "savane"
+  },
+  {
+    "fact": "«Alcool» vient de l'arabe «al-kuhl» via l'espagnol «alcohol». L'Espagne médiévale, influencée par la culture arabe pendant huit siècles, a été le.",
+    "type": "etymologie",
+    "keyword": "alcool"
+  },
+  {
+    "fact": "«Guitare» vient de l'espagnol «guitarra», qui descend du grec «kithara» via l'arabe «qitar». L'instrument a voyagé des Grecs aux Arabes,.",
+    "type": "etymologie",
+    "keyword": "guitare"
+  },
+  {
+    "fact": "«Maïs» vient de l'espagnol «maíz», lui-même emprunté au taíno «mahiz», une langue des Caraïbes. Comme le cacao et la tomate, c'est l'espagnol qui a.",
+    "type": "etymologie",
+    "keyword": "maïs"
+  },
+  {
+    "fact": "«Plaza» vient du latin «platea» (place large), exactement comme le mot français «place». Les deux mots sont donc des cousins directs issus de la même source.",
+    "type": "etymologie",
+    "keyword": "plaza"
+  },
+  {
+    "fact": "«Sieste» vient de l'espagnol «siesta», lui-même issu du latin «sexta hora» (la sixième heure après le lever du soleil, soit midi).",
+    "type": "etymologie",
+    "keyword": "sieste"
+  },
+  {
+    "fact": "«Vanille» vient de l'espagnol «vainilla», diminutif de «vaina» (gaine), en référence à la forme allongée de la gousse.",
+    "type": "etymologie",
+    "keyword": "vanille"
+  },
+  {
+    "fact": "«Créole» vient de l'espagnol «criollo», qui désignait à l'origine les Espagnols nés en Amérique. En Argentine, «criollo» reste très usité pour désigner.",
+    "type": "etymologie",
+    "keyword": "créole"
+  },
+  {
+    "fact": "«Caramel» vient de l'espagnol «caramelo», issu du latin médiéval «calamellus» (petit roseau, en référence à la canne à sucre).",
+    "type": "etymologie",
+    "keyword": "caramel"
+  },
+  {
+    "fact": "«Lasso» vient de l'espagnol «lazo» (nœud coulant). Ce mot, symbole de la culture gaucho argentine, a voyagé jusqu'en Europe et dans les westerns américains.",
+    "type": "etymologie",
+    "keyword": "lasso"
+  },
+  {
+    "fact": "«Anchois» vient de l'espagnol «anchoa» ou «anchova», d'origine peut-être basque ou provençale. Les Basques, présents en grand nombre en Argentine.",
+    "type": "etymologie",
+    "keyword": "anchois"
+  },
+  {
+    "fact": "«Haricot» vient probablement du náhuatl «ayacotl» via l'espagnol. Le haricot vient des Amériques et c'est l'espagnol colonial qui lui a donné son passeport européen.",
+    "type": "etymologie",
+    "keyword": "haricot"
+  },
+  {
+    "fact": "«Bonanza» est entré en anglais et dans de nombreuses langues via l'espagnol, où il signifie «bonne fortune» ou «prospérité».",
+    "type": "etymologie",
+    "keyword": "bonanza"
+  },
+  {
+    "fact": "«Mosquée» vient de l'espagnol «mezquita», qui lui-même vient de l'arabe «masjid». L'Espagne médiévale a été le filtre principal par lequel.",
     "type": "etymologie",
     "keyword": "mosquée"
   },
   {
-    "fact": "«Avocado» vient du nahuatl «ahuacatl». Les Espagnols l'ont transformé en «aguacate», les Français en «avocat».",
-    "type": "etymologie",
-    "keyword": "avocat"
-  },
-  {
-    "fact": "«Cannibal» vient de l'espagnol «caníbal», issu du mot taïno désignant les Caraïbes.",
-    "type": "etymologie",
-    "keyword": "cannibal"
-  },
-  {
-    "fact": "«Costar un ojo de la cara» = coûter un œil — identique à «coûter les yeux de la tête» en français !",
+    "fact": "«Tener fiaca» est l'expression argentine pour dire qu'on n'a pas le courage de faire quelque chose, l'équivalent de «avoir la flemme».",
     "type": "expression_idiomatique",
-    "keyword": "ojo de la cara"
+    "keyword": "fiaca"
   },
   {
-    "fact": "«Llueve a cántaros» (il pleut à seaux) correspond à «il pleut des cordes» en français.",
+    "fact": "«Estar en el horno» (être dans le four) équivaut au français «être dans de beaux draps» ou «être dans une situation critique».",
     "type": "expression_idiomatique",
-    "keyword": "llueve a cántaros"
+    "keyword": "estar en el horno"
   },
   {
-    "fact": "«Estar en las nubes» (être dans les nuages) = «être dans la lune» en français. Même idée !",
+    "fact": "«No dar el ancho» signifie ne pas être à la hauteur, ne pas remplir correctement un rôle. L'image vient du tissu : une étoffe qui n'a pas la largeur requise.",
     "type": "expression_idiomatique",
-    "keyword": "estar en las nubes"
+    "keyword": "no dar el ancho"
   },
   {
-    "fact": "«Matar dos pájaros de un tiro» = tuer deux oiseaux d'une pierre. Identique dans les deux langues !",
+    "fact": "«Al pedo» est une expression très argentino pour dire «pour rien», «inutilement» ou «en vain». Un voyage «al pedo» est un voyage qui n'a servi à rien.",
     "type": "expression_idiomatique",
-    "keyword": "dos pájaros"
+    "keyword": "al pedo"
   },
   {
-    "fact": "«A buen entendedor, pocas palabras» = à bon entendeur, salut. La sagesse est universelle !",
+    "fact": "«Copado» signifie «super», «génial», «cool». C'est l'un des adjectifs positifs les plus fréquents en espagnol argentin.",
     "type": "expression_idiomatique",
-    "keyword": "buen entendedor"
+    "keyword": "copado"
   },
   {
-    "fact": "«Poser un lapin» en français = «dejar plantado» en espagnol. Laisser quelqu'un attendre seul.",
+    "fact": "«Quilombo» désigne un désordre, un bazar ou une situation chaotique. À l'origine, le mot vient du kimbundu (langue d'Angola) et désignait les.",
     "type": "expression_idiomatique",
-    "keyword": "lapin"
+    "keyword": "quilombo"
   },
   {
-    "fact": "«Tener pájaros en la cabeza» = avoir des oiseaux dans la tête = être tête en l'air.",
+    "fact": "«Hacerse el boludo» signifie faire semblant de ne pas comprendre, jouer à l'idiot pour éviter une responsabilité.",
     "type": "expression_idiomatique",
-    "keyword": "pájaros en la cabeza"
+    "keyword": "hacerse el boludo"
   },
   {
-    "fact": "«No hay mal que por bien no venga» = à quelque chose malheur est bon. Proverbe universel !",
+    "fact": "«No tener pelos en la lengua» (ne pas avoir de poils sur la langue) signifie dire ce qu'on pense sans filtre.",
+    "type": "expression_idiomatique",
+    "keyword": "pelos en la lengua"
+  },
+  {
+    "fact": "«Costar un ojo de la cara» (coûter un œil de la tête) correspond parfaitement au français «coûter les yeux de la tête».",
+    "type": "expression_idiomatique",
+    "keyword": "costar un ojo"
+  },
+  {
+    "fact": "«Estar entre la espada y la pared» (être entre l'épée et le mur) équivaut au français «être entre le marteau et l'enclume». La situation est identique : coincé sans issue.",
+    "type": "expression_idiomatique",
+    "keyword": "espada y pared"
+  },
+  {
+    "fact": "«No hay mal que por bien no venga» est l'équivalent exact du proverbe français «à quelque chose malheur est bon».",
     "type": "expression_idiomatique",
     "keyword": "no hay mal"
   },
   {
-    "fact": "«Avoir le cafard» (être déprimé) n'a pas d'équivalent direct en espagnol. «Estar de bajón» est proche.",
+    "fact": "«Buscarle la quinta pata al gato» (chercher la cinquième patte au chat) signifie compliquer inutilement les choses.",
     "type": "expression_idiomatique",
-    "keyword": "cafard"
+    "keyword": "quinta pata al gato"
   },
   {
-    "fact": "«Estar hecho polvo» (être fait poussière) = être épuisé. En français : «être à plat» ou «être vidé».",
+    "fact": "«Hablar hasta por los codos» (parler jusqu'aux coudes) signifie parler sans s'arrêter. Le français dit «avoir la langue bien pendue» ou «être un moulin à paroles».",
     "type": "expression_idiomatique",
-    "keyword": "hecho polvo"
+    "keyword": "hablar por los codos"
   },
   {
-    "fact": "«Meterse en camisa de once varas» = se mêler d'affaires complexes sans raison valable.",
+    "fact": "«Ponerse las pilas» signifie se ressaisir, se motiver, s'activer. L'image est moderne et électrique : un appareil sans piles ne fonctionne pas.",
     "type": "expression_idiomatique",
-    "keyword": "camisa de once varas"
+    "keyword": "ponerse las pilas"
   },
   {
-    "fact": "«Sauter du coq à l'âne» n'a pas d'équivalent imagé en espagnol. On dit simplement «cambiar de tema».",
+    "fact": "«Morfar» est le verbe argentin pour «manger», issu du lunfardo. Il vient de l'italien «morfare» ou du romani «marav».",
     "type": "expression_idiomatique",
-    "keyword": "coq à l'âne"
+    "keyword": "morfar"
   },
   {
-    "fact": "En Argentine, le «vos» remplace le «tú». C'est le «voseo», une variante propre au Río de la Plata.",
-    "type": "culture",
-    "keyword": "voseo"
+    "fact": "«Posta» signifie «vrai», «sérieux», «sans blague». Dire «¿en posta?» équivaut à «vraiment?» ou «sérieusement?». C'est l'un des mots les plus caractéristiques de l'argot argentin.",
+    "type": "expression_idiomatique",
+    "keyword": "posta"
   },
   {
-    "fact": "L'Académie française existe depuis 1635. La Real Academia Española a été fondée en 1713.",
-    "type": "culture",
-    "keyword": "académie"
+    "fact": "En espagnol argentin, le préfixe «re» est un intensificateur universel, comme «hyper» ou «méga» en français familier.",
+    "type": "expression_idiomatique",
+    "keyword": "re intensificateur"
   },
   {
-    "fact": "L'espagnol est parlé par plus de 500 millions de personnes. Le français par environ 320 millions.",
-    "type": "culture",
-    "keyword": "locuteurs"
+    "fact": "«De taquito» signifie «facilement», «sans effort», les doigts dans le nez. L'image vient du football : marquer un but «de taquito» c'est le.",
+    "type": "expression_idiomatique",
+    "keyword": "de taquito"
   },
   {
-    "fact": "Le «¡» et «¿» espagnols signalent dès le début si la phrase est exclamative ou interrogative.",
-    "type": "culture",
-    "keyword": "ponctuation"
+    "fact": "«Tirar bronca» signifie être en colère ou manifester son agacement. «Bronce» désignait à l'origine l'airain, un métal dur. Par extension, cette dureté est devenue la colère.",
+    "type": "expression_idiomatique",
+    "keyword": "tirar bronca"
   },
   {
-    "fact": "En Argentine, le «mate» est une boisson nationale à base d'herbe yerba. Un rituel quotidien !",
-    "type": "culture",
-    "keyword": "mate"
+    "fact": "«Estar al horno con papas» est la version renforcée de «estar en el horno». En ajoutant «avec des pommes de terre», l'expression insiste sur le.",
+    "type": "expression_idiomatique",
+    "keyword": "al horno con papas"
   },
   {
-    "fact": "L'espagnol a été fortement influencé par l'arabe pendant 800 ans de présence en Espagne.",
-    "type": "culture",
-    "keyword": "arabe"
+    "fact": "«Caerle bien a alguien» signifie plaire à quelqu'un, être apprécié. Le verbe «caer» (tomber) exprime l'impression que l'on fait : «me cae bien» (je l'apprécie).",
+    "type": "expression_idiomatique",
+    "keyword": "caer bien"
   },
   {
-    "fact": "En Argentine, «che» est une interjection universelle, comme «hé» ou «dis donc» en français.",
-    "type": "culture",
-    "keyword": "che"
+    "fact": "«Tener ficha» en Argentine signifie avoir du magnétisme, du charme naturel. Ce n'est pas simplement être beau : c'est dégager quelque chose d'attractif.",
+    "type": "expression_idiomatique",
+    "keyword": "tener ficha"
   },
   {
-    "fact": "Les Québécois parlent un français influencé par l'anglais, comme les Argentins par l'italien.",
-    "type": "culture",
-    "keyword": "québec"
+    "fact": "«Andar a los ponchazos» signifie se bagarrer, en venir aux mains. «Ponchar» vient de l'anglais «to punch».",
+    "type": "expression_idiomatique",
+    "keyword": "ponchazos"
   },
   {
-    "fact": "En espagnol, les jours de la semaine ne prennent pas de majuscule : lunes, martes, miércoles...",
-    "type": "culture",
-    "keyword": "jours"
+    "fact": "«En pedo» signifie «ivre» en argot argentin. Par extension, «ni en pedo» (pas même en étant ivre) équivaut à «jamais de la vie» ou «hors de question».",
+    "type": "expression_idiomatique",
+    "keyword": "ni en pedo"
   },
   {
-    "fact": "Le français est langue officielle dans 29 pays. L'espagnol est officiel dans 20 pays.",
-    "type": "culture",
-    "keyword": "langues officielles"
+    "fact": "«A full» est un anglicisme massivement utilisé en Argentine pour dire «à fond», «à toute vitesse». «Estoy trabajando a full» signifie «je travaille à fond».",
+    "type": "expression_idiomatique",
+    "keyword": "a full"
   },
   {
-    "fact": "En Espagne, le «vosotros» est utilisé. En Amérique latine, ce pronom a disparu au profit de «ustedes».",
-    "type": "culture",
-    "keyword": "vosotros"
+    "fact": "«Darle la vuelta a la tortilla» (retourner la tortilla) signifie renverser la situation, changer les rapports de force.",
+    "type": "expression_idiomatique",
+    "keyword": "vuelta a la tortilla"
   },
   {
-    "fact": "Le «lunfardo» est un argot argentin né au XIXe siècle, influencé par l'italien et l'espagnol.",
-    "type": "culture",
+    "fact": "«Tener mala leche» (avoir du mauvais lait) signifie avoir une mauvaise nature ou être malchanceux. Le français dit «avoir du mauvais sang» avec une image corporelle similaire.",
+    "type": "expression_idiomatique",
+    "keyword": "mala leche"
+  },
+  {
+    "fact": "«Boliche» désigne une boîte de nuit ou un bar festif en Argentine. En Espagne, ce même mot désigne une quille ou une boutique de quartier.",
+    "type": "expression_idiomatique",
+    "keyword": "boliche"
+  },
+  {
+    "fact": "La culture nocturne de Buenos Aires, appelée «la noche porteña», est réputée pour commencer très tard. Dîner à 22h, sortir à minuit et rentrer à l'aube.",
+    "type": "expression_idiomatique",
+    "keyword": "noche porteña"
+  },
+  {
+    "fact": "Le «voseo» ne change pas seulement le pronom mais toute la conjugaison au présent. On dit «vos tenés» (tu as), «vos comés» (tu manges), «vos.",
+    "type": "rioplatense",
+    "keyword": "voseo conjugaison"
+  },
+  {
+    "fact": "Le lunfardo est l'argot né à Buenos Aires au XIXe siècle dans les quartiers d'immigrants. Forgé par le mélange de l'espagnol, de l'italien, du génois,.",
+    "type": "rioplatense",
     "keyword": "lunfardo"
   },
   {
-    "fact": "La langue des signes française (LSF) a influencé la langue des signes américaine (ASL) au XIXe s.",
+    "fact": "Le vesre est la technique du lunfardo qui consiste à inverser les syllabes des mots. «Café» devient «feca», «tango» devient «gotán», «hotel».",
+    "type": "rioplatense",
+    "keyword": "vesre"
+  },
+  {
+    "fact": "«Che» est l'interjection la plus caractéristique de l'espagnol argentin. Elle sert à interpeller quelqu'un, à exprimer la surprise ou à ponctuer une phrase.",
+    "type": "rioplatense",
+    "keyword": "che"
+  },
+  {
+    "fact": "Le sheísmo argentin est systématique à Buenos Aires mais variable dans les provinces. À Córdoba, le «yo» se prononce avec un son proche du «y» anglais.",
+    "type": "rioplatense",
+    "keyword": "sheísmo régional"
+  },
+  {
+    "fact": "En Argentine, le «tú» n'existe tout simplement pas dans l'usage courant. Un film sous-titré avec du «tú» sonne immédiatement artificiel pour un Argentin.",
+    "type": "rioplatense",
+    "keyword": "absence de tú"
+  },
+  {
+    "fact": "Le «cocoliche» était un mélange d'espagnol et d'italien parlé par les immigrants italiens en Argentine à la fin du XIXe siècle.",
+    "type": "rioplatense",
+    "keyword": "cocoliche"
+  },
+  {
+    "fact": "Le guaraní, langue des populations indigènes du Río de la Plata, a laissé de nombreuses traces dans l'espagnol argentin.",
+    "type": "rioplatense",
+    "keyword": "guaraní influence"
+  },
+  {
+    "fact": "L'accent argentin est souvent décrit par les autres hispanophones comme «chantant». Cette musicalité est directement héritée de l'immigration.",
+    "type": "rioplatense",
+    "keyword": "intonation italienne"
+  },
+  {
+    "fact": "L'espagnol argentin utilise les diminutifs de manière très intensive pour exprimer l'affection. «Un momentito», «un cafecito», «un besito» ne désignent.",
+    "type": "rioplatense",
+    "keyword": "diminutifs affectifs"
+  },
+  {
+    "fact": "En espagnol argentin, «igual» s'utilise comme adverbe pour signifier «quand même» ou «de toutes façons». «Igual te llamo» signifie «je t'appelle quand même».",
+    "type": "rioplatense",
+    "keyword": "igual argentin"
+  },
+  {
+    "fact": "«Onda» (littéralement «onde» ou «vague») est l'un des mots les plus polyvalents de l'argot argentin. «Buena onda» signifie bonne ambiance, quelqu'un de sympa.",
+    "type": "rioplatense",
+    "keyword": "onda"
+  },
+  {
+    "fact": "L'«español neutro» est une variante artificielle créée pour les doublages et les médias, qui évite tout régionalisme pour être compris partout.",
+    "type": "rioplatense",
+    "keyword": "español neutro"
+  },
+  {
+    "fact": "Les termes d'adresse argentin incluent un registre d'insultes douces utilisées entre amis. «Boludo/a» entre proches est presque affectueux, comme «con».",
+    "type": "rioplatense",
+    "keyword": "insultes affectives"
+  },
+  {
+    "fact": "En Argentine, on utilise «acá» à la place de «aquí» (ici) et «allá» à la place de «ahí» (là). «Aquí» et «ahí» existent mais sonnent très formel ou castillan.",
+    "type": "rioplatense",
+    "keyword": "acá et allá"
+  },
+  {
+    "fact": "«¿Viste?» est l'une des questions tags les plus fréquentes en espagnol argentin, équivalent du «tu vois?» ou «t'as vu?» français.",
+    "type": "rioplatense",
+    "keyword": "viste"
+  },
+  {
+    "fact": "Les Argentins disent «castellano» et non «español» pour désigner leur langue. Ce choix n'est pas neutre : «castellano» rappelle que la langue vient de.",
+    "type": "rioplatense",
+    "keyword": "castellano vs español"
+  },
+  {
+    "fact": "Contrairement à beaucoup d'argots qui s'éteignent avec les générations, le lunfardo est en bonne santé à Buenos Aires.",
+    "type": "rioplatense",
+    "keyword": "lunfardo vivant"
+  },
+  {
+    "fact": "«No tiene nada que ver» signifie «ça n'a rien à voir» et s'utilise exactement comme son équivalent français. C'est l'un des nombreux parallèles.",
+    "type": "rioplatense",
+    "keyword": "nada que ver"
+  },
+  {
+    "fact": "À la fin du XIXe siècle, Buenos Aires était surnommée «le Paris de l'Amérique du Sud» avec raison. Le gouvernement argentin avait fait appel à des.",
+    "type": "histoire",
+    "keyword": "Buenos Aires Paris"
+  },
+  {
+    "fact": "Entre 1850 et 1950, plus de 200 000 Français ont immigré en Argentine. La province de Buenos Aires comptait des colonies françaises entières, et des villes.",
+    "type": "histoire",
+    "keyword": "immigration française"
+  },
+  {
+    "fact": "L'Alliance française de Buenos Aires, fondée en 1893, est l'une des plus anciennes et des plus grandes du monde. Elle témoigne des liens culturels profonds entre les deux pays.",
+    "type": "histoire",
+    "keyword": "Alliance française Buenos Aires"
+  },
+  {
+    "fact": "Les idéaux de la Révolution française ont profondément influencé les libérateurs argentins. José de San Martín et Manuel Belgrano avaient.",
+    "type": "histoire",
+    "keyword": "Lumières et indépendance"
+  },
+  {
+    "fact": "À la fin du XIXe siècle, des ingénieurs et des investisseurs français ont contribué activement au développement du réseau ferroviaire argentin.",
+    "type": "histoire",
+    "keyword": "chemin de fer français"
+  },
+  {
+    "fact": "Les Basques constituent l'une des premières et des plus importantes communautés d'immigration européenne en Argentine.",
+    "type": "histoire",
+    "keyword": "Basques argentins"
+  },
+  {
+    "fact": "Le tango est né dans les faubourgs de Buenos Aires mais c'est Paris qui lui a donné sa respectabilité.",
+    "type": "histoire",
+    "keyword": "tango et Paris"
+  },
+  {
+    "fact": "Jorge Luis Borges a étudié à Genève et vécu en Espagne et en France. Il lisait couramment le français et fut profondément influencé par Flaubert et Baudelaire.",
+    "type": "histoire",
+    "keyword": "Borges et Paris"
+  },
+  {
+    "fact": "Eva Perón a effectué un voyage triomphal en Europe en 1947, incluant un passage en France où elle a rencontré de nombreuses personnalités politiques et culturelles.",
+    "type": "histoire",
+    "keyword": "Evita et la France"
+  },
+  {
+    "fact": "Buenos Aires a été fondée deux fois : en 1535 par Pedro de Mendoza (expédition échouée) puis définitivement en 1580 par Juan de Garay.",
+    "type": "histoire",
+    "keyword": "fondation Buenos Aires"
+  },
+  {
+    "fact": "Pendant la dictature militaire argentine (1976-1983), des milliers d'Argentins ont fui en exil. La France a accueilli une communauté d'exilés très importante, notamment à Paris.",
+    "type": "histoire",
+    "keyword": "dictature et exil en France"
+  },
+  {
+    "fact": "Julio Cortázar a vécu à Paris pendant plus de 30 ans, de 1951 jusqu'à sa mort en 1984. Il travaillait comme traducteur pour l'UNESCO et écrivait ses.",
+    "type": "histoire",
+    "keyword": "Cortázar à Paris"
+  },
+  {
+    "fact": "La finale de la Coupe du monde 2022 entre l'Argentine et la France est considérée comme l'une des plus grandes finales de l'histoire du football.",
+    "type": "histoire",
+    "keyword": "Coupe du monde 2022"
+  },
+  {
+    "fact": "Carlos Gardel, le plus grand interprète de tango de l'histoire, est à la fois revendiqué par l'Argentine, l'Uruguay et la France.",
+    "type": "histoire",
+    "keyword": "Gardel né à Toulouse"
+  },
+  {
+    "fact": "Le guaraní, langue des populations indigènes du Río de la Plata, est co-officiel avec l'espagnol au Paraguay voisin.",
+    "type": "histoire",
+    "keyword": "guaraní survivance"
+  },
+  {
+    "fact": "L'immigration italienne en Argentine au XIXe siècle a été encore plus massive que la française. Buenos Aires a accueilli plus d'Italiens que n'importe.",
+    "type": "histoire",
+    "keyword": "immigration italienne"
+  },
+  {
+    "fact": "Pour retenir le genre des mots espagnols, la règle des terminaisons fonctionne dans plus de 90% des cas : les mots en «o» sont masculins, en «a» féminins.",
+    "type": "apprentissage",
+    "keyword": "genre des mots"
+  },
+  {
+    "fact": "Pour maîtriser «ser» et «estar», retenez que «ser» décrit une caractéristique inhérente ou permanente («soy alto», je suis grand de nature) et «estar» un état temporaire («estoy cansado», je suis fatigué en ce moment).",
+    "type": "apprentissage",
+    "keyword": "ser vs estar"
+  },
+  {
+    "fact": "Pour ne pas confondre «por» et «para», pensez à «par» pour «por» (cause, moyen, durée) et à «pour but» pour «para» (destination, objectif).",
+    "type": "apprentissage",
+    "keyword": "por vs para"
+  },
+  {
+    "fact": "Le subjonctif espagnol est plus présent qu'en français moderne mais suit une logique similaire : doute, souhait, nécessité, émotion.",
+    "type": "apprentissage",
+    "keyword": "subjonctif espagnol"
+  },
+  {
+    "fact": "En espagnol argentin, le «pretérito indefinido» est quasi exclusivement utilisé pour le passé. Les Argentins disent «ayer fui» (hier j'y suis allé) là où.",
+    "type": "apprentissage",
+    "keyword": "passé argentin vs castillan"
+  },
+  {
+    "fact": "Les erreurs les plus fréquentes des francophones en espagnol sont prévisibles : confondre «ser» et «estar», oublier la préposition «a» devant les compléments humains («veo a María»), et conjuguer «tener» à la place de «ser» pour l'état civil.",
+    "type": "apprentissage",
+    "keyword": "erreurs fréquentes"
+  },
+  {
+    "fact": "La méthode du «shadowing» consiste à répéter à voix haute, en temps réel, ce qu'on entend dans la langue cible.",
+    "type": "apprentissage",
+    "keyword": "shadowing"
+  },
+  {
+    "fact": "Lire les journaux argentins est l'une des façons les plus efficaces d'acquérir du vocabulaire contextuel. «Infobae», «La Nación» et «Página 12» représentent.",
+    "type": "apprentissage",
+    "keyword": "lecture journaux"
+  },
+  {
+    "fact": "Écouter du tango chanté (Gardel, Piazzolla) ou des chansons de Mercedes Sosa permet d'intégrer des structures grammaticales de façon inconsciente.",
+    "type": "apprentissage",
+    "keyword": "musique apprentissage"
+  },
+  {
+    "fact": "Le français et l'espagnol partagent environ 75% de vocabulaire d'origine latine commune. Pour un francophone, ce «transfert positif» est immense : des.",
+    "type": "apprentissage",
+    "keyword": "transfert positif"
+  },
+  {
+    "fact": "L'espagnol ne compte qu'une cinquantaine de verbes vraiment irréguliers à haute fréquence. De plus, leurs irrégularités suivent des patterns.",
+    "type": "apprentissage",
+    "keyword": "verbes irréguliers patterns"
+  },
+  {
+    "fact": "Les prépositions sont souvent les dernières à se naturaliser dans une langue étrangère. En espagnol, «a» est à la fois la préposition du mouvement et celle.",
+    "type": "apprentissage",
+    "keyword": "a personnel"
+  },
+  {
+    "fact": "L'imparfait espagnol est étonnamment régulier. Seuls trois verbes sont irréguliers : ser (era), ir (iba) et ver (veía).",
+    "type": "apprentissage",
+    "keyword": "imparfait régulier"
+  },
+  {
+    "fact": "Le futur proche espagnol se forme exactement comme en français : «ir + a + infinitivo» équivaut à «aller + infinitif». «Voy a comer» correspond à «je vais manger».",
+    "type": "apprentissage",
+    "keyword": "futur proche"
+  },
+  {
+    "fact": "Le conditionnel espagnol se forme en ajoutant des terminaisons à l'infinitif entier : hablaría, comería, viviría. Ces terminaisons sont identiques pour tous les verbes réguliers.",
+    "type": "apprentissage",
+    "keyword": "conditionnel espagnol"
+  },
+  {
+    "fact": "Les diminutifs espagnols (ito, ita, cito, cita) ne servent pas seulement à désigner quelque chose de petit. Ils servent surtout à adoucir une demande ou à exprimer de l'affection.",
+    "type": "apprentissage",
+    "keyword": "diminutifs outil"
+  },
+  {
+    "fact": "Pour mémoriser le vocabulaire espagnol, l'une des méthodes les plus simples consiste à étiqueter les objets de sa maison en espagnol.",
+    "type": "apprentissage",
+    "keyword": "mémoriser vocabulaire"
+  },
+  {
+    "fact": "Le linguiste Stephen Krashen a démontré que l'acquisition d'une langue se fait principalement par l'«input compréhensible» : du contenu que l'on comprend à 80 ou 90%.",
+    "type": "apprentissage",
+    "keyword": "input compréhensible"
+  },
+  {
+    "fact": "Les faux-amis entre espagnol et français sont nombreux. «Embarazada» signifie «enceinte» et non «embarrassée». «Sensible» signifie «sensible» comme en français mais aussi «perceptible».",
+    "type": "apprentissage",
+    "keyword": "faux amis"
+  },
+  {
+    "fact": "Les verbes pronominaux sont très nombreux en espagnol et diffèrent parfois du français. «Levantarse» (se lever), «llamarse» (s'appeler) fonctionnent exactement comme en français.",
+    "type": "apprentissage",
+    "keyword": "verbes pronominaux"
+  },
+  {
+    "fact": "Le tango est né dans les conventillos de Buenos Aires à la fin du XIXe siècle, dans un mélange de cultures italienne, africaine et espagnole.",
     "type": "culture",
+    "keyword": "tango histoire"
+  },
+  {
+    "fact": "Le maté est bien plus qu'une boisson en Argentine : c'est un rituel social. Partager le maté, c'est partager un moment d'intimité dans la même gourde avec la même bombilla.",
+    "type": "culture",
+    "keyword": "maté rituel"
+  },
+  {
+    "fact": "L'asado argentin est un rituel social comparable au repas dominical en France. Il dure des heures, se prépare lentement sur braises et réunit famille et amis.",
+    "type": "culture",
+    "keyword": "asado"
+  },
+  {
+    "fact": "Jorge Luis Borges est l'un des écrivains les plus influents du XXe siècle. Ses labyrinthes narratifs et ses bibliothèques infinies ont influencé Umberto Eco et Michel Foucault.",
+    "type": "culture",
+    "keyword": "Borges"
+  },
+  {
+    "fact": "Julio Cortázar a vécu une grande partie de sa vie à Paris et y a écrit plusieurs de ses chefs-d'œuvre en espagnol.",
+    "type": "culture",
+    "keyword": "Cortázar"
+  },
+  {
+    "fact": "Astor Piazzolla a révolutionné le tango en lui ajoutant des harmonies jazz et des influences de musique classique européenne.",
+    "type": "culture",
+    "keyword": "Piazzolla"
+  },
+  {
+    "fact": "Mercedes Sosa, surnommée «la voix de l'Amérique latine», était une chanteuse de folklore argentin et une figure politique majeure.",
+    "type": "culture",
+    "keyword": "Mercedes Sosa"
+  },
+  {
+    "fact": "Le dulce de leche est la confiture nationale argentine. La légende raconte qu'il fut inventé par accident quand du lait sucré fut oublié sur le feu.",
+    "type": "culture",
+    "keyword": "dulce de leche"
+  },
+  {
+    "fact": "L'alfajor est le biscuit argentin par excellence : deux biscuits friables enserrant du dulce de leche, souvent enrobés de chocolat.",
+    "type": "culture",
+    "keyword": "alfajores"
+  },
+  {
+    "fact": "Le football est en Argentine bien plus qu'un sport : c'est une religion civile avec ses temples (les stades), ses saints (Maradona, Messi) et ses schismes (les rivalités de clubs).",
+    "type": "culture",
+    "keyword": "football argentin"
+  },
+  {
+    "fact": "Diego Maradona est une figure quasi mythologique en Argentine. Sa «mano de Dios» contre l'Angleterre en 1986 (un but marqué de la main qu'il attribua à.",
+    "type": "culture",
+    "keyword": "Maradona"
+  },
+  {
+    "fact": "Le «boom latino-américain» des années 1960 et 1970 a vu les éditeurs français publier massivement des auteurs comme García Márquez, Vargas Llosa et les Argentins Cortázar et Puig.",
+    "type": "culture",
+    "keyword": "boom latino Paris"
+  },
+  {
+    "fact": "Le cinéma argentin a remporté deux Oscars du meilleur film étranger, notamment «Le Secret de ses yeux» de Juan José Campanella en 2010.",
+    "type": "culture",
+    "keyword": "cinéma argentin"
+  },
+  {
+    "fact": "La danse du tango est fondée sur une improvisation à deux dans un code très précis. Le meneur et le suiveur communiquent uniquement par le contact physique, sans paroles.",
+    "type": "culture",
+    "keyword": "tango danse milonga"
+  },
+  {
+    "fact": "La cumbia villera est un genre musical né dans les banlieues défavorisées de Buenos Aires dans les années 1990. Elle raconte la vie dans les «villas miseria» avec un langage cru et direct.",
+    "type": "culture",
+    "keyword": "cumbia villera"
+  },
+  {
+    "fact": "La murga est une tradition de carnaval née dans les quartiers populaires de Buenos Aires et Montevideo. Des troupes habillées de façon extravagante.",
+    "type": "culture",
+    "keyword": "murga"
+  },
+  {
+    "fact": "Buenos Aires possède des «cafés notables», des établissements historiques protégés par la ville pour leur valeur patrimoniale.",
+    "type": "culture",
+    "keyword": "cafés notables"
+  },
+  {
+    "fact": "Le Teatro Colón de Buenos Aires est considéré comme l'une des cinq meilleures salles d'opéra du monde pour son acoustique.",
+    "type": "culture",
+    "keyword": "Teatro Colón"
+  },
+  {
+    "fact": "La Feria Internacional del Libro de Buenos Aires est la deuxième plus grande foire du livre hispanophone du monde. Elle attire chaque année des centaines d'écrivains.",
+    "type": "culture",
+    "keyword": "Feria del Libro"
+  },
+  {
+    "fact": "Buenos Aires est la ville avec le plus grand nombre de psychanalystes par habitant au monde : environ 800 pour 100 000 habitants. La psychanalyse y est une pratique culturelle autant que médicale.",
+    "type": "culture",
+    "keyword": "psychanalyse Buenos Aires"
+  },
+  {
+    "fact": "«Martín Fierro» de José Hernández est l'œuvre fondatrice de la littérature gauchesque argentine. Ce long poème épique célèbre la figure du gaucho, le cavalier.",
+    "type": "culture",
+    "keyword": "Martin Fierro"
+  },
+  {
+    "fact": "La Patagonie est l'une des régions les plus mythiques pour les voyageurs français depuis le récit de Bruce Chatwin «En Patagonie».",
+    "type": "culture",
+    "keyword": "Patagonie"
+  },
+  {
+    "fact": "Le Malbec, cépage emblématique argentin, vient en réalité du sud-ouest de la France, de la région de Cahors. Introduit en Argentine au XIXe siècle, il a trouvé.",
+    "type": "culture",
+    "keyword": "Malbec Mendoza"
+  },
+  {
+    "fact": "Les empanadas sont des chaussons farcis présents dans toute l'Amérique latine, mais avec des spécificités très marquées selon les provinces argentines. Chaque région a sa recette et son identité.",
+    "type": "culture",
+    "keyword": "empanadas"
+  },
+  {
+    "fact": "Les medialunas (littéralement «demi-lunes») sont les croissants argentins, plus petits et plus sucrés que les croissants français.",
+    "type": "culture",
+    "keyword": "medialunas"
+  },
+  {
+    "fact": "Le rock argentin («rock nacional») est une scène musicale majeure et originale, avec des artistes comme Soda Stereo, Charly García et Fito Páez.",
+    "type": "culture",
+    "keyword": "rock nacional"
+  },
+  {
+    "fact": "La yerba maté contient de la caféine, de la théobromine (comme le chocolat) et de la théophylline (comme le thé).",
+    "type": "culture",
+    "keyword": "yerba maté chimie"
+  },
+  {
+    "fact": "Lionel Messi a joué au Paris Saint-Germain de 2021 à 2023. Son passage en France, décevant sportivement, a néanmoins renforcé les liens entre les deux cultures du football.",
+    "type": "culture",
+    "keyword": "Messi au PSG"
+  },
+  {
+    "fact": "«Mafalda» de Quino est l'une des bandes dessinées les plus traduites au monde et a été publiée en France dès les années 1970.",
+    "type": "culture",
+    "keyword": "Mafalda"
+  },
+  {
+    "fact": "San Telmo est le quartier historique le plus emblématique de Buenos Aires. Ses rues pavées, ses maisons coloniales et ses marchés d'antiquités lui donnent une.",
+    "type": "culture",
+    "keyword": "San Telmo"
+  },
+  {
+    "fact": "Le vocabulaire du football imprègne profondément le langage argentin. «Gambetear» (dribbler) signifie esquiver une difficulté.",
+    "type": "culture",
+    "keyword": "football et langage"
+  },
+  {
+    "fact": "Buenos Aires mélange des styles architecturaux très variés : néoclassique français, art déco américain, modernisme et colonial espagnol.",
+    "type": "culture",
+    "keyword": "architecture porteña"
+  },
+  {
+    "fact": "Ernesto Guevara, dit «Che», est né à Rosario, en Argentine. Ses contacts avec des intellectuels français comme Sartre ont influencé sa pensée révolutionnaire.",
+    "type": "culture",
+    "keyword": "Che Guevara argentin"
+  },
+  {
+    "fact": "La musique andine du nord-ouest argentin (chacarera, zamba, cueca) est aussi importante culturellement que le tango, bien que moins connue internationalement.",
+    "type": "culture",
+    "keyword": "folklore andin"
+  },
+  {
+    "fact": "Les chutes d'Iguazú, à la frontière entre l'Argentine et le Brésil, sont parmi les plus grandes et les plus spectaculaires du monde.",
+    "type": "culture",
+    "keyword": "Iguazú"
+  },
+  {
+    "fact": "Mendoza est la capitale argentine du vin, nichée au pied des Andes. Ses vignobles cultivent essentiellement le Malbec, un cépage venu de France.",
+    "type": "culture",
+    "keyword": "Mendoza vignobles"
+  },
+  {
+    "fact": "L'espagnol est la deuxième langue la plus parlée au monde en nombre de locuteurs natifs, avec environ 500 millions de personnes. Il dépasse l'anglais comme langue maternelle.",
+    "type": "insolite",
+    "keyword": "espagnol langue mondiale"
+  },
+  {
+    "fact": "L'espagnol est l'une des langues qui se parle le plus vite au monde. Des études de linguistique ont mesuré environ 7,82 syllabes par seconde.",
+    "type": "insolite",
+    "keyword": "vitesse parole"
+  },
+  {
+    "fact": "L'espagnol est l'une des rares langues au monde à utiliser un signe de ponctuation inversé en ouverture : ¡ et ¿.",
+    "type": "insolite",
+    "keyword": "ponctuation inversée"
+  },
+  {
+    "fact": "Le mot «ojalá» (espérons que, pourvu que) vient directement de l'arabe «insha'Allah» (si Dieu le veut). C'est l'une des traces les plus directes des huit.",
+    "type": "insolite",
+    "keyword": "ojalá arabe"
+  },
+  {
+    "fact": "La Real Academia Española (RAE), créée en 1713, adopte une approche plus descriptive que prescriptive : elle observe comment la langue évolue avant de légiférer.",
+    "type": "insolite",
+    "keyword": "Real Academia Española"
+  },
+  {
+    "fact": "Miguel de Cervantes et William Shakespeare sont morts à quelques jours d'intervalle en 1616. Cette coïncidence a fait du 23 avril la Journée mondiale du livre.",
+    "type": "insolite",
+    "keyword": "Cervantes Shakespeare"
+  },
+  {
+    "fact": "L'espagnol est l'une des six langues officielles de l'ONU, aux côtés du français, de l'anglais, de l'arabe, du russe et du mandarin.",
+    "type": "insolite",
+    "keyword": "espagnol à l'ONU"
+  },
+  {
+    "fact": "L'espagnol est la deuxième langue la plus parlée aux États-Unis, avec plus de 40 millions de locuteurs natifs. C'est plus que la population totale de l'Espagne.",
+    "type": "insolite",
+    "keyword": "espagnol aux États-Unis"
+  },
+  {
+    "fact": "Le tango a été inscrit au patrimoine culturel immatériel de l'UNESCO en 2009, conjointement par l'Argentine et l'Uruguay.",
+    "type": "insolite",
+    "keyword": "tango UNESCO"
+  },
+  {
+    "fact": "L'espagnol possède officiellement 17 temps verbaux. Mais dans la pratique quotidienne, un Argentin n'en utilise activement qu'une dizaine.",
+    "type": "insolite",
+    "keyword": "temps verbaux"
+  },
+  {
+    "fact": "La langue des signes argentine (LSA) et la langue des signes française (LSF) partagent certaines similarités historiques car elles descendent toutes deux partiellement de la langue des signes française du XIXe siècle, introduite dans les Amériques.",
+    "type": "insolite",
     "keyword": "langue des signes"
   },
   {
-    "fact": "En espagnol, les nationalités ne prennent pas de majuscule : «soy francés», «soy argentino».",
+    "fact": "L'Argentine est le pays d'Amérique latine avec le taux de lecture le plus élevé. Buenos Aires compte plus de librairies par habitant que presque n'importe quelle autre ville du monde.",
+    "type": "insolite",
+    "keyword": "Argentine et lecture"
+  },
+  {
+    "fact": "L'espagnol est géré par 23 académies nationales coordonnées par la RAE. Cette structure unique au monde signifie que l'espagnol d'Argentine, du Mexique ou.",
+    "type": "insolite",
+    "keyword": "23 académies"
+  },
+  {
+    "fact": "Le nom «Argentina» vient du latin «argentum» (argent). Les conquistadors espagnols croyaient cette région riche en argent, sur la foi de rumeurs évoquant des.",
+    "type": "insolite",
+    "keyword": "nom Argentine"
+  },
+  {
+    "fact": "Carlos Gardel, le plus grand interprète de tango de l'histoire, est revendiqué par l'Argentine, l'Uruguay et la France. Il est probablement né à Toulouse vers 1890.",
+    "type": "insolite",
+    "keyword": "Gardel et Toulouse"
+  },
+  {
+    "fact": "Don Quichotte de Cervantes (1605) est souvent présenté comme le premier roman moderne de la littérature mondiale. Il a été traduit en français dès 1614, soit.",
+    "type": "insolite",
+    "keyword": "Don Quichotte"
+  },
+  {
+    "fact": "Environ 4 000 mots espagnols viennent directement de l'arabe. C'est la troisième influence la plus importante sur le vocabulaire espagnol après le latin et le grec.",
+    "type": "insolite",
+    "keyword": "espagnol et arabe"
+  },
+  {
+    "fact": "L'espagnol est la langue étrangère la plus étudiée au monde, devant l'anglais et le français. Sur les applications mobiles d'apprentissage, c'est la première langue apprise en Europe.",
+    "type": "insolite",
+    "keyword": "langue la plus étudiée"
+  },
+  {
+    "fact": "L'Argentine est le premier pays au monde à avoir légalisé le mariage pour tous en Amérique latine, en 2010. La France l'a légalisé en 2013.",
+    "type": "insolite",
+    "keyword": "mariage pour tous"
+  },
+  {
+    "fact": "L'Avenue 9 de Julio à Buenos Aires est réputée comme l'une des avenues les plus larges du monde avec ses 140 mètres de largeur.",
+    "type": "insolite",
+    "keyword": "9 de Julio avenue"
+  },
+  {
+    "fact": "Le spanglish, mélange d'espagnol et d'anglais parlé par des millions de Latinos aux États-Unis, n'existe pas en Argentine. Là-bas, l'influence de l'anglais prend la forme d'emprunts.",
+    "type": "insolite",
+    "keyword": "spanglish vs franglais"
+  },
+  {
+    "fact": "L'espagnol et le français sont toutes deux des langues romanes issues du latin vulgaire, mais elles ont divergé à des vitesses différentes.",
+    "type": "insolite",
+    "keyword": "latin et divergence"
+  },
+  {
+    "fact": "Le mot «tango» lui-même a une origine incertaine. Les théories l'associent à l'africain «tamgu» (tambour), au latin «tangere» (toucher) ou à une onomatopée.",
+    "type": "insolite",
+    "keyword": "origine du mot tango"
+  },
+  {
+    "fact": "La ville de Buenos Aires est techniquement une «ciudad autónoma» (ville autonome), avec un statut équivalent à celui d'une province.",
+    "type": "insolite",
+    "keyword": "statut Buenos Aires"
+  },
+  {
+    "fact": "«Mango» désigne un peso argentin en argot. «No tengo un mango» signifie «je n'ai pas un sou». Ce mot vient du lunfardo et est utilisé dans toutes les couches sociales.",
+    "type": "rioplatense",
+    "keyword": "mango argent"
+  },
+  {
+    "fact": "«No dar pie con bola» (ne pas mettre le pied avec la balle) signifie rater tout ce qu'on entreprend, ne rien réussir.",
+    "type": "expression_idiomatique",
+    "keyword": "no dar pie con bola"
+  },
+  {
+    "fact": "Le mot «carabela» (caravelle) désigne en argot argentin un verre de vin partagé entre plusieurs personnes qui cotisent pour l'acheter.",
+    "type": "etymologie",
+    "keyword": "carabela"
+  },
+  {
+    "fact": "«Cancha» vient du quechua «kancha» (espace clôturé, terrain). En espagnol argentin, «cancha» désigne n'importe quel terrain de sport mais aussi l'expérience et le savoir-faire.",
+    "type": "etymologie",
+    "keyword": "cancha"
+  },
+  {
+    "fact": "La bande son de «Requiem pour un fou» de Jacques Brel, traduite en espagnol, est devenue un classique en Argentine. Brel lui-même est une figure connue dans les milieux culturels argentins.",
     "type": "culture",
-    "keyword": "nationalités"
+    "keyword": "Brel en Argentine"
   },
   {
-    "fact": "Le français a emprunté «plaza», «patio», «siesta» à l'espagnol. Les deux langues s'échangent !",
+    "fact": "La Villa Crespo, le Once et Palermo sont les quartiers juifs historiques de Buenos Aires. L'Argentine abrite la plus grande communauté juive d'Amérique latine et la cinquième au monde.",
     "type": "culture",
-    "keyword": "emprunts"
+    "keyword": "communauté juive Buenos Aires"
   },
   {
-    "fact": "En espagnol, le sujet est souvent omis : «Hablo» = «Je parle». Le verbe se suffit à lui-même !",
-    "type": "grammaire",
-    "keyword": "sujet omis"
+    "fact": "L'Argentine a donné naissance à plusieurs marques et concepts gastronomiques qui ont conquis l'Europe, dont la chaîne de steak houses «La Cabrera» ou les glaces artisanales aux saveurs de dulce de leche.",
+    "type": "culture",
+    "keyword": "gastronomie exportée"
   },
   {
-    "fact": "L'espagnol possède deux verbes «être» : «ser» (essence) et «estar» (état). Un défi pour les francophones !",
-    "type": "grammaire",
-    "keyword": "ser/estar"
-  },
-  {
-    "fact": "Le genre des mots diffère parfois : «la mer» = «el mar» (masculin en espagnol).",
-    "type": "grammaire",
-    "keyword": "genre"
-  },
-  {
-    "fact": "Le subjonctif est beaucoup plus courant en espagnol qu'en français. «Espero que vengas» !",
-    "type": "grammaire",
-    "keyword": "subjonctif"
-  },
-  {
-    "fact": "L'espagnol n'a pas d'article partitif : «Je mange du pain» = «Como pan» (sans article).",
-    "type": "grammaire",
-    "keyword": "article partitif"
-  },
-  {
-    "fact": "En Argentine, le pretérito indefinido est plus utilisé que le pretérito perfecto compuesto.",
-    "type": "grammaire",
-    "keyword": "pretérito"
-  },
-  {
-    "fact": "Le «ne... pas» français est unique. En espagnol, la négation simple «no» suffit avant le verbe.",
-    "type": "grammaire",
-    "keyword": "négation"
-  },
-  {
-    "fact": "En espagnol, les verbes réfléchis sont très fréquents : «levantarse», «llamarse», «sentirse».",
-    "type": "grammaire",
-    "keyword": "verbes réfléchis"
-  },
-  {
-    "fact": "L'espagnol utilise deux points d'interrogation : «¿Cómo estás?» Pour anticiper la question !",
-    "type": "grammaire",
-    "keyword": "interrogation"
-  },
-  {
-    "fact": "En espagnol, l'adjectif se place généralement après le nom : «casa blanca», «libro interesante».",
-    "type": "grammaire",
-    "keyword": "adjectif"
-  },
-  {
-    "fact": "Le «vous» de politesse existe aussi en espagnol : «usted» (singulier), «ustedes» (pluriel).",
-    "type": "grammaire",
-    "keyword": "usted"
-  },
-  {
-    "fact": "En espagnol, le futur peut être remplacé par «ir + a + infinitif» : «voy a comer» = je vais manger.",
-    "type": "grammaire",
-    "keyword": "futur périphrastique"
-  },
-  {
-    "fact": "En français, le «on» peut désigner «nous». En espagnol, «uno» joue parfois ce rôle.",
-    "type": "grammaire",
-    "keyword": "pronom on"
-  },
-  {
-    "fact": "Le «r» roulé espagnol n'existe pas en français standard. Le «r» français est guttural et unique.",
-    "type": "prononciation",
-    "keyword": "r roulé"
-  },
-  {
-    "fact": "Le «ll» espagnol se prononce «j» (comme «je») en Argentine : «lluvia» se dit /ʒuvia/.",
-    "type": "prononciation",
-    "keyword": "ll argentin"
-  },
-  {
-    "fact": "Le «s» final espagnol se prononce toujours, contrairement au français où il est souvent muet.",
-    "type": "prononciation",
-    "keyword": "s final"
-  },
-  {
-    "fact": "En espagnol, toutes les voyelles se prononcent distinctement. Pas de voyelles muettes comme en français !",
-    "type": "prononciation",
-    "keyword": "voyelles"
-  },
-  {
-    "fact": "Le «u» français (son /y/ comme dans «rue») n'existe pas en espagnol. Un défi pour les hispanophones !",
-    "type": "prononciation",
-    "keyword": "son /y/"
-  },
-  {
-    "fact": "La «jota» espagnole (j/g devant e,i) est un son guttural /x/ absent du français standard.",
-    "type": "prononciation",
-    "keyword": "jota"
-  },
-  {
-    "fact": "En espagnol, l'accent tonique est crucial : «hablo» (je parle, présent) vs «habló» (il parla, passé).",
-    "type": "prononciation",
-    "keyword": "accent tonique"
-  },
-  {
-    "fact": "Le français possède des sons nasaux (an, en, in, on, un) qui n'existent pas en espagnol.",
-    "type": "prononciation",
-    "keyword": "nasales"
-  },
-  {
-    "fact": "En espagnol argentin, le «sh» remplace le «ll» et «y» : «yo» se prononce «sho». Le «sheísmo» !",
-    "type": "prononciation",
-    "keyword": "sheísmo"
-  },
-  {
-    "fact": "Le «e» français a trois prononciations (/e/, /ɛ/, /ə/) selon les accents. En espagnol, une seule.",
-    "type": "prononciation",
-    "keyword": "e français"
+    "fact": "Mendoza, Salta et la région de Quebrada de Humahuaca dans le nord-ouest de l'Argentine figurent parmi les destinations préférées des touristes français.",
+    "type": "culture",
+    "keyword": "tourisme français en Argentine"
   }
 ]

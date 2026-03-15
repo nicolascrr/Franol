@@ -2,6 +2,7 @@
 
 import { useLocale } from "@/contexts/LocaleContext";
 import { AliasInput } from "@/components/forms/AliasInput";
+import { CustomDropdown } from "@/components/ui/CustomDropdown";
 import { ARTICLES_FR, ARTICLES_ES } from "@/lib/constants";
 import type { Category } from "@/types";
 import { getLangValue } from "@/lib/lang";
@@ -77,44 +78,26 @@ export function VocabularyForm({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-franol-text mb-2">
-              {t("add.articleFr")}
-            </label>
-            <select
-              value={form.article_fr}
-              onChange={(e) => onFieldChange("article_fr", e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border-2 border-franol-warm
-                          bg-white text-franol-text
-                          focus:border-franol-accent-blue focus:outline-none transition-colors"
-            >
-              <option value="">{t("add.selectArticle")}</option>
-              {ARTICLES_FR.map((article) => (
-                <option key={article} value={article}>
-                  {article}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-franol-text mb-2">
-              {t("add.articleEs")}
-            </label>
-            <select
-              value={form.article_es}
-              onChange={(e) => onFieldChange("article_es", e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border-2 border-franol-warm
-                          bg-white text-franol-text
-                          focus:border-franol-accent-blue focus:outline-none transition-colors"
-            >
-              <option value="">{t("add.selectArticle")}</option>
-              {ARTICLES_ES.map((article) => (
-                <option key={article} value={article}>
-                  {article}
-                </option>
-              ))}
-            </select>
-          </div>
+          <CustomDropdown
+            value={form.article_fr}
+            onChange={(value) => onFieldChange("article_fr", value)}
+            options={[
+              { value: "", label: t("add.selectArticle") },
+              ...ARTICLES_FR.map((article) => ({ value: article, label: article })),
+            ]}
+            placeholder={t("add.selectArticle")}
+            label={t("add.articleFr")}
+          />
+          <CustomDropdown
+            value={form.article_es}
+            onChange={(value) => onFieldChange("article_es", value)}
+            options={[
+              { value: "", label: t("add.selectArticle") },
+              ...ARTICLES_ES.map((article) => ({ value: article, label: article })),
+            ]}
+            placeholder={t("add.selectArticle")}
+            label={t("add.articleEs")}
+          />
         </div>
 
         <div>
@@ -153,22 +136,22 @@ export function VocabularyForm({
             {t("add.category")}
           </label>
           <div className="flex gap-2">
-            <select
+            <CustomDropdown
               value={form.category}
-              onChange={(e) => onFieldChange("category", e.target.value)}
-              className="flex-1 px-4 py-3 rounded-xl border-2 border-franol-warm
-                         bg-white text-franol-text
-                         focus:border-franol-accent-blue focus:outline-none transition-colors"
-            >
-              <option value="">{t("add.selectCategory")}</option>
-              {categories
-                .filter((c) => c.type === "vocabulary")
-                .map((cat) => (
-                  <option key={cat.id} value={cat.id}>
-                    {getLangValue(cat, "name", sourceLang)}
-                  </option>
-                ))}
-            </select>
+              onChange={(value) => onFieldChange("category", value)}
+              options={[
+                { value: "", label: t("add.selectCategory") },
+                ...categories
+                  .filter((c) => c.type === "vocabulary")
+                  .map((cat) => ({
+                    value: cat.id,
+                    label: getLangValue(cat, "name", sourceLang),
+                    color: cat.color,
+                  })),
+              ]}
+              placeholder={t("add.selectCategory")}
+              className="flex-1"
+            />
             <button
               type="button"
               onClick={onOpenCategoryModal}

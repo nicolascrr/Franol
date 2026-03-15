@@ -19,7 +19,6 @@ import {
   ArrowRight,
   LogOut,
   HelpCircle,
-  Sparkles,
 } from "lucide-react";
 
 type QuizState = "loading" | "playing" | "answered" | "finished";
@@ -66,15 +65,19 @@ export default function QuizPage() {
     setIsLoadingFact(true);
     try {
       // Dynamically import facts based on locale
-      const facts = locale === "es" 
-        ? (await import("@/data/fun-facts-es.json")).default 
-        : (await import("@/data/fun-facts-fr.json")).default;
-      
+      const facts =
+        locale === "es"
+          ? (await import("@/data/fun-facts-es.json")).default
+          : (await import("@/data/fun-facts-fr.json")).default;
+
       // Filter out seen keywords
-      const availableFacts = seenKeywords.length > 0
-        ? facts.filter((f: { keyword: string }) => !seenKeywords.includes(f.keyword))
-        : facts;
-      
+      const availableFacts =
+        seenKeywords.length > 0
+          ? facts.filter(
+              (f: { keyword: string }) => !seenKeywords.includes(f.keyword),
+            )
+          : facts;
+
       // Pick a random fact
       if (availableFacts.length > 0) {
         const randomIndex = Math.floor(Math.random() * availableFacts.length);
@@ -140,10 +143,11 @@ export default function QuizPage() {
           // Vérifier que le quiz sauvegardé correspond au bon portail
           if (savedQuiz.locale === (locale || "fr")) {
             // Si pas de config en session OU si c'est le même quiz (pas un nouveau lancement)
-            const isResume = !configStr || (
-              configStr && JSON.parse(configStr).prompt === savedQuiz.config.prompt
-              && JSON.parse(configStr).mode === savedQuiz.config.mode
-            );
+            const isResume =
+              !configStr ||
+              (configStr &&
+                JSON.parse(configStr).prompt === savedQuiz.config.prompt &&
+                JSON.parse(configStr).mode === savedQuiz.config.mode);
 
             if (isResume && savedQuiz.currentIndex > 0) {
               quizLoadedRef.current = true;
@@ -155,7 +159,10 @@ export default function QuizPage() {
               setState("playing");
 
               // Restaurer en sessionStorage pour les autres pages
-              sessionStorage.setItem("quizConfig", JSON.stringify(savedQuiz.config));
+              sessionStorage.setItem(
+                "quizConfig",
+                JSON.stringify(savedQuiz.config),
+              );
               sessionStorage.setItem(
                 "cachedQuizQuestions",
                 JSON.stringify(savedQuiz.questions),
@@ -595,12 +602,6 @@ export default function QuizPage() {
               <LogOut size={20} />
             </button>
             <div className="flex items-center gap-2">
-              {isDiscoveryMode && (
-                <div className="flex items-center gap-1 px-2 py-0.5 bg-gradient-to-r from-orange-500 to-amber-500 rounded-full text-xs font-semibold text-white">
-                  <Sparkles size={10} />
-                  IA
-                </div>
-              )}
               <span className="text-sm font-medium text-franol-text">
                 {t("practice.quiz.question")} {currentIndex + 1}{" "}
                 {t("practice.quiz.of")} {totalQuestions}
@@ -799,7 +800,7 @@ export default function QuizPage() {
                                 disabled:opacity-50"
                     >
                       <HelpCircle size={14} />
-                      {t("practice.quiz.explain")}
+                      {t("practice.quiz.explanation")}
                     </button>
                   )}
                 </div>
@@ -813,23 +814,21 @@ export default function QuizPage() {
                               w-full mt-3 px-4 py-2.5 text-sm font-medium
                               text-franol-muted hover:text-franol-accent-blue
                               bg-white/60 hover:bg-white
-                              rounded-lg border border-black/10
+                              rounded-lg border border-franol-warm
                               transition-colors disabled:opacity-50"
                   >
                     <HelpCircle size={16} />
-                    {t("practice.quiz.explain")}
+                    {t("practice.quiz.explanation")}
+                    {" ?"}
                   </button>
                 )}
               </div>
 
               {showExplanation && (
-                <div className="p-4 rounded-xl mb-4 bg-gradient-to-r from-orange-50 to-amber-50 border border-orange-200 animate-fade-in">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Sparkles size={16} className="text-orange-500" />
-                    <span className="text-sm font-semibold text-orange-700">
-                      {t("practice.quiz.aiExplanation")}
-                    </span>
-                  </div>
+                <div className="p-4 rounded-xl mb-4 bg-franol-sand border border-franol-warm animate-fade-in">
+                  <p className="text-sm font-medium text-franol-text mb-2">
+                    {t("practice.quiz.explanation")}
+                  </p>
                   {isLoadingExplanation ? (
                     <div className="flex items-center gap-2 text-franol-muted">
                       <Loader2 size={16} className="animate-spin" />
