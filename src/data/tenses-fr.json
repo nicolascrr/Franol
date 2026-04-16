@@ -1,0 +1,12 @@
+[
+  { "key": "present", "label": "Présent" },
+  { "key": "passe_compose", "label": "Passé composé" },
+  { "key": "imparfait", "label": "Imparfait" },
+  { "key": "plus_que_parfait", "label": "Plus-que-parfait" },
+  { "key": "passe_simple", "label": "Passé simple" },
+  { "key": "futur_simple", "label": "Futur simple" },
+  { "key": "futur_proche", "label": "Futur proche" },
+  { "key": "conditionnel", "label": "Conditionnel" },
+  { "key": "subjonctif", "label": "Subjonctif" },
+  { "key": "gerondif", "label": "Gérondif" }
+]

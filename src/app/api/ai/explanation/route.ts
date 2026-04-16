@@ -1,10 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
+import { GoogleGenAI } from "@google/genai";
 import { getExplanationPrompts } from "@/lib/prompts";
 import type { Locale } from "@/lib/prompts";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
-const OPENAI_API_KEY = process.env.API_KEY;
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+
+const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY ?? "" });
 
 interface ExplanationRequestBody {
   question: string;
@@ -33,34 +36,17 @@ export async function POST(request: NextRequest) {
       },
     );
 
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${OPENAI_API_KEY}`,
+    const response = await ai.models.generateContent({
+      model: "gemini-3-flash-preview",
+      contents: userPrompt,
+      config: {
+        systemInstruction: systemPrompt,
+        temperature: 0.4,
+        maxOutputTokens: 3000,
       },
-      body: JSON.stringify({
-        model: "gpt-4.1-mini",
-        messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: userPrompt },
-        ],
-        temperature: 0.7,
-        max_tokens: 300,
-      }),
     });
 
-    if (!response.ok) {
-      const errorData = await response.text();
-      console.error("OpenAI API error:", errorData);
-      return NextResponse.json(
-        { error: "Failed to get explanation" },
-        { status: 500 },
-      );
-    }
-
-    const data = await response.json();
-    const explanation = data.choices?.[0]?.message?.content;
+    const explanation = response.text;
 
     if (!explanation) {
       return NextResponse.json(

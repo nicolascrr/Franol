@@ -3,8 +3,9 @@
 import { X, Loader2, Plus } from "lucide-react";
 import { useLocale } from "@/contexts/LocaleContext";
 import { getLangValue } from "@/lib/lang";
-import { AliasInput } from "@/components/forms/AliasInput";
+import { AliasSection } from "@/components/forms/AliasSection";
 import { CustomDropdown } from "@/components/ui/CustomDropdown";
+import { Checkbox } from "@/components/ui/Checkbox";
 import { ARTICLES_FR, ARTICLES_ES } from "@/lib/constants";
 import type { ContentItem, Category, VocabularyItem, ExpressionItem, ConjugationItem } from "@/types";
 import type { LangCode } from "@/lib/lang";
@@ -141,71 +142,40 @@ export function EditModal({
                   label={t("add.articleEs")}
                 />
               </div>
-              <div>
-                <label className="block text-sm font-medium text-franol-text mb-2">
-                  {t("add.aliases")}
-                </label>
-                {sourceLang === "fr" ? (
-                  <AliasInput
-                    aliases={editForm.aliases_fr}
-                    onAdd={(alias) =>
-                      setEditForm({
-                        ...editForm,
-                        aliases_fr: [...editForm.aliases_fr, alias],
-                      })
-                    }
-                    onRemove={(index) =>
-                      setEditForm({
-                        ...editForm,
-                        aliases_fr: editForm.aliases_fr.filter(
-                          (_, i) => i !== index,
-                        ),
-                      })
-                    }
-                    placeholder={t("add.aliasPlaceholderVocab")}
-                  />
-                ) : (
-                  <AliasInput
-                    aliases={editForm.aliases_es}
-                    onAdd={(alias) =>
-                      setEditForm({
-                        ...editForm,
-                        aliases_es: [...editForm.aliases_es, alias],
-                      })
-                    }
-                    onRemove={(index) =>
-                      setEditForm({
-                        ...editForm,
-                        aliases_es: editForm.aliases_es.filter(
-                          (_, i) => i !== index,
-                        ),
-                      })
-                    }
-                    placeholder={t("add.aliasPlaceholderVocab")}
-                  />
-                )}
-              </div>
+              <AliasSection
+                aliasesFr={editForm.aliases_fr}
+                aliasesEs={editForm.aliases_es}
+                onAddFr={(alias) => setEditForm({ ...editForm, aliases_fr: [...editForm.aliases_fr, alias] })}
+                onRemoveFr={(index) => setEditForm({ ...editForm, aliases_fr: editForm.aliases_fr.filter((_, i) => i !== index) })}
+                onAddEs={(alias) => setEditForm({ ...editForm, aliases_es: [...editForm.aliases_es, alias] })}
+                onRemoveEs={(index) => setEditForm({ ...editForm, aliases_es: editForm.aliases_es.filter((_, i) => i !== index) })}
+                placeholderFr={t("add.aliasPlaceholderVocab")}
+                placeholderEs={t("add.aliasPlaceholderVocab")}
+                labelFr={t("add.aliasesFr")}
+                labelEs={t("add.aliasesEs")}
+                title={t("add.aliases")}
+              />
               <div>
                 <label className="block text-sm font-medium text-franol-text mb-2">
                   {t("add.category")}
                 </label>
                 <div className="flex gap-2">
-                  <select
+                  <CustomDropdown
                     value={editForm.category || ""}
-                    onChange={(e) =>
-                      setEditForm({ ...editForm, category: e.target.value })
+                    onChange={(value) =>
+                      setEditForm({ ...editForm, category: value })
                     }
-                    className="flex-1 px-4 py-3 rounded-xl border-2 border-franol-warm
-                               bg-white text-franol-text
-                               focus:border-franol-accent-blue focus:outline-none transition-colors"
-                  >
-                    <option value="">{t("add.selectCategory")}</option>
-                    {vocabularyCategories.map((cat) => (
-                      <option key={cat.id} value={cat.id}>
-                        {getLangValue(cat, "name", sourceLang)}
-                      </option>
-                    ))}
-                  </select>
+                    options={[
+                      { value: "", label: t("add.selectCategory") },
+                      ...vocabularyCategories.map((cat) => ({
+                        value: cat.id,
+                        label: getLangValue(cat, "name", sourceLang),
+                        color: cat.color,
+                      })),
+                    ]}
+                    placeholder={t("add.selectCategory")}
+                    className="flex-1"
+                  />
                   <button
                     type="button"
                     onClick={() => onOpenNewCategoryModal("vocabulary")}
@@ -252,50 +222,19 @@ export function EditModal({
                              focus:border-franol-accent-blue focus:outline-none transition-colors"
                 />
               </div>
-              <div>
-                <label className="block text-sm font-medium text-franol-text mb-2">
-                  {t("add.aliases")}
-                </label>
-                {sourceLang === "fr" ? (
-                  <AliasInput
-                    aliases={editForm.aliases_fr}
-                    onAdd={(alias) =>
-                      setEditForm({
-                        ...editForm,
-                        aliases_fr: [...editForm.aliases_fr, alias],
-                      })
-                    }
-                    onRemove={(index) =>
-                      setEditForm({
-                        ...editForm,
-                        aliases_fr: editForm.aliases_fr.filter(
-                          (_, i) => i !== index,
-                        ),
-                      })
-                    }
-                    placeholder={t("add.aliasPlaceholderExpr")}
-                  />
-                ) : (
-                  <AliasInput
-                    aliases={editForm.aliases_es}
-                    onAdd={(alias) =>
-                      setEditForm({
-                        ...editForm,
-                        aliases_es: [...editForm.aliases_es, alias],
-                      })
-                    }
-                    onRemove={(index) =>
-                      setEditForm({
-                        ...editForm,
-                        aliases_es: editForm.aliases_es.filter(
-                          (_, i) => i !== index,
-                        ),
-                      })
-                    }
-                    placeholder={t("add.aliasPlaceholderExpr")}
-                  />
-                )}
-              </div>
+              <AliasSection
+                aliasesFr={editForm.aliases_fr}
+                aliasesEs={editForm.aliases_es}
+                onAddFr={(alias) => setEditForm({ ...editForm, aliases_fr: [...editForm.aliases_fr, alias] })}
+                onRemoveFr={(index) => setEditForm({ ...editForm, aliases_fr: editForm.aliases_fr.filter((_, i) => i !== index) })}
+                onAddEs={(alias) => setEditForm({ ...editForm, aliases_es: [...editForm.aliases_es, alias] })}
+                onRemoveEs={(index) => setEditForm({ ...editForm, aliases_es: editForm.aliases_es.filter((_, i) => i !== index) })}
+                placeholderFr={t("add.aliasPlaceholderExpr")}
+                placeholderEs={t("add.aliasPlaceholderExpr")}
+                labelFr={t("add.aliasesFr")}
+                labelEs={t("add.aliasesEs")}
+                title={t("add.aliases")}
+              />
               <div>
                 <label className="block text-sm font-medium text-franol-text mb-2">
                   {t("add.context")}
@@ -369,50 +308,19 @@ export function EditModal({
                              focus:border-franol-accent-blue focus:outline-none transition-colors"
                 />
               </div>
-              <div>
-                <label className="block text-sm font-medium text-franol-text mb-2">
-                  {t("add.aliases")}
-                </label>
-                {sourceLang === "fr" ? (
-                  <AliasInput
-                    aliases={editForm.aliases_fr}
-                    onAdd={(alias) =>
-                      setEditForm({
-                        ...editForm,
-                        aliases_fr: [...editForm.aliases_fr, alias],
-                      })
-                    }
-                    onRemove={(index) =>
-                      setEditForm({
-                        ...editForm,
-                        aliases_fr: editForm.aliases_fr.filter(
-                          (_, i) => i !== index,
-                        ),
-                      })
-                    }
-                    placeholder={t("add.aliasPlaceholderVerb")}
-                  />
-                ) : (
-                  <AliasInput
-                    aliases={editForm.aliases_es}
-                    onAdd={(alias) =>
-                      setEditForm({
-                        ...editForm,
-                        aliases_es: [...editForm.aliases_es, alias],
-                      })
-                    }
-                    onRemove={(index) =>
-                      setEditForm({
-                        ...editForm,
-                        aliases_es: editForm.aliases_es.filter(
-                          (_, i) => i !== index,
-                        ),
-                      })
-                    }
-                    placeholder={t("add.aliasPlaceholderVerb")}
-                  />
-                )}
-              </div>
+              <AliasSection
+                aliasesFr={editForm.aliases_fr}
+                aliasesEs={editForm.aliases_es}
+                onAddFr={(alias) => setEditForm({ ...editForm, aliases_fr: [...editForm.aliases_fr, alias] })}
+                onRemoveFr={(index) => setEditForm({ ...editForm, aliases_fr: editForm.aliases_fr.filter((_, i) => i !== index) })}
+                onAddEs={(alias) => setEditForm({ ...editForm, aliases_es: [...editForm.aliases_es, alias] })}
+                onRemoveEs={(index) => setEditForm({ ...editForm, aliases_es: editForm.aliases_es.filter((_, i) => i !== index) })}
+                placeholderFr={t("add.aliasPlaceholderVerb")}
+                placeholderEs={t("add.aliasPlaceholderVerb")}
+                labelFr={t("add.aliasesFr")}
+                labelEs={t("add.aliasesEs")}
+                title={t("add.aliases")}
+              />
               <div className="grid grid-cols-2 gap-4">
                 <CustomDropdown
                   value={editForm.group_fr || ""}
@@ -444,67 +352,37 @@ export function EditModal({
                   label={t("add.groupEs")}
                 />
               </div>
-              <div className="flex items-center gap-3">
-                <input
-                  type="checkbox"
-                  id="edit_is_irregular"
-                  checked={editForm.is_irregular || false}
-                  onChange={(e) =>
-                    setEditForm({ ...editForm, is_irregular: e.target.checked })
-                  }
-                  className="w-5 h-5 rounded border-2 border-franol-warm text-franol-accent-blue
-                             focus:ring-franol-accent-blue focus:ring-offset-0"
-                />
-                <label
-                  htmlFor="edit_is_irregular"
-                  className="text-sm font-medium text-franol-text"
-                >
-                  {t("add.isIrregular")}
-                </label>
-              </div>
+              <Checkbox
+                id="edit_is_irregular"
+                checked={editForm.is_irregular || false}
+                onChange={(val) =>
+                  setEditForm({ ...editForm, is_irregular: val })
+                }
+                label={t("add.isIrregular")}
+              />
               <div className="flex flex-wrap items-center gap-6">
-                <div className="flex items-center gap-3">
-                  <input
-                    type="checkbox"
-                    id="edit_is_reflexive_fr"
-                    checked={editForm.is_reflexive_fr || false}
-                    onChange={(e) =>
-                      setEditForm({
-                        ...editForm,
-                        is_reflexive_fr: e.target.checked,
-                      })
-                    }
-                    className="w-5 h-5 rounded border-2 border-franol-warm text-franol-accent-blue
-                               focus:ring-franol-accent-blue focus:ring-offset-0"
-                  />
-                  <label
-                    htmlFor="edit_is_reflexive_fr"
-                    className="text-sm font-medium text-franol-text"
-                  >
-                    {t("add.isReflexiveFr")}
-                  </label>
-                </div>
-                <div className="flex items-center gap-3">
-                  <input
-                    type="checkbox"
-                    id="edit_is_reflexive_es"
-                    checked={editForm.is_reflexive_es || false}
-                    onChange={(e) =>
-                      setEditForm({
-                        ...editForm,
-                        is_reflexive_es: e.target.checked,
-                      })
-                    }
-                    className="w-5 h-5 rounded border-2 border-franol-warm text-franol-accent-blue
-                               focus:ring-franol-accent-blue focus:ring-offset-0"
-                  />
-                  <label
-                    htmlFor="edit_is_reflexive_es"
-                    className="text-sm font-medium text-franol-text"
-                  >
-                    {t("add.isReflexiveEs")}
-                  </label>
-                </div>
+                <Checkbox
+                  id="edit_is_reflexive_fr"
+                  checked={editForm.is_reflexive_fr || false}
+                  onChange={(val) =>
+                    setEditForm({
+                      ...editForm,
+                      is_reflexive_fr: val,
+                    })
+                  }
+                  label={t("add.isReflexiveFr")}
+                />
+                <Checkbox
+                  id="edit_is_reflexive_es"
+                  checked={editForm.is_reflexive_es || false}
+                  onChange={(val) =>
+                    setEditForm({
+                      ...editForm,
+                      is_reflexive_es: val,
+                    })
+                  }
+                  label={t("add.isReflexiveEs")}
+                />
               </div>
               <div>
                 <label className="block text-sm font-medium text-franol-text mb-2">
@@ -541,24 +419,14 @@ export function EditModal({
             </>
           )}
 
-          <div className="flex items-center gap-3">
-            <input
-              type="checkbox"
-              id="edit_verified"
-              checked={editForm.verified || false}
-              onChange={(e) =>
-                setEditForm({ ...editForm, verified: e.target.checked })
-              }
-              className="w-5 h-5 rounded border-2 border-franol-warm text-franol-accent-blue
-                         focus:ring-franol-accent-blue focus:ring-offset-0"
-            />
-            <label
-              htmlFor="edit_verified"
-              className="text-sm font-medium text-franol-text"
-            >
-              {t("content.verified")}
-            </label>
-          </div>
+          <Checkbox
+            id="edit_verified"
+            checked={editForm.verified || false}
+            onChange={(val) =>
+              setEditForm({ ...editForm, verified: val })
+            }
+            label={t("content.verified")}
+          />
 
           <div>
             <label className="block text-sm font-medium text-franol-text mb-2">

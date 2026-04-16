@@ -1,7 +1,7 @@
 "use client";
 
 import { useLocale } from "@/contexts/LocaleContext";
-import { AliasInput } from "@/components/forms/AliasInput";
+import { AliasSection } from "@/components/forms/AliasSection";
 import { CustomDropdown } from "@/components/ui/CustomDropdown";
 import type { Category } from "@/types";
 import { getLangValue } from "@/lib/lang";
@@ -74,36 +74,19 @@ export function ExpressionForm({
           </div>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-franol-text mb-2">
-            {t("add.aliases")}
-          </label>
-          {sourceLang === "fr" ? (
-            <AliasInput
-              aliases={form.aliases_fr}
-              onAdd={(alias) => onFieldChange("aliases_fr", [...form.aliases_fr, alias])}
-              onRemove={(index) =>
-                onFieldChange(
-                  "aliases_fr",
-                  form.aliases_fr.filter((_, i) => i !== index)
-                )
-              }
-              placeholder={t("add.aliasPlaceholderExpr")}
-            />
-          ) : (
-            <AliasInput
-              aliases={form.aliases_es}
-              onAdd={(alias) => onFieldChange("aliases_es", [...form.aliases_es, alias])}
-              onRemove={(index) =>
-                onFieldChange(
-                  "aliases_es",
-                  form.aliases_es.filter((_, i) => i !== index)
-                )
-              }
-              placeholder={t("add.aliasPlaceholderExpr")}
-            />
-          )}
-        </div>
+        <AliasSection
+          aliasesFr={form.aliases_fr}
+          aliasesEs={form.aliases_es}
+          onAddFr={(alias) => onFieldChange("aliases_fr", [...form.aliases_fr, alias])}
+          onRemoveFr={(index) => onFieldChange("aliases_fr", form.aliases_fr.filter((_, i) => i !== index))}
+          onAddEs={(alias) => onFieldChange("aliases_es", [...form.aliases_es, alias])}
+          onRemoveEs={(index) => onFieldChange("aliases_es", form.aliases_es.filter((_, i) => i !== index))}
+          placeholderFr={t("add.aliasPlaceholderExpr")}
+          placeholderEs={t("add.aliasPlaceholderExpr")}
+          labelFr={t("add.aliasesFr")}
+          labelEs={t("add.aliasesEs")}
+          title={t("add.aliases")}
+        />
 
         <div>
           <label className="block text-sm font-medium text-franol-text mb-2">

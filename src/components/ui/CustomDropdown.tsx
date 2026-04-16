@@ -40,13 +40,22 @@ export function CustomDropdown({
 
   const selectedOption = options.find((opt) => opt.value === value);
 
-  // Calculate dropdown position
+  // Calculate dropdown position — viewport-relative (fixed positioning)
   const updatePosition = useCallback(() => {
     if (buttonRef.current) {
       const rect = buttonRef.current.getBoundingClientRect();
+      const viewportWidth = window.innerWidth;
+      const gap = 6;
+
+      let left = rect.left;
+      const rightEdge = left + rect.width;
+      if (rightEdge > viewportWidth - 8) {
+        left = Math.max(8, viewportWidth - rect.width - 8);
+      }
+
       setDropdownPosition({
-        top: rect.bottom + window.scrollY + 6,
-        left: rect.left + window.scrollX,
+        top: rect.bottom + gap,
+        left,
         width: rect.width,
       });
     }
@@ -171,10 +180,11 @@ export function CustomDropdown({
             <div
               ref={menuRef}
               style={{
-                position: "absolute",
+                position: "fixed",
                 top: dropdownPosition.top,
                 left: dropdownPosition.left,
                 width: dropdownPosition.width,
+                zIndex: 9999,
               }}
               className={cn(
                 "z-[9999] py-1.5 rounded-xl border border-franol-warm",

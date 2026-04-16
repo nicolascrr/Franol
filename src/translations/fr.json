@@ -21,6 +21,8 @@
     "infinitiveFrPlaceholder": "Ex : Manger",
     "infinitiveEsPlaceholder": "Ex : Comer",
     "aliases": "Synonymes",
+    "aliasesFr": "Synonymes en français",
+    "aliasesEs": "Sinónimos en español",
     "aliasPlaceholderVocab": "Ex : Salut, Coucou...",
     "aliasPlaceholderExpr": "Ex : Comment ça va ?, Ça roule ?...",
     "aliasPlaceholderVerb": "Ex : Bouffer, Se nourrir...",
@@ -106,6 +108,7 @@
     "createdAt": "Créé le",
     "updatedAt": "Modifié le",
     "editCategory": "Modifier la catégorie",
+    "saveError": "Erreur lors de la sauvegarde. Veuillez réessayer.",
     "verified": "Vérifié",
     "markVerified": "Marquer comme vérifié"
   },

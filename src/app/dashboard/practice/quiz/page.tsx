@@ -9,7 +9,7 @@ import {
   type QuizQuestion,
   type QuizAnswer,
 } from "@/lib/quiz";
-import { generateAIQuizBatchWithStream, getAIExplanation } from "@/lib/openai";
+import { generateAIQuizBatchWithStream, getAIExplanation } from "@/lib/ai";
 import { checkAnswer } from "@/lib/levenshtein";
 import { QuitModal } from "@/components/practice/QuitModal";
 import {

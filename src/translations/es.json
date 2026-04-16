@@ -21,6 +21,8 @@
     "infinitiveFrPlaceholder": "Ej: Manger",
     "infinitiveEsPlaceholder": "Ej: Comer",
     "aliases": "Sinónimos",
+    "aliasesFr": "Sinónimos en francés",
+    "aliasesEs": "Sinónimos en español",
     "aliasPlaceholderVocab": "Ej: Buenas, Qué tal...",
     "aliasPlaceholderExpr": "Ej: ¿Cómo andas?, ¿Qué onda?...",
     "aliasPlaceholderVerb": "Ej: Tragar, Alimentarse...",
@@ -106,6 +108,7 @@
     "createdAt": "Creado el",
     "updatedAt": "Modificado el",
     "editCategory": "Editar categoría",
+    "saveError": "Error al guardar. Por favor, intentá de nuevo.",
     "verified": "Verificado",
     "markVerified": "Marcar como verificado"
   },

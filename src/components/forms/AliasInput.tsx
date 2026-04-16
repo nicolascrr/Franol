@@ -2,12 +2,15 @@
 
 import { useState, KeyboardEvent } from "react";
 import { Plus, X } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface AliasInputProps {
   aliases: string[];
   onAdd: (alias: string) => void;
   onRemove: (index: number) => void;
   placeholder: string;
+  language: "fr" | "es";
+  disabled?: boolean;
 }
 
 export function AliasInput({
@@ -15,6 +18,8 @@ export function AliasInput({
   onAdd,
   onRemove,
   placeholder,
+  language,
+  disabled,
 }: AliasInputProps) {
   const [inputValue, setInputValue] = useState("");
 
@@ -42,15 +47,19 @@ export function AliasInput({
           onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
+          disabled={disabled}
           className="flex-1 px-4 py-2 rounded-xl border-2 border-franol-warm
                      bg-white text-franol-text placeholder-franol-muted
-                     focus:border-franol-accent-blue focus:outline-none transition-colors"
+                     focus:border-franol-accent-blue focus:outline-none transition-colors
+                     disabled:opacity-50 disabled:cursor-not-allowed"
         />
         <button
           type="button"
           onClick={handleAdd}
+          disabled={disabled}
           className="px-3 py-2 rounded-xl bg-franol-accent-blue text-white
-                     hover:bg-blue-700 transition-colors"
+                     hover:bg-blue-700 transition-colors
+                     disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <Plus size={20} />
         </button>
@@ -60,14 +69,24 @@ export function AliasInput({
           {aliases.map((alias, index) => (
             <span
               key={index}
-              className="inline-flex items-center gap-1 px-3 py-1 rounded-full
-                         bg-franol-sand text-franol-text text-sm"
+              className="inline-flex items-center gap-1.5 pl-3 pr-1.5 py-1 rounded-full text-sm"
             >
-              {alias}
+              <span className="text-franol-text">{alias}</span>
+              <span
+                className={cn(
+                  "text-[10px] font-bold px-1.5 py-0.5 rounded-full uppercase",
+                  language === "fr"
+                    ? "bg-blue-100 text-blue-700"
+                    : "bg-amber-100 text-amber-700"
+                )}
+              >
+                {language}
+              </span>
               <button
                 type="button"
                 onClick={() => onRemove(index)}
-                className="hover:text-red-500 transition-colors"
+                disabled={disabled}
+                className="hover:text-red-500 transition-colors ml-0.5"
               >
                 <X size={14} />
               </button>

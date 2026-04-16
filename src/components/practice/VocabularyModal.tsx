@@ -383,25 +383,27 @@ export function VocabularyModal({
 
                   <div>
                     <label className="block text-xs font-medium text-franol-muted mb-1.5">
-                      {t("add.aliases")} (FR)
+                      {t("add.aliasesFr")}
                     </label>
                     <AliasInput
                       aliases={vocab.aliasesFr}
                       onAdd={(alias) => onAddAlias(vocab.id, "aliasesFr", alias)}
                       onRemove={(index) => onRemoveAlias(vocab.id, "aliasesFr", index)}
                       placeholder={t("add.aliasPlaceholderVocab")}
+                      language="fr"
                     />
                   </div>
 
                   <div>
                     <label className="block text-xs font-medium text-franol-muted mb-1.5">
-                      {t("add.aliases")} (ES)
+                      {t("add.aliasesEs")}
                     </label>
                     <AliasInput
                       aliases={vocab.aliasesEs}
                       onAdd={(alias) => onAddAlias(vocab.id, "aliasesEs", alias)}
                       onRemove={(index) => onRemoveAlias(vocab.id, "aliasesEs", index)}
                       placeholder={t("add.aliasPlaceholderVocab")}
+                      language="es"
                     />
                   </div>
 
