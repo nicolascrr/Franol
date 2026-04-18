@@ -3,6 +3,8 @@
  * Only user-facing features, written in English
  */
 
+import packageJson from "../../package.json";
+
 export interface ReleaseFeature {
   title: string;
   desc: string;
@@ -86,10 +88,10 @@ export const releases: Release[] = [
 ];
 
 /**
- * Get the current app version
+ * Get the current app version from package.json
  */
 export function getCurrentVersion(): string {
-  return process.env.NEXT_PUBLIC_APP_VERSION || "1.0.0";
+  return packageJson.version;
 }
 
 /**

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Sparkles, ChevronDown, ChevronUp, History } from "lucide-react";
 import { useLocale } from "@/contexts/LocaleContext";
-import { releases, type Release, type ReleaseFeature } from "@/data/releases";
+import { releases, getCurrentVersion, type Release, type ReleaseFeature } from "@/data/releases";
 
 const typeColors: Record<string, string> = {
   feature: "bg-emerald-500",
@@ -117,7 +117,7 @@ export function Changelog() {
           {t("dashboard.whatsNew")}
         </h2>
         <span className="ml-auto text-sm text-franol-muted bg-franol-sand px-3 py-1 rounded-full">
-          {t("dashboard.version")} {process.env.NEXT_PUBLIC_APP_VERSION || "1.0.0"}
+          {t("dashboard.version")} {getCurrentVersion()}
         </span>
       </div>
 

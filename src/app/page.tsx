@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useLocale } from "@/contexts/LocaleContext";
+import { getCurrentVersion } from "@/data/releases";
 import { FlagTicker } from "@/components/home/FlagTicker";
 import { LanguageButton } from "@/components/home/LanguageButton";
 
@@ -10,7 +11,7 @@ export default function HomePage() {
   const router = useRouter();
   const { setLocale } = useLocale();
   const [loadingPortal, setLoadingPortal] = useState<"fr" | "es" | null>(null);
-  const version = process.env.NEXT_PUBLIC_APP_VERSION || "1.0.0";
+  const version = getCurrentVersion();
 
   const handleSelectPortal = async (locale: "fr" | "es") => {
     setLoadingPortal(locale);
