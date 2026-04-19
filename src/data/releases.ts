@@ -3,6 +3,8 @@
  * Only user-facing features, written in English
  */
 
+import packageJson from "../../package.json";
+
 export interface ReleaseFeature {
   title: string;
   desc: string;
@@ -16,6 +18,57 @@ export interface Release {
 }
 
 export const releases: Release[] = [
+  {
+    version: "1.2.0",
+    date: "2026-04-19",
+    features: [
+      {
+        title: "Smart articles in AI quizzes",
+        desc: "AI-generated questions now use the correct article for each noun: indefinite (un/une) for countable words to reveal gender, and definite (le/la) for uncountables like milk or flour",
+        type: "feature",
+      },
+      {
+        title: "Cleaner AI explanations",
+        desc: "Explanations no longer contain Markdown formatting like **bold** or *italic* — just clean, readable text",
+        type: "fix",
+      },
+      {
+        title: "Collapsible synonyms sections",
+        desc: "Language-specific synonyms inputs now group into a collapsible section, making forms cleaner and less overwhelming",
+        type: "improvement",
+      },
+      {
+        title: "Custom checkboxes",
+        desc: "Replaced native checkboxes with styled ones that match Frañol's design across all forms and modals",
+        type: "feature",
+      },
+      {
+        title: "Simplified edit modal",
+        desc: "The content edit modal was refactored for better readability and consistency across vocabulary, expressions and verbs",
+        type: "improvement",
+      },
+      {
+        title: "Fixed guillemets wrapping",
+        desc: "Quotation marks (« ») in quiz questions no longer break onto a separate line from their word",
+        type: "fix",
+      },
+      {
+        title: "Portal components responsive fix",
+        desc: "Dropdowns and date picker now use fixed positioning with viewport clamping — no more off-screen popups on mobile",
+        type: "fix",
+      },
+      {
+        title: "Version from package.json",
+        desc: "App version is now read directly from package.json instead of an environment variable — single source of truth",
+        type: "improvement",
+      },
+      {
+        title: "Conjugation tenses data",
+        desc: "Added tense data files for French and Spanish verbs to prepare for the upcoming conjugation overhaul",
+        type: "feature",
+      },
+    ],
+  },
   {
     version: "1.1.1",
     date: "2025-03-15",
@@ -86,10 +139,10 @@ export const releases: Release[] = [
 ];
 
 /**
- * Get the current app version
+ * Get the current app version from package.json
  */
 export function getCurrentVersion(): string {
-  return process.env.NEXT_PUBLIC_APP_VERSION || "1.0.0";
+  return packageJson.version;
 }
 
 /**

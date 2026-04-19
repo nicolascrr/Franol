@@ -17,7 +17,8 @@ ESTILO:
 - Evitá banalidades ("¡Bien!", "Es un error común")
 - Andá al grano
 - Concentrate en lo que ayuda a RECORDAR y a NO CONFUNDIR
-- Usá vocabulario argentino cuando des ejemplos`;
+- Usá vocabulario argentino cuando des ejemplos
+- PROHIBIDO usar formato Markdown (sin **negrita**, sin *cursiva*, sin # títulos).`;
 
 /**
  * Genera el prompt de usuario para una explicación

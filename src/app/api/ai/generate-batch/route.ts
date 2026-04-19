@@ -1,10 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
+import { GoogleGenAI } from "@google/genai";
 import { getQuizPrompts } from "@/lib/prompts";
 import type { Locale } from "@/lib/prompts";
 
 export const dynamic = "force-dynamic";
 
-const OPENAI_API_KEY = process.env.API_KEY;
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+
+const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY ?? "" });
 
 interface BatchRequestBody {
   prompt: string;
@@ -348,44 +351,21 @@ The JSON must have this EXACT structure:
 
 Every string must be properly quoted. Every comma must be present. No trailing commas.`;
 
-    // Désactiver le streaming qui cause des problèmes
-    const useStream = false;
-
-    const apiParams = {
-      model: "gpt-4.1-mini",
-      messages: [
-        { role: "system", content: enhancedSystem },
-        { role: "user", content: user + "\n\nRespond with valid JSON only:" },
-      ],
-      temperature: 0.3, // Encore plus bas pour la cohérence
-      max_tokens: Math.max(4000, numQuestions * 400),
-      response_format: { type: "json_object" },
-    };
-
-    // Toujours utiliser le mode non-streaming pour plus de fiabilité
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${OPENAI_API_KEY}`,
+    const response = await ai.models.generateContent({
+      model: "gemini-3-flash-preview",
+      contents: user + "\n\nRespond with valid JSON only:",
+      config: {
+        systemInstruction: enhancedSystem,
+        temperature: 0.3,
+        maxOutputTokens: Math.max(4000, numQuestions * 400),
+        responseMimeType: "application/json",
       },
-      body: JSON.stringify(apiParams),
     });
 
-    if (!response.ok) {
-      const errorData = await response.text();
-      console.error("OpenAI API error:", response.status, errorData);
-      return NextResponse.json(
-        { error: `API error: ${response.status}` },
-        { status: 500 },
-      );
-    }
-
-    const data = await response.json();
-    const content = data.choices?.[0]?.message?.content;
+    const content = response.text;
 
     if (!content) {
-      console.error("No content:", JSON.stringify(data));
+      console.error("No content from Gemini");
       return NextResponse.json(
         { error: "No content from AI" },
         { status: 500 },

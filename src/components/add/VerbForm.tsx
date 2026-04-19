@@ -1,8 +1,9 @@
 "use client";
 
 import { useLocale } from "@/contexts/LocaleContext";
-import { AliasInput } from "@/components/forms/AliasInput";
+import { AliasSection } from "@/components/forms/AliasSection";
 import { CustomDropdown } from "@/components/ui/CustomDropdown";
+import { Checkbox } from "@/components/ui/Checkbox";
 import type { Category } from "@/types";
 import { getLangValue } from "@/lib/lang";
 import { Plus } from "lucide-react";
@@ -79,36 +80,19 @@ export function VerbForm({
           </div>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-franol-text mb-2">
-            {t("add.aliases")}
-          </label>
-          {sourceLang === "fr" ? (
-            <AliasInput
-              aliases={form.aliases_fr}
-              onAdd={(alias) => onFieldChange("aliases_fr", [...form.aliases_fr, alias])}
-              onRemove={(index) =>
-                onFieldChange(
-                  "aliases_fr",
-                  form.aliases_fr.filter((_, i) => i !== index)
-                )
-              }
-              placeholder={t("add.aliasPlaceholderVerb")}
-            />
-          ) : (
-            <AliasInput
-              aliases={form.aliases_es}
-              onAdd={(alias) => onFieldChange("aliases_es", [...form.aliases_es, alias])}
-              onRemove={(index) =>
-                onFieldChange(
-                  "aliases_es",
-                  form.aliases_es.filter((_, i) => i !== index)
-                )
-              }
-              placeholder={t("add.aliasPlaceholderVerb")}
-            />
-          )}
-        </div>
+        <AliasSection
+          aliasesFr={form.aliases_fr}
+          aliasesEs={form.aliases_es}
+          onAddFr={(alias) => onFieldChange("aliases_fr", [...form.aliases_fr, alias])}
+          onRemoveFr={(index) => onFieldChange("aliases_fr", form.aliases_fr.filter((_, i) => i !== index))}
+          onAddEs={(alias) => onFieldChange("aliases_es", [...form.aliases_es, alias])}
+          onRemoveEs={(index) => onFieldChange("aliases_es", form.aliases_es.filter((_, i) => i !== index))}
+          placeholderFr={t("add.aliasPlaceholderVerb")}
+          placeholderEs={t("add.aliasPlaceholderVerb")}
+          labelFr={t("add.aliasesFr")}
+          labelEs={t("add.aliasesEs")}
+          title={t("add.aliases")}
+        />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <CustomDropdown
@@ -138,47 +122,26 @@ export function VerbForm({
           />
         </div>
 
-        <div className="flex items-center gap-3">
-          <input
-            type="checkbox"
-            id="is_irregular"
-            checked={form.is_irregular}
-            onChange={(e) => onFieldChange("is_irregular", e.target.checked)}
-            className="w-5 h-5 rounded border-2 border-franol-warm text-franol-accent-blue
-                       focus:ring-franol-accent-blue focus:ring-offset-0"
-          />
-          <label htmlFor="is_irregular" className="text-sm font-medium text-franol-text">
-            {t("add.isIrregular")}
-          </label>
-        </div>
+        <Checkbox
+          id="is_irregular"
+          checked={form.is_irregular}
+          onChange={(val) => onFieldChange("is_irregular", val)}
+          label={t("add.isIrregular")}
+        />
 
         <div className="flex flex-wrap items-center gap-6">
-          <div className="flex items-center gap-3">
-            <input
-              type="checkbox"
-              id="is_reflexive_fr"
-              checked={form.is_reflexive_fr}
-              onChange={(e) => onFieldChange("is_reflexive_fr", e.target.checked)}
-              className="w-5 h-5 rounded border-2 border-franol-warm text-franol-accent-blue
-                          focus:ring-franol-accent-blue focus:ring-offset-0"
-            />
-            <label htmlFor="is_reflexive_fr" className="text-sm font-medium text-franol-text">
-              {t("add.isReflexiveFr")}
-            </label>
-          </div>
-          <div className="flex items-center gap-3">
-            <input
-              type="checkbox"
-              id="is_reflexive_es"
-              checked={form.is_reflexive_es}
-              onChange={(e) => onFieldChange("is_reflexive_es", e.target.checked)}
-              className="w-5 h-5 rounded border-2 border-franol-warm text-franol-accent-blue
-                          focus:ring-franol-accent-blue focus:ring-offset-0"
-            />
-            <label htmlFor="is_reflexive_es" className="text-sm font-medium text-franol-text">
-              {t("add.isReflexiveEs")}
-            </label>
-          </div>
+          <Checkbox
+            id="is_reflexive_fr"
+            checked={form.is_reflexive_fr}
+            onChange={(val) => onFieldChange("is_reflexive_fr", val)}
+            label={t("add.isReflexiveFr")}
+          />
+          <Checkbox
+            id="is_reflexive_es"
+            checked={form.is_reflexive_es}
+            onChange={(val) => onFieldChange("is_reflexive_es", val)}
+            label={t("add.isReflexiveEs")}
+          />
         </div>
 
         <div>

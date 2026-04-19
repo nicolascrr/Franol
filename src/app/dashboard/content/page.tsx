@@ -577,30 +577,41 @@ export default function ContentPage() {
 
   const handleSaveCategory = async () => {
     if (!editingCategory) return;
+    if (!categoryEditForm.name_fr.trim() || !categoryEditForm.name_es.trim()) {
+      setError(
+        locale === "fr"
+          ? "Les noms en français et en espagnol sont obligatoires."
+          : "Los nombres en francés y español son obligatorios."
+      );
+      return;
+    }
     setIsSavingCategory(true);
+    setError("");
 
     try {
-      const now = new Date().toISOString();
       const { data, error: err } = await supabase
         .from("categories")
         .update({
-          name_fr: categoryEditForm.name_fr,
-          name_es: categoryEditForm.name_es,
+          name_fr: categoryEditForm.name_fr.trim(),
+          name_es: categoryEditForm.name_es.trim(),
           color: categoryEditForm.color,
-          updated_at: now,
         })
         .eq("id", editingCategory.id)
         .select()
         .single();
 
-      if (err) throw err;
+      if (err) {
+        console.error("Supabase error updating category:", err.message, err.code);
+        throw err;
+      }
 
       setCategories((prev) =>
         prev.map((c) => (c.id === editingCategory.id ? data : c)),
       );
       closeEditCategoryModal();
-    } catch {
-      setError(t("common.error"));
+    } catch (error) {
+      console.error("Error saving category:", error);
+      setError(t("content.saveError"));
     } finally {
       setIsSavingCategory(false);
     }
@@ -707,7 +718,7 @@ export default function ContentPage() {
   ];
 
   return (
-    <div className="p-4 sm:p-6 md:p-8 max-w-7xl mx-auto">
+    <div className="p-4 sm:p-6 md:p-8 max-w-7xl mx-auto min-w-0 overflow-x-hidden">
       {/* Header */}
       <header className="mb-6 animate-fade-in">
         <h1 className="text-2xl md:text-3xl font-display font-bold text-franol-text">
@@ -901,7 +912,7 @@ export default function ContentPage() {
       {/* Modal d'édition de catégorie */}
       {editingCategory && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl w-full max-w-lg">
+          <div className="bg-white rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between p-6 border-b border-franol-warm">
               <h2 className="text-xl font-display font-bold text-franol-text">
                 {t("content.editCategory")}
@@ -916,6 +927,11 @@ export default function ContentPage() {
             </div>
 
             <div className="p-6 space-y-4">
+              {error && (
+                <div className="p-3 rounded-xl bg-red-50 border border-franol-accent-red/20 text-franol-accent-red text-sm">
+                  {error}
+                </div>
+              )}
               <div>
                 <label className="block text-sm font-medium text-franol-text mb-2">
                   {locale === "fr" ? "Type" : "Tipo"}

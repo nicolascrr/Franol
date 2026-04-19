@@ -9,8 +9,9 @@ import {
   type QuizQuestion,
   type QuizAnswer,
 } from "@/lib/quiz";
-import { generateAIQuizBatchWithStream, getAIExplanation } from "@/lib/openai";
+import { generateAIQuizBatchWithStream, getAIExplanation } from "@/lib/ai";
 import { checkAnswer } from "@/lib/levenshtein";
+import { fixGuillemets } from "@/lib/utils";
 import { QuitModal } from "@/components/practice/QuitModal";
 import {
   Loader2,
@@ -632,7 +633,7 @@ export default function QuizPage() {
       <div className="max-w-2xl mx-auto p-6">
         <div key={currentIndex} className="animate-fade-in">
           {/* Question Card */}
-          <div className="bg-white rounded-2xl p-8 border border-franol-warm mb-6 shadow-sm">
+          <div className="bg-white rounded-2xl p-5 md:p-6 border border-franol-warm mb-6 shadow-sm">
             {currentQuestion.type === "conjugation" &&
               currentQuestion.tense &&
               currentQuestion.pronoun && (
@@ -647,11 +648,13 @@ export default function QuizPage() {
               )}
 
             <h2 className="text-2xl md:text-3xl font-display font-bold text-franol-text text-center">
-              {currentQuestion.type === "conjugation" &&
-              currentQuestion.tense &&
-              currentQuestion.pronoun
-                ? `${t("practice.quiz.conjugate")}: ${currentQuestion.questionText}`
-                : currentQuestion.questionText}
+              {fixGuillemets(
+                currentQuestion.type === "conjugation" &&
+                currentQuestion.tense &&
+                currentQuestion.pronoun
+                  ? `${t("practice.quiz.conjugate")}: ${currentQuestion.questionText}`
+                  : currentQuestion.questionText
+              )}
             </h2>
           </div>
 

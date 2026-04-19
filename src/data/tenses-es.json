@@ -1,0 +1,11 @@
+[
+  { "key": "presente", "label": "Presente" },
+  { "key": "preterito_indefinido", "label": "Pretérito indefinido" },
+  { "key": "imperfecto", "label": "Imperfecto" },
+  { "key": "pluscuamperfecto", "label": "Pluscuamperfecto" },
+  { "key": "futuro_simple", "label": "Futuro simple" },
+  { "key": "ir_a_infinitif", "label": "ir a + infinitivo" },
+  { "key": "condicional", "label": "Condicional" },
+  { "key": "subjuntivo", "label": "Subjuntivo" },
+  { "key": "gerundio", "label": "Gerundio" }
+]

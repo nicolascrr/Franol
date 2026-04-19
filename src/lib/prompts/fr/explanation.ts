@@ -16,7 +16,8 @@ STYLE:
 - Évite les banalités ("Bravo!", "C'est une erreur courante")
 - Va droit au but
 - Concentre-toi sur ce qui aide à RETENIR et à NE PAS CONFONDRE
-- IMPORTANT: Donnes un équivalent ARGENTIN du mot ou de l'expression à expliquer SEULEMENT si il est différent de lespagnol`;
+- IMPORTANT: Donnes un équivalent ARGENTIN du mot ou de l'expression à expliquer SEULEMENT si il est différent de lespagnol
+- INTERDIT d'utiliser du formatage Markdown (pas de **gras**, pas de *italique*, pas de # titres).`;
 
 /**
  * Génère le prompt utilisateur pour une explication

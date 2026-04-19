@@ -41,11 +41,11 @@ REGLAS IMPERATIVAS:
 1. DIRECCIÓN DE TRADUCCIÓN
    - La pregunta pide la traducción de una palabra en ${questionLang}
    - La respuesta correcta y las 3 falsas son en ${answerLang}
-   - Ejemplo${
-     isEsToFr
-       ? `: "¿Cómo se dice « auto » en francés?" → respuesta: "voiture"`
-       : `: "¿Cómo se dice « voiture » en español?" → respuesta: "auto"`
-   }
+    - Ejemplo${
+      isEsToFr
+        ? `: "¿Cómo se dice « un auto » en francés?" → respuesta: "une voiture"`
+        : `: "¿Cómo se dice « une voiture » en español?" → respuesta: "un auto"`
+    }
 
 2. RESPETO ESTRICTO DEL TEMA
    - Si el tema menciona un país/región francófona (Suiza, Bélgica, Québec, etc.):
@@ -90,26 +90,42 @@ REGLAS IMPERATIVAS:
    - La respuesta debe ser la traducción EXACTA de la palabra pedida
    - Verificable en un diccionario
 
-7. VARIEDAD TEMÁTICA
+7. ARTÍCULOS ANTE SUSTANTIVOS (OBLIGATORIO)
+   - SIEMPRE incluir un artículo antes de cada sustantivo en la pregunta Y en las 4 respuestas
+   - El OBJETIVO es aprender el GÉNERO de los sustantivos → el artículo debe ser LÓGICO según el idioma hablado
+   - Sustantivos CONTABLES (se pueden contar) → artículo INDEFINIDO que revela el género:
+     • Francés: « un » (masculino) o « une » (femenino)
+     • Español: « un » (masculino) o « una » (femenino)
+     • Ejemplos: « un chien », « une pomme », « un abricot » (NO « l'abricot »), « une orange » (NO « l'orange »)
+   - Sustantivos INCONTABLES (líquidos, materias, conceptos — no se cuentan) → artículo DEFINIDO:
+     • Francés: « le », « la » o « l' »
+     • Español: « el », « la »
+     • Ejemplos: « le lait » (NO « un lait »), « la farine », « le pain », « el agua », « la leche »
+   - PROHIBIDO usar « l' » con un sustantivo contable que empieza por vocal (oculta el género)
+   - PROHIBIDO usar un artículo indefinido con un sustantivo incontable (suena incorrecto)
+   - NUNCA el mismo sustantivo con artículos diferentes en las 4 opciones de una misma pregunta
+   - NO poner artículo antes de verbos, adjetivos solos, adverbios o expresiones
+
+8. VARIEDAD TEMÁTICA
    - Cubrir TODO el espectro del tema pedido
    - "comida" = asado, empanadas, milanesas, medialunas, alfajores, mate, etc.
    - "animales" = mamíferos, aves, peces, insectos, etc.
    - No limitarse a una subcategoría
 
-8. PREGUNTAS ÚNICAS
+9. PREGUNTAS ÚNICAS
    - Cada pregunta trata sobre una palabra DIFERENTE
    - Ninguna repetición de respuesta en el quiz
 
-9. FORMATO
-   - Comillas latinas « »
-   - Puntuación correcta con espacios
-   - No usar palabras en MAYÚSCULAS
-   - Nunca especifiques en español rioplatense, di solamente en español
+10. FORMATO
+    - Comillas latinas « »
+    - Puntuación correcta con espacios
+    - No usar palabras en MAYÚSCULAS
+    - Nunca especifiques en español rioplatense, di solamente en español
 
-10. CLASIFICACIÓN DEL TÉRMINO (campo "t")
-   - "t": "v" si es un sustantivo, adjetivo, adverbio o vocabulario general
-   - "t": "e" si es una expresión idiomática o locución fija
-   - "t": "c" si es un verbo (en infinitivo)`;
+11. CLASIFICACIÓN DEL TÉRMINO (campo "t")
+    - "t": "v" si es un sustantivo, adjetivo, adverbio o vocabulario general
+    - "t": "e" si es una expresión idiomática o locución fija
+    - "t": "c" si es un verbo (en infinitivo)`;
 }
 
 // Alias para compatibilidad (dirección por defecto)

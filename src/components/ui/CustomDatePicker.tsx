@@ -92,15 +92,32 @@ export function CustomDatePicker({
     }
   }, [isOpen, value]);
 
-  // Calculate calendar position
+  // Calculate calendar position — viewport-relative (fixed positioning)
   const updatePosition = useCallback(() => {
     if (buttonRef.current) {
       const rect = buttonRef.current.getBoundingClientRect();
-      return {
-        top: rect.bottom + window.scrollY + 6,
-        left: rect.left + window.scrollX,
-        width: Math.max(280, rect.width),
-      };
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+      const gap = 6;
+
+      let width = Math.max(280, rect.width);
+      if (width > viewportWidth - 16) {
+        width = viewportWidth - 16;
+      }
+
+      let left = rect.left;
+      const rightEdge = left + width;
+      if (rightEdge > viewportWidth - 8) {
+        left = Math.max(8, viewportWidth - width - 8);
+      }
+
+      let top = rect.bottom + gap;
+      const estimatedHeight = 320;
+      if (top + estimatedHeight > viewportHeight) {
+        top = rect.top - estimatedHeight - gap;
+      }
+
+      return { top, left, width };
     }
     return { top: 0, left: 0, width: 280 };
   }, []);
@@ -288,66 +305,6 @@ export function CustomDatePicker({
     return years;
   };
 
-  const calendarContent = (
-    <div className="bg-white rounded-xl border border-franol-warm shadow-xl p-3">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-3">
-        <button
-          type="button"
-          onClick={() => navigateMonth(-1)}
-          className="p-1.5 rounded-lg hover:bg-franol-sand transition-colors"
-        >
-          <ChevronLeft size={16} className="text-franol-text" />
-        </button>
-        <button
-          type="button"
-          onClick={() => {
-            if (viewMode === "days") setViewMode("months");
-            else if (viewMode === "months") setViewMode("years");
-          }}
-          className="px-3 py-1.5 rounded-lg text-sm font-semibold text-franol-text hover:bg-franol-sand transition-colors"
-        >
-          {viewMode === "days" && `${months[viewDate.getMonth()]} ${viewDate.getFullYear()}`}
-          {viewMode === "months" && viewDate.getFullYear()}
-          {viewMode === "years" && `${Math.floor(viewDate.getFullYear() / 10) * 10} - ${Math.floor(viewDate.getFullYear() / 10) * 10 + 11}`}
-        </button>
-        <button
-          type="button"
-          onClick={() => navigateMonth(1)}
-          className="p-1.5 rounded-lg hover:bg-franol-sand transition-colors"
-        >
-          <ChevronRight size={16} className="text-franol-text" />
-        </button>
-      </div>
-
-      {/* Days header (only in days view) */}
-      {viewMode === "days" && (
-        <div className="grid grid-cols-7 gap-1 mb-2">
-          {days.map((day) => (
-            <div
-              key={day}
-              className="w-8 h-6 flex items-center justify-center text-xs font-medium text-franol-muted"
-            >
-              {day}
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* Calendar grid */}
-      <div
-        className={cn(
-          "grid gap-1",
-          viewMode === "days" ? "grid-cols-7" : "grid-cols-3"
-        )}
-      >
-        {viewMode === "days" && renderDaysView()}
-        {viewMode === "months" && renderMonthsView()}
-        {viewMode === "years" && renderYearsView()}
-      </div>
-    </div>
-  );
-
   return (
     <div className={className} ref={containerRef}>
       {label && (
@@ -372,7 +329,7 @@ export function CustomDatePicker({
               : "border-franol-warm/60 bg-white hover:border-franol-warm hover:shadow-md"
           )}
         >
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2.5 min-w-0 flex-1">
             <Calendar size={16} className="text-franol-muted" />
             <span
               className={cn(
@@ -398,15 +355,72 @@ export function CustomDatePicker({
           <div
             ref={calendarRef}
             style={{
-              position: "absolute",
+              position: "fixed",
               top: calendarPosition.top,
               left: calendarPosition.left,
               width: calendarPosition.width,
               maxWidth: "320px",
+              zIndex: 9999,
             }}
             className="z-[9999] animate-fade-in"
           >
-            {calendarContent}
+            <div className="bg-white rounded-xl border border-franol-warm shadow-xl p-3 max-w-[calc(100vw-16px)]">
+              {/* Header */}
+              <div className="flex items-center justify-between mb-3">
+                <button
+                  type="button"
+                  onClick={() => navigateMonth(-1)}
+                  className="p-1.5 rounded-lg hover:bg-franol-sand transition-colors"
+                >
+                  <ChevronLeft size={16} className="text-franol-text" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (viewMode === "days") setViewMode("months");
+                    else if (viewMode === "months") setViewMode("years");
+                  }}
+                  className="px-3 py-1.5 rounded-lg text-sm font-semibold text-franol-text hover:bg-franol-sand transition-colors"
+                >
+                  {viewMode === "days" && `${months[viewDate.getMonth()]} ${viewDate.getFullYear()}`}
+                  {viewMode === "months" && viewDate.getFullYear()}
+                  {viewMode === "years" && `${Math.floor(viewDate.getFullYear() / 10) * 10} - ${Math.floor(viewDate.getFullYear() / 10) * 10 + 11}`}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => navigateMonth(1)}
+                  className="p-1.5 rounded-lg hover:bg-franol-sand transition-colors"
+                >
+                  <ChevronRight size={16} className="text-franol-text" />
+                </button>
+              </div>
+
+              {/* Days header (only in days view) */}
+              {viewMode === "days" && (
+                <div className="grid grid-cols-7 gap-1 mb-2">
+                  {days.map((day) => (
+                    <div
+                      key={day}
+                      className="w-8 h-6 flex items-center justify-center text-xs font-medium text-franol-muted"
+                    >
+                      {day}
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Calendar grid */}
+              <div
+                className={cn(
+                  "grid gap-1",
+                  viewMode === "days" ? "grid-cols-7" : "grid-cols-3"
+                )}
+              >
+                {viewMode === "days" && renderDaysView()}
+                {viewMode === "months" && renderMonthsView()}
+                {viewMode === "years" && renderYearsView()}
+              </div>
+            </div>
           </div>,
           document.body
         )}

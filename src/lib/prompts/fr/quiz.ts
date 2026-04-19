@@ -38,11 +38,11 @@ RÈGLES IMPÉRATIVES:
 1. DIRECTION DE TRADUCTION
    - La question demande la traduction d'un mot en ${questionLang}
    - La réponse correcte et les 3 fausses réponses sont en ${answerLang}
-   - Exemple${
-     isFrToEs
-       ? `: "Comment dit-on « voiture » en espagnol ?" → réponse: "coche"`
-       : `: "Comment dit-on « coche » en français ?" → réponse: "voiture"`
-   }
+    - Exemple${
+      isFrToEs
+        ? `: "Comment dit-on « une voiture » en espagnol ?" → réponse: "un coche"`
+        : `: "Comment dit-on « un coche » en français ?" → réponse: "une voiture"`
+    }
 
 2. RESPECT STRICT DU THÈME
    - Si le thème mentionne un pays/région hispanophone (Argentine, Mexique, etc.):
@@ -78,25 +78,41 @@ RÈGLES IMPÉRATIVES:
    - La réponse doit être la traduction EXACTE du mot demandé
    - Vérifiable dans un dictionnaire
 
-7. VARIÉTÉ THÉMATIQUE
+7. ARTICLES DEVANT LES NOMS (OBLIGATOIRE)
+   - TOUJOURS inclure un article devant chaque nom dans la question ET dans les 4 réponses
+   - Le BUT est d'apprendre le GENRE des noms → l'article doit être LOGIQUE par rapport à la langue parlée
+   - Noms DÉNOMBRABLES (on peut les compter) → article INDÉFINI qui révèle le genre:
+     • Français: « un » (masculin) ou « une » (féminin)
+     • Espagnol: « un » (masculin) ou « una » (femenino)
+     • Exemples: « un chien », « une pomme », « un abricot » (PAS « l'abricot »), « une orange » (PAS « l'orange »)
+   - Noms NON DÉNOMBRABLES (liquides, matières, concepts — on ne les compte pas) → article DÉFINI:
+     • Français: « le », « la » ou « l' »
+     • Espagnol: « el », « la »
+     • Exemples: « le lait » (PAS « un lait »), « la farine », « le pain », « el agua », « la leche »
+   - INTERDIT d'utiliser « l' » avec un nom dénombrable commençant par une voyelle (cela masque le genre)
+   - INTERDIT d'utiliser un article indéfini avec un nom non dénombrable (cela sonne faux)
+   - JAMAIS le même nom avec des articles différents dans les 4 options d'une même question
+   - Ne PAS mettre d'article devant les verbes, adjectifs seuls, adverbes ou expressions
+
+8. VARIÉTÉ THÉMATIQUE
    - Couvrir TOUT le spectre du thème demandé
    - "nourriture" = viandes, légumes, fruits, féculents, boissons, desserts, etc.
    - "animaux" = mammifères, oiseaux, poissons, insectes, etc.
    - Ne pas se limiter à une sous-catégorie
 
-8. QUESTIONS UNIQUES
+9. QUESTIONS UNIQUES
    - Chaque question porte sur un mot DIFFÉRENT
    - Aucune répétition de réponse dans le quiz
 
-9. MISE EN FORME
-   - Guillemets français « »
-   - Ponctuation correcte avec espaces
-   - Pas de mots en MAJUSCULES
+10. MISE EN FORME
+    - Guillemets français « »
+    - Ponctuation correcte avec espaces
+    - Pas de mots en MAJUSCULES
 
-10. CLASSIFICATION DU MOT (champ "t")
-   - "t": "v" si c'est un nom, adjectif, adverbe ou vocabulaire général
-   - "t": "e" si c'est une expression idiomatique ou une locution figée
-   - "t": "c" si c'est un verbe (à l'infinitif)`;
+11. CLASSIFICATION DU MOT (champ "t")
+    - "t": "v" si c'est un nom, adjectif, adverbe ou vocabulaire général
+    - "t": "e" si c'est une expression idiomatique ou une locution figée
+    - "t": "c" si c'est un verbe (à l'infinitif)`;
 }
 
 // Alias pour compatibilité (direction par défaut)
