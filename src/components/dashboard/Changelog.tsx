@@ -3,12 +3,25 @@
 import { useState } from "react";
 import { Sparkles, ChevronDown, ChevronUp, History } from "lucide-react";
 import { useLocale } from "@/contexts/LocaleContext";
-import { releases, getCurrentVersion, type Release, type ReleaseFeature } from "@/data/releases";
+import {
+  releases,
+  getCurrentVersion,
+  type Release,
+  type ReleaseFeature,
+} from "@/data/releases";
 
 const typeColors: Record<string, string> = {
   feature: "bg-emerald-500",
   improvement: "bg-blue-500",
   fix: "bg-orange-500",
+};
+
+const typeOrder: ReleaseFeature["type"][] = ["feature", "improvement", "fix"];
+
+const typeLabels: Record<ReleaseFeature["type"], string> = {
+  feature: "New features",
+  improvement: "Improvements",
+  fix: "Fixes",
 };
 
 function FeatureItem({ feature }: { feature: ReleaseFeature }) {
@@ -27,6 +40,29 @@ function FeatureItem({ feature }: { feature: ReleaseFeature }) {
   );
 }
 
+function FeatureGroup({
+  label,
+  features,
+}: {
+  label: string;
+  features: ReleaseFeature[];
+}) {
+  if (features.length === 0) return null;
+
+  return (
+    <div className="first:mt-2 mt-8">
+      <h4 className="text-xs font-medium uppercase tracking-widest text-franol-muted mb-3">
+        {label}
+      </h4>
+      <ul className="space-y-4">
+        {features.map((feature, index) => (
+          <FeatureItem key={index} feature={feature} />
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 function ReleaseCard({
   release,
   sourceLang,
@@ -42,8 +78,14 @@ function ReleaseCard({
 }) {
   const formattedDate = new Date(release.date).toLocaleDateString(
     sourceLang === "fr" ? "fr-FR" : "es-ES",
-    { year: "numeric", month: "long", day: "numeric" }
+    { year: "numeric", month: "long", day: "numeric" },
   );
+
+  const grouped = typeOrder.map((type) => ({
+    type,
+    label: typeLabels[type],
+    features: release.features.filter((f) => f.type === type),
+  }));
 
   return (
     <div className="bg-white rounded-2xl border border-franol-warm overflow-hidden">
@@ -73,14 +115,11 @@ function ReleaseCard({
 
       {isExpanded && (
         <div className="px-6 pb-6 pt-2 border-t border-franol-warm">
-          <ul className="space-y-4">
-            {release.features.map((feature, index) => (
-              <FeatureItem
-                key={index}
-                feature={feature}
-              />
+          <div className="space-y-5">
+            {grouped.map(({ type, label, features }) => (
+              <FeatureGroup key={type} label={label} features={features} />
             ))}
-          </ul>
+          </div>
         </div>
       )}
     </div>
@@ -90,7 +129,7 @@ function ReleaseCard({
 export function Changelog() {
   const { sourceLang, t } = useLocale();
   const [expandedVersions, setExpandedVersions] = useState<Set<string>>(
-    new Set([releases[0]?.version])
+    new Set([releases[0]?.version]),
   );
   const [showHistory, setShowHistory] = useState(false);
 
