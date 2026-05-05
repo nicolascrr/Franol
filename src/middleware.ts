@@ -5,53 +5,57 @@ import { verifySession } from "@/lib/auth/session";
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // ── Public pages ── no auth required
+  // ── Public pages ── no auth required, never fail
   if (pathname === "/" || pathname === "/login") {
     return NextResponse.next();
   }
 
-  // ── Auth API routes ── no session required
+  // ── Auth API routes ── no session required, never fail
   if (pathname.startsWith("/api/auth/")) {
     return NextResponse.next();
   }
 
-  // ── Other API routes ── require valid signed session
-  if (pathname.startsWith("/api/")) {
+  // ── Protected routes ── verify signed session
+  try {
     const sessionCookie = request.cookies.get("franol-session");
+
     if (!sessionCookie) {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+      return pathname.startsWith("/api/")
+        ? NextResponse.json({ error: "Non autorisé" }, { status: 401 })
+        : redirectToLanding(request, pathname);
     }
 
     const payload = await verifySession(sessionCookie.value);
+
     if (!payload) {
-      return NextResponse.json({ error: "Session expirée" }, { status: 401 });
+      if (pathname.startsWith("/api/")) {
+        return NextResponse.json({ error: "Session expirée" }, { status: 401 });
+      }
+
+      // Invalid/tampered token — clear cookie and redirect
+      const response = redirectToLanding(request, pathname);
+      response.cookies.set("franol-session", "", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        maxAge: 0,
+        path: "/",
+      });
+      return response;
     }
 
     return NextResponse.next();
-  }
+  } catch (error) {
+    // If session verification crashes (Edge Runtime issue, missing env var, etc.)
+    // fail SAFE: block protected routes rather than letting them through
+    console.error("[Middleware] Verification error:", error);
 
-  // ── Protected pages (dashboard, etc.) ── require valid signed session
-  const sessionCookie = request.cookies.get("franol-session");
+    if (pathname.startsWith("/api/")) {
+      return NextResponse.json({ error: "Erreur de session" }, { status: 500 });
+    }
 
-  if (!sessionCookie) {
     return redirectToLanding(request, pathname);
   }
-
-  const payload = await verifySession(sessionCookie.value);
-  if (!payload) {
-    // Clear the invalid/tampered cookie and redirect
-    const response = redirectToLanding(request, pathname);
-    response.cookies.set("franol-session", "", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      maxAge: 0,
-      path: "/",
-    });
-    return response;
-  }
-
-  return NextResponse.next();
 }
 
 function redirectToLanding(request: NextRequest, pathname: string): NextResponse {

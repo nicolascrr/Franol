@@ -27,23 +27,16 @@ const nextConfig = {
 
           // ── Content Security Policy ──
           // Restricts resource loading to trusted sources only.
-          // - default-src 'self': Only load from same origin by default
-          // - script-src 'self' 'unsafe-eval': Next.js dev needs eval;
-          //   in production, HMR chunks require 'self' only
-          // - style-src: Tailwind via <style>, inline styles via 'unsafe-inline'
-          // - img-src: self + data: (SVGs) + flagcdn.com (flags)
-          // - connect-src: self + Supabase + Google Gemini API
-          // - font-src: self + system fonts
-          // - frame-ancestors 'none': Prevent clickjacking (replaces X-Frame-Options)
-          // - base-uri 'self': Prevent base tag injection
-          // - form-action 'self': Prevent form submission to external sites
+          // - unsafe-inline: REQUIRED by Next.js for hydration scripts
+          // - unsafe-eval: REQUIRED by Next.js for dynamic chunks
+          // - blob: needed for dynamic image loading
           {
             key: "Content-Security-Policy",
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-eval'",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
               "style-src 'self' 'unsafe-inline'",
-              "img-src 'self' data: https://flagcdn.com",
+              "img-src 'self' data: blob: https://flagcdn.com",
               "connect-src 'self' https://*.supabase.co https://generativelanguage.googleapis.com",
               "font-src 'self'",
               "frame-ancestors 'none'",
