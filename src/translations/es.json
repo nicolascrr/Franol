@@ -127,7 +127,8 @@
     "viewLessons": "Ver lecciones",
     "viewLessonsDesc": "Fichas y resúmenes",
     "whatsNew": "Novedades",
-    "version": "Versión"
+    "version": "Versión",
+    "startQuiz": "Iniciar un quiz"
   },
   "nav": {
     "home": "Inicio",
@@ -150,7 +151,12 @@
     "back": "Volver",
     "error": "Ha ocurrido un error",
     "loading": "Cargando...",
-    "close": "Cerrar"
+    "close": "Cerrar",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "delete": "Eliminar",
+    "edit": "Modificar",
+    "save": "Guardar"
   },
   "practice": {
     "title": "Practicar",
@@ -206,7 +212,9 @@
       "verbGroup": "Grupo verbal",
       "allGroups": "Todos los grupos",
       "pronoun": "Pronombre",
-      "allPronouns": "Todos los pronombres"
+      "allPronouns": "Todos los pronombres",
+      "adjustedCount": "Solo {available} preguntas disponibles (en lugar de {requested} solicitadas). Quiz ajustado automáticamente.",
+      "noContent": "No hay contenido disponible para esta configuración. ¡Añadí vocabulario o expresiones primero!"
     },
     "quiz": {
       "question": "Pregunta",
@@ -226,7 +234,13 @@
       "explain": "Explicar",
       "getExplanation": "Obtener una explicación",
       "loadingExplanation": "Cargando...",
-      "explanation": "Explicación"
+      "explanation": "Explicación",
+      "alreadyUsedAnswer": "Respuesta ya utilizada",
+      "conjugate": "Conjugá este verbo ",
+      "previous": "Anterior",
+      "sayDifferently": "Cómo decir de otra manera",
+      "translation": "Traducción",
+      "youCanAlsoSay": "También podés decir:"
     },
     "results": {
       "title": "Resultados",
@@ -250,6 +264,24 @@
       "adding": "Añadiendo...",
       "addSelected": "Añadir selección",
       "vocabAdded": "¡Vocabulario añadido con éxito!"
+    },
+    "presets": {
+      "title": "Mis quizzes guardados",
+      "save": "Guardar esta configuración",
+      "saveName": "Nombrá tu configuración",
+      "namePlaceholder": "Mi quiz...",
+      "saved": "¡Configuración guardada!",
+      "launch": "Lanzar",
+      "delete": "Eliminar",
+      "deleteConfirm": "¿Realmente querés eliminar este quiz guardado?",
+      "deleted": "Quiz eliminado",
+      "empty": "Ningún quiz guardado. ¡Lanzá un quiz y guardá su configuración!",
+      "viewAll": "Ver todo"
     }
+  },
+  "notFound": {
+    "title": "Página no encontrada",
+    "description": "La página que buscas no existe o fue movida.",
+    "home": "Volver al inicio"
   }
 }
