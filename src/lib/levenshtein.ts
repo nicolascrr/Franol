@@ -50,7 +50,8 @@ export function normalizeString(s: string): string {
 export function checkAnswer(
   input: string,
   expected: string,
-  aliases: string[] = []
+  aliases: string[] = [],
+  tolerance?: number,
 ): boolean {
   const normalizedInput = normalizeString(input);
   const normalizedExpected = normalizeString(expected);
@@ -63,21 +64,39 @@ export function checkAnswer(
     if (normalizedInput === normalizeString(alias)) return true;
   }
 
-  // Check with Levenshtein tolerance
-  // For short words (< 5 chars), allow 1 error; otherwise allow 2
-  const tolerance = normalizedExpected.length < 5 ? 1 : 2;
-  if (levenshteinDistance(normalizedInput, normalizedExpected) <= tolerance) {
+  // Determine Levenshtein tolerance
+  // Max 1 character difference for vocabulary/expressions
+  const defaultTolerance = 1;
+  const effectiveTolerance = tolerance !== undefined ? tolerance : defaultTolerance;
+
+  if (effectiveTolerance > 0 && levenshteinDistance(normalizedInput, normalizedExpected) <= effectiveTolerance) {
     return true;
   }
 
   // Check tolerance on aliases
-  for (const alias of aliases) {
-    const normalizedAlias = normalizeString(alias);
-    const aliasTolerance = normalizedAlias.length < 5 ? 1 : 2;
-    if (levenshteinDistance(normalizedInput, normalizedAlias) <= aliasTolerance) {
-      return true;
+  if (effectiveTolerance > 0) {
+    for (const alias of aliases) {
+      const normalizedAlias = normalizeString(alias);
+      if (levenshteinDistance(normalizedInput, normalizedAlias) <= effectiveTolerance) {
+        return true;
+      }
     }
   }
 
   return false;
+}
+
+/**
+ * Check a conjugation answer with minimal tolerance (0 = exact match only).
+ *
+ * For conjugation, the answer is a precise conjugated form (e.g. "yo como", "je mange").
+ * We only allow exact match (normalized = case-insensitive, accent-insensitive).
+ * No Levenshtein tolerance — conjugation must be exact.
+ */
+export function checkConjugationAnswer(
+  input: string,
+  expected: string,
+  aliases: string[] = [],
+): boolean {
+  return checkAnswer(input, expected, aliases, 0);
 }

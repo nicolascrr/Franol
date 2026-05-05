@@ -1,8 +1,44 @@
 {
-  "extends": "next/core-web-vitals",
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:security/recommended-legacy"
+  ],
+  "plugins": [
+    "security",
+    "no-secrets"
+  ],
   "rules": {
+    // ── Existing rules ──
     "react/no-unescaped-entities": "off",
     "react-hooks/exhaustive-deps": "warn",
-    "@next/next/no-img-element": "warn"
-  }
+    "@next/next/no-img-element": "warn",
+
+    // ── Security plugin rules ──
+    // Detect use of eval()-like functions
+    "security/detect-eval-with-expression": "error",
+    // Detect unsafe regular expressions (ReDoS)
+    "security/detect-unsafe-regex": "error",
+    // Detect non-literal regexp
+    "security/detect-non-literal-regexp": "warn",
+    // Detect buffer overflow risks
+    "security/detect-buffer-noassert": "error",
+    // Detect potentially vulnerable object injection
+    "security/detect-object-injection": "off",
+    // Detect non-literal require()
+    "security/detect-non-literal-require": "error",
+
+    // ── No-secrets plugin ──
+    // Detect potential secrets hardcoded in source
+    "no-secrets/no-secrets": "error"
+  },
+  "overrides": [
+    {
+      // Less strict for test files
+      "files": ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts"],
+      "rules": {
+        "no-secrets/no-secrets": "off",
+        "security/detect-object-injection": "off"
+      }
+    }
+  ]
 }

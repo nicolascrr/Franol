@@ -4,7 +4,12 @@
  * Questions en français, réponses en espagnol standard
  */
 
-import type { PromptPair, QuizPromptParams } from "../types";
+import type {
+  PromptPair,
+  QuizPromptParams,
+  ConjugationPromptParams,
+  WrongAnswersPromptParams,
+} from "../types";
 
 /**
  * Génère le prompt système selon la direction
@@ -216,3 +221,120 @@ export const buildQuizFirstBatchPrompt = buildQuizPrompt;
 export const buildQuizContinuationPrompt = buildQuizPrompt;
 export const QUIZ_SIMPLE_SYSTEM_PROMPT = QUIZ_SYSTEM_PROMPT;
 export const buildSimpleQuizPrompt = buildQuizPrompt;
+
+// ---------------------------------------------------------------------------
+// US-Q5/Q6: Conjugation prompts — French portal
+// ---------------------------------------------------------------------------
+
+const CONJUGATION_SYSTEM_PROMPT_FR_TO_ES = `Expert en conjugaison espagnole RIOPLATENSE (Argentine). JSON seul.
+RÈGLES RIOPLATENSE:
+- "vosotros/ustedes" → TOUJOURS "ustedes" (ej: ustedes toman, ustedes comen)
+- "tú/vos" → TOUJOURS "vos" au présent: -ar→ás, -er→és, -ir→ís (ej: vos tomás, vos comés, vos vivís)
+- "tú/vos" aux autres temps → "tú" standard (ej: tú tomaste, tú comiste)
+
+RÈGLE CRITIQUE POUR LES PRONOMS AVEC SLASH:
+- Si le pronom contient "/", choisis TOUJOURS le PREMIER variant comme pronom dans la réponse.
+- "él/ella" → utilises TOUJOURS "él" dans la réponse correcte. Correct: "él escuche". INTERDIT: "él/ella escuche"
+- "ellos/ellas" → utilises TOUJOURS "ellos". Correct: "ellos terminen". INTERDIT: "ellos/ellas terminen"
+- "il/elle" → utilises TOUJOURS "il". Correct: "il écoute". INTERDIT: "il/elle écoute"
+- "ils/elles" → utilises TOUJOURS "ils". Correct: "ils terminent". INTERDIT: "ils/elles terminent"
+- N'ÉCRIS JAMAIS un pronom avec "/" dans le champ "correct" ou "wrongAnswers".
+
+wrongAnswers: même pronom (un seul, sans slash), temps différent, conjugaisons réelles, 3 temps différents.
+Format: {"conjugations":[{"id":"...","correct":"[pronom seul] [conjugué]","wrongAnswers":["[même pronom] [conjugué_autre_temps]","...","..."],"tenseUsed":"[temps]"}]}`;
+
+const CONJUGATION_SYSTEM_PROMPT_ES_TO_FR = `Expert en conjugaison française.
+Génère la conjugaison EXACTE au temps et pronom demandés. JSON seul, pas de texte.
+
+RÈGLE CRITIQUE POUR LES PRONOMS AVEC SLASH:
+- Si le pronom contient "/", choisis TOUJOURS le PREMIER variant comme pronom dans la réponse.
+- "il/elle" → utilises TOUJOURS "il". Correct: "il écoute". INTERDIT: "il/elle écoute"
+- "ils/elles" → utilises TOUJOURS "ils". Correct: "ils terminent". INTERDIT: "ils/elles terminent"
+- N'ÉCRIS JAMAIS un pronom avec "/" dans le champ "correct" ou "wrongAnswers".
+
+Format: {"conjugations":[{"id":"...","correct":"[pronom seul] [conjugué]","wrongAnswers":["[même pronom] [conjugué_autre_temps]","...","..."],"tenseUsed":"[temps fr]"}]}
+wrongAnswers: même pronom (un seul, sans slash), temps différent, conjugaisons réelles, 3 temps différents.`;
+
+export function buildConjugationPrompt(
+  params: ConjugationPromptParams,
+): string {
+  const { verbs, direction, generateWrongAnswers, allTenseKeys } = params;
+  const isFrToEs = direction === "fr-to-es";
+
+  const verbList = verbs
+    .map((v) => {
+      const inf = isFrToEs ? v.infinitiveEs : v.infinitiveFr;
+      return `{"id":"${v.id}","inf":"${inf}","temps":"${v.tenseLabel}","pronom":"${v.pronoun}"}`;
+    })
+    .join(",");
+
+  const targetLang = isFrToEs ? "ESPAGNOL (rioplatense)" : "FRANÇAIS";
+  const wrongInstr = generateWrongAnswers
+    ? `+3 mauvaises réponses par verbe (même pronom, autre temps parmi: ${allTenseKeys.join(",")})`
+    : "wrongAnswers:[]";
+
+  return `Conjugue en ${targetLang}:[${verbList}]${wrongInstr}`;
+}
+
+export function buildConjugationPrompts(
+  params: ConjugationPromptParams,
+): PromptPair {
+  const isFrToEs = params.direction === "fr-to-es";
+  return {
+    system: isFrToEs
+      ? CONJUGATION_SYSTEM_PROMPT_FR_TO_ES
+      : CONJUGATION_SYSTEM_PROMPT_ES_TO_FR,
+    user: buildConjugationPrompt(params),
+  };
+}
+
+// ---------------------------------------------------------------------------
+// US-Q7: Wrong answers for QCM — French portal
+// ---------------------------------------------------------------------------
+
+const WRONG_ANSWERS_SYSTEM_PROMPT_FR = `Tu génères des réponses incorrectes mais plausibles pour un quiz de traduction.
+Règles STRICTES:
+- Pour chaque élément, génère EXACTEMENT 3 réponses fausses dans la langue cible (targetLang)
+- Même type: nom avec nom, expression avec expression, nombre avec nombre
+- LES 3 FAUSSES RÉPONSES DOIVENT ÊTRE TRÈS PROCHES DE LA BONNE RÉPONSE:
+  - MÊME CATÉGORIE SÉMANTIQUE: des mots du même domaine (fruits, véhicules, couleurs, nombres...)
+  - PROXIMITÉ ORTHOGRAPHIQUE: des mots qui se ressemblent visuellement
+  - CONSONANCE SIMILAIRE: des mots qui sonnent pareil
+- EXEMPLES DE QUALITÉ:
+  - correct="cuarenta y dos" → wrong=["cuarenta y uno","cincuenta y dos","sesenta y dos"]
+  - correct="un coche" → wrong=["un camión","una furgoneta","un autobús"]
+  - correct="una manzana" → wrong=["una pera","un durazno","una ciruela"]
+  - correct="el rojo" → wrong=["el rosa","el rubio","el ron"]
+- Los artículos deben ser coherentes (mismo artículo que la respuesta correcta según el género)
+- NUNCA la respuesta correcta ni sus variantes/sinónimos
+- NUNCA duplicados entre las 3 falsas
+- Las respuestas deben ser PALABRAS REALES, nunca inventadas
+Formato JSON: {"results":[{"id":"...","wrongAnswers":["falso1","falso2","falso3"]}]}`;
+
+export function buildWrongAnswersPrompt(
+  params: WrongAnswersPromptParams,
+): string {
+  const itemsJson = params.items
+    .map((item) =>
+      JSON.stringify({
+        id: item.id,
+        correct: item.correctAnswer,
+        question: item.questionText,
+        targetLang: item.targetLang,
+        type: item.type,
+      }),
+    )
+    .join(",");
+
+  return `Génère 3 mauvaises réponses pour chaque élément (dans la langue targetLang indiquée):
+[${itemsJson}]`;
+}
+
+export function buildWrongAnswersPrompts(
+  params: WrongAnswersPromptParams,
+): PromptPair {
+  return {
+    system: WRONG_ANSWERS_SYSTEM_PROMPT_FR,
+    user: buildWrongAnswersPrompt(params),
+  };
+}

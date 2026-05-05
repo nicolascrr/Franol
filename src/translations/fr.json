@@ -127,7 +127,8 @@
     "viewLessons": "Voir les cours",
     "viewLessonsDesc": "Fiches et mémos",
     "whatsNew": "Nouveautés",
-    "version": "Version"
+    "version": "Version",
+    "startQuiz": "Démarrer un quiz"
   },
   "nav": {
     "home": "Accueil",
@@ -150,7 +151,12 @@
     "back": "Retour",
     "error": "Une erreur est survenue",
     "loading": "Chargement...",
-    "close": "Fermer"
+    "close": "Fermer",
+    "save": "Sauvegarder",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "confirm": "Confirmer",
+    "edit": "Modifier"
   },
   "practice": {
     "title": "S'entraîner",
@@ -166,14 +172,27 @@
       "conjugationDesc": "Verbes à conjuguer selon un temps donné",
       "discovery": "Découverte",
       "discoveryDesc": "Découvrez de nouveaux mots, verbes ou expressions",
-      "custom": "Personnalisé",
-      "customDesc": "Décrivez le quiz souhaité",
+      "custom": "Mes quiz",
+      "customDesc": "Vos configurations de quiz enregistrées",
       "comingSoon": "Bientôt disponible"
     },
     "resume": {
       "title": "Quiz en cours",
       "button": "Reprendre",
       "dismiss": "Supprimer"
+    },
+    "presets": {
+      "title": "Mes quiz enregistrés",
+      "save": "Enregistrer cette configuration",
+      "saveName": "Nommez votre configuration",
+      "namePlaceholder": "Mon quiz...",
+      "saved": "Configuration enregistrée !",
+      "launch": "Lancer",
+      "delete": "Supprimer",
+      "deleteConfirm": "Voulez-vous vraiment supprimer ce quiz enregistré ?",
+      "deleted": "Quiz supprimé",
+      "empty": "Aucun quiz enregistré. Lancez un quiz puis enregistrez sa configuration !",
+      "viewAll": "Voir tout"
     },
     "discovery": {
       "title": "Mode découverte",
@@ -199,19 +218,30 @@
       "direction": "Direction",
       "frToEs": "Français → Espagnol",
       "esToFr": "Espagnol → Français",
-      "start": "Commencer"
+      "start": "Commencer",
+      "noContent": "Aucun contenu disponible pour cette configuration. Ajoutez du vocabulaire ou des expressions d'abord.",
+      "adjustedCount": "Seulement {available} questions disponibles (au lieu de {requested} demandées). Quiz ajusté automatiquement.",
+      "conjugationOptions": "Options de conjugaison",
+      "tense": "Temps",
+      "allTenses": "Tous les temps",
+      "verbGroup": "Groupe verbal",
+      "allGroups": "Tous les groupes",
+      "pronoun": "Pronom",
+      "allPronouns": "Tous les pronoms"
     },
     "quiz": {
       "question": "Question",
       "of": "sur",
       "validate": "Valider",
       "next": "Suivant",
+      "previous": "Précédent",
       "correct": "Correct !",
       "incorrect": "Incorrect",
       "correctAnswerWas": "La bonne réponse était :",
       "theAnswerIs": "La réponse :",
+      "translation": "Traduction",
       "typeAnswer": "Tapez votre réponse...",
-      "conjugate": "Conjuguez",
+      "conjugate": "Conjuguez ce verbe ",
       "tense": "Temps",
       "pronoun": "Pronom",
       "quitConfirm": "Voulez-vous vraiment quitter le quiz ? Votre progression sera perdue.",
@@ -220,7 +250,10 @@
       "explain": "Expliquer",
       "getExplanation": "Obtenir une explication",
       "loadingExplanation": "Chargement...",
-      "explanation": "Explication"
+      "explanation": "Explication",
+      "sayDifferently": "Comment dire autrement",
+      "alreadyUsedAnswer": "Réponse déjà utilisée",
+      "youCanAlsoSay": "Tu peux aussi dire :"
     },
     "results": {
       "title": "Résultats",
@@ -245,5 +278,10 @@
       "addSelected": "Ajouter la sélection",
       "vocabAdded": "Vocabulaire ajouté avec succès !"
     }
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "description": "La page que vous cherchez n'existe pas ou a été déplacée.",
+    "home": "Retour à l'accueil"
   }
 }

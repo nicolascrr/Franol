@@ -7,12 +7,11 @@ import {
   Shuffle,
   MessageSquare,
   PenTool,
-  Lock,
   Compass,
   BookOpen,
   Play,
   X,
-  Settings,
+  Bookmark,
 } from "lucide-react";
 
 type QuizMode =
@@ -30,7 +29,6 @@ interface ModeCard {
   icon: typeof Shuffle;
   color: string;
   bgColor: string;
-  disabled?: boolean;
 }
 
 interface SavedQuiz {
@@ -57,11 +55,9 @@ export function PracticeContent() {
       const saved = localStorage.getItem("savedQuiz");
       if (saved) {
         const data = JSON.parse(saved) as SavedQuiz;
-        // Vérifier que le quiz est valide et correspond au portail actuel
         if (data.config && data.questions?.length > 0 && data.locale === (locale || "fr")) {
           setSavedQuiz(data);
         } else if (data.locale && data.locale !== (locale || "fr")) {
-          // Portail différent → supprimer
           localStorage.removeItem("savedQuiz");
         } else if (!data.config || !data.questions?.length) {
           localStorage.removeItem("savedQuiz");
@@ -74,12 +70,8 @@ export function PracticeContent() {
 
   const handleResume = () => {
     if (!savedQuiz) return;
-    // Restaurer le config en sessionStorage et naviguer vers le quiz
     sessionStorage.setItem("quizConfig", JSON.stringify(savedQuiz.config));
-    sessionStorage.setItem(
-      "cachedQuizQuestions",
-      JSON.stringify(savedQuiz.questions),
-    );
+    sessionStorage.setItem("cachedQuizQuestions", JSON.stringify(savedQuiz.questions));
     router.push("/dashboard/practice/quiz");
   };
 
@@ -133,25 +125,26 @@ export function PracticeContent() {
       mode: "custom",
       titleKey: "custom",
       descKey: "customDesc",
-      icon: Settings,
+      icon: Bookmark,
       color: "text-amber-600",
       bgColor: "bg-amber-100",
-      disabled: true,
     },
   ];
 
   const handleModeSelect = (mode: QuizMode) => {
-    if (mode === "custom") return;
     if (mode === "discovery") {
       router.push("/dashboard/practice/discovery");
+      return;
+    }
+    if (mode === "custom") {
+      router.push("/dashboard/practice/presets");
       return;
     }
     router.push(`/dashboard/practice/setup?mode=${mode}`);
   };
 
-
   return (
-    <div className="p-6 md:p-8 max-w-5xl mx-auto">
+    <div className="p-4 sm:p-6 md:p-8 max-w-5xl mx-auto">
       {/* Header */}
       <header className="mb-8 animate-fade-in">
         <h1 className="text-3xl md:text-4xl font-display font-bold text-franol-text">
@@ -182,7 +175,7 @@ export function PracticeContent() {
               <button
                 onClick={handleDismissSaved}
                 className="p-2 rounded-lg text-franol-muted hover:text-red-500
-                          hover:bg-red-50 transition-colors"
+                           hover:bg-red-50 transition-colors"
                 title={t("practice.resume.dismiss")}
               >
                 <X size={16} />
@@ -190,8 +183,8 @@ export function PracticeContent() {
               <button
                 onClick={handleResume}
                 className="flex items-center gap-2 px-4 py-2 bg-franol-accent-blue
-                          text-white text-sm font-medium rounded-xl
-                          hover:bg-blue-700 transition-colors active:scale-[0.98]"
+                           text-white text-sm font-medium rounded-xl
+                           hover:bg-blue-700 transition-colors active:scale-[0.98]"
               >
                 <Play size={14} />
                 {t("practice.resume.button")}
@@ -205,38 +198,20 @@ export function PracticeContent() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {modes.map((card, index) => {
           const Icon = card.icon;
-          const isDisabled = card.disabled;
 
           return (
             <button
               key={card.mode}
               onClick={() => handleModeSelect(card.mode)}
-              disabled={isDisabled}
-              className={`group relative bg-white rounded-2xl p-6 border border-franol-warm
+              className="group relative bg-white rounded-2xl p-6 border border-franol-warm
                          text-left transition-all duration-300 animate-slide-up
-                         ${
-                           isDisabled
-                             ? "opacity-60 cursor-not-allowed"
-                             : "hover:border-franol-accent-blue hover:shadow-lg hover:-translate-y-1 active:scale-[0.98]"
-                         }`}
+                         hover:border-franol-accent-blue hover:shadow-lg hover:-translate-y-1 active:scale-[0.98]"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              {/* Disabled overlay badge */}
-              {isDisabled && (
-                <div
-                  className="absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1
-                               bg-franol-sand rounded-full text-xs font-medium text-franol-muted"
-                >
-                  <Lock size={12} />
-                  {t("practice.modes.comingSoon")}
-                </div>
-              )}
-
               {/* Icon */}
               <div
                 className={`inline-flex p-3 rounded-xl ${card.bgColor} mb-4
-                           transition-transform duration-300
-                           ${!isDisabled && "group-hover:scale-110"}`}
+                            transition-transform duration-300 group-hover:scale-110`}
               >
                 <Icon className={`w-6 h-6 ${card.color}`} />
               </div>
@@ -250,26 +225,24 @@ export function PracticeContent() {
               </p>
 
               {/* Hover arrow indicator */}
-              {!isDisabled && (
-                <div
-                  className="absolute bottom-6 right-6 opacity-0 transform translate-x-2
-                               group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"
+              <div
+                className="absolute bottom-6 right-6 opacity-0 transform translate-x-2
+                            group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"
+              >
+                <svg
+                  className="w-5 h-5 text-franol-accent-blue"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
                 >
-                  <svg
-                    className="w-5 h-5 text-franol-accent-blue"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M13 7l5 5m0 0l-5 5m5-5H6"
-                    />
-                  </svg>
-                </div>
-              )}
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 7l5 5m0 0l-5 5m5-5H6"
+                  />
+                </svg>
+              </div>
             </button>
           );
         })}

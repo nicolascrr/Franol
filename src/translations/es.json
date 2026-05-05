@@ -199,7 +199,14 @@
       "direction": "Dirección",
       "frToEs": "Francés → Español",
       "esToFr": "Español → Francés",
-      "start": "Comenzar"
+      "start": "Comenzar",
+      "conjugationOptions": "Opciones de conjugación",
+      "tense": "Tiempo",
+      "allTenses": "Todos los tiempos",
+      "verbGroup": "Grupo verbal",
+      "allGroups": "Todos los grupos",
+      "pronoun": "Pronombre",
+      "allPronouns": "Todos los pronombres"
     },
     "quiz": {
       "question": "Pregunta",
@@ -211,7 +218,6 @@
       "correctAnswerWas": "La respuesta correcta era:",
       "theAnswerIs": "La respuesta:",
       "typeAnswer": "Escribe tu respuesta...",
-      "conjugate": "Conjuga",
       "tense": "Tiempo",
       "pronoun": "Pronombre",
       "quitConfirm": "¿Realmente quieres salir del quiz? Tu progreso se perderá.",

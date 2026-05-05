@@ -30,6 +30,7 @@ import {
   ChevronDown,
   ChevronUp,
   Trash2,
+  Bookmark,
 } from "lucide-react";
 import type { Category } from "@/types";
 
@@ -108,6 +109,12 @@ export default function ResultsPage() {
   const [isAddingVocab, setIsAddingVocab] = useState(false);
   const [vocabAdded, setVocabAdded] = useState(false);
   const [expandedItem, setExpandedItem] = useState<string | null>(null);
+
+  // Save preset state (US-Q10)
+  const [showSavePreset, setShowSavePreset] = useState(false);
+  const [presetName, setPresetName] = useState("");
+  const [isSavingPreset, setIsSavingPreset] = useState(false);
+  const [presetSaved, setPresetSaved] = useState(false);
 
   const isDiscoveryMode = config?.mode === "discovery";
 
@@ -455,6 +462,39 @@ export default function ResultsPage() {
     router.push("/dashboard");
   };
 
+  const handleSavePreset = async () => {
+    if (!config || !presetName.trim()) return;
+    setIsSavingPreset(true);
+    try {
+      const response = await fetch("/api/quiz-presets", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: presetName.trim(),
+          mode: config.mode,
+          format: config.format,
+          question_count: config.questionCount,
+          category: config.category || null,
+          direction: config.direction,
+          tense: config.tense || null,
+          pronoun: config.pronoun || null,
+          verb_group: config.verbGroup || null,
+          prompt: config.prompt || null,
+          locale: config.locale || locale || "fr",
+        }),
+      });
+      if (response.ok) {
+        setPresetSaved(true);
+        setShowSavePreset(false);
+        setPresetName("");
+      }
+    } catch (error) {
+      console.error("Error saving preset:", error);
+    } finally {
+      setIsSavingPreset(false);
+    }
+  };
+
   if (isLoading || !result) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center p-6">
@@ -575,6 +615,67 @@ export default function ResultsPage() {
           <span className="font-medium">
             {t("practice.results.vocabAdded")}
           </span>
+        </div>
+      )}
+
+      {/* Save Preset Button (US-Q10) */}
+      {!presetSaved && (
+        <div className="mb-6 animate-slide-up" style={{ animationDelay: "0.05s" }}>
+          {!showSavePreset ? (
+            <button
+              onClick={() => setShowSavePreset(true)}
+              className="w-full flex items-center justify-center gap-2 px-6 py-3
+                        bg-white border-2 border-franol-warm text-franol-text
+                        font-medium rounded-2xl hover:border-franol-accent-blue
+                        transition-colors active:scale-[0.98]"
+            >
+              <Bookmark size={18} />
+              {t("practice.presets.save")}
+            </button>
+          ) : (
+            <div className="bg-white rounded-2xl p-4 border border-franol-warm">
+              <p className="text-sm font-medium text-franol-text mb-3">
+                {t("practice.presets.saveName")}
+              </p>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={presetName}
+                  onChange={(e) => setPresetName(e.target.value)}
+                  placeholder={t("practice.presets.namePlaceholder")}
+                  className="flex-1 px-4 py-2.5 rounded-xl border-2 border-franol-warm
+                            bg-white text-franol-text focus:border-franol-accent-blue
+                            focus:outline-none transition-colors text-sm"
+                  maxLength={100}
+                  autoFocus
+                />
+                <button
+                  onClick={handleSavePreset}
+                  disabled={!presetName.trim() || isSavingPreset}
+                  className="px-5 py-2.5 bg-franol-accent-blue text-white text-sm font-medium
+                            rounded-xl hover:bg-blue-700 transition-colors disabled:opacity-50"
+                >
+                  {isSavingPreset ? <Loader2 size={16} className="animate-spin" /> : t("common.save")}
+                </button>
+                <button
+                  onClick={() => { setShowSavePreset(false); setPresetName(""); }}
+                  className="px-3 py-2.5 text-franol-muted hover:text-franol-text transition-colors"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Preset saved confirmation */}
+      {presetSaved && (
+        <div className="flex items-center justify-center gap-2 p-4
+                      bg-emerald-50 border border-emerald-200 rounded-2xl mb-6
+                      text-emerald-700 animate-fade-in">
+          <Check size={18} />
+          <span className="font-medium text-sm">{t("practice.presets.saved")}</span>
         </div>
       )}
 

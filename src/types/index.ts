@@ -136,3 +136,21 @@ export const defaultVerbForm: VerbFormState = {
   category: "",
   notes: "",
 };
+
+// US-Q10: Saved quiz preset
+export interface QuizPreset {
+  id: string;
+  name: string;
+  mode: string;
+  format: string;
+  question_count: number;
+  category: string | null;
+  direction: string;
+  tense: string | null;
+  pronoun: string | null;
+  verb_group: string | null;
+  prompt: string | null;
+  locale: string;
+  created_at: string;
+  updated_at: string;
+}

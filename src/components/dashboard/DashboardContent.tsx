@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useLocale } from "@/contexts/LocaleContext";
+import type { QuizPreset } from "@/types";
+import type { QuizConfig } from "@/lib/quiz";
 import {
   PlusCircle,
   Dumbbell,
@@ -13,13 +15,31 @@ import {
   Clock,
   LogOut,
   Loader2,
+  Play,
+  Bookmark,
+  ChevronRight,
+  BookOpen as VocabIcon,
+  MessageSquare,
+  Shuffle,
+  PenTool,
+  Compass,
 } from "lucide-react";
 import { Changelog } from "@/components/dashboard/Changelog";
+import { cn } from "@/lib/utils";
+
+const MODE_ICONS: Record<string, typeof Shuffle> = {
+  classic: Shuffle,
+  vocabulary: VocabIcon,
+  expressions: MessageSquare,
+  conjugation: PenTool,
+  discovery: Compass,
+};
 
 export function DashboardContent() {
-  const { t, clearLocale } = useLocale();
+  const { t, clearLocale, locale } = useLocale();
   const router = useRouter();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [presets, setPresets] = useState<QuizPreset[]>([]);
 
   const handleLogout = async () => {
     setIsLoggingOut(true);
@@ -27,6 +47,43 @@ export function DashboardContent() {
     await fetch("/api/auth/logout", { method: "POST" });
     clearLocale();
     router.push("/");
+  };
+
+  const fetchPresets = useCallback(async () => {
+    try {
+      const response = await fetch(`/api/quiz-presets?locale=${locale || "fr"}&limit=3`);
+      if (response.ok) {
+        const data = await response.json();
+        setPresets((data.presets || []).slice(0, 3));
+      }
+    } catch (error) {
+      console.error("Error fetching presets:", error);
+    }
+  }, [locale]);
+
+  useEffect(() => {
+    fetchPresets();
+  }, [fetchPresets]);
+
+  const handleLaunchPreset = (preset: QuizPreset) => {
+    const config: QuizConfig = {
+      mode: preset.mode as QuizConfig["mode"],
+      format: preset.format as QuizConfig["format"],
+      questionCount: preset.question_count,
+      category: preset.category || undefined,
+      direction: preset.direction as QuizConfig["direction"],
+      prompt: preset.prompt || undefined,
+      isAI: preset.mode === "discovery" ? true : undefined,
+      locale: preset.locale as "fr" | "es",
+      tense: preset.tense || undefined,
+      pronoun: preset.pronoun || undefined,
+      verbGroup: preset.verb_group || undefined,
+    };
+
+    localStorage.removeItem("savedQuiz");
+    sessionStorage.removeItem("cachedQuizQuestions");
+    sessionStorage.setItem("quizConfig", JSON.stringify(config));
+    router.push("/dashboard/practice/quiz");
   };
 
   const quickActions = [
@@ -54,7 +111,7 @@ export function DashboardContent() {
   ];
 
   return (
-    <div className="p-6 md:p-8 max-w-5xl mx-auto">
+    <div className="p-4 sm:p-6 md:p-8 max-w-5xl mx-auto">
       {/* Header */}
       <header className="mb-8 animate-fade-in">
         <h1 className="text-3xl md:text-4xl font-display font-bold text-franol-text">
@@ -132,8 +189,10 @@ export function DashboardContent() {
               style={{ animationDelay: `${0.3 + index * 0.1}s` }}
             >
               <div
-                className={`inline-flex p-3 rounded-xl ${action.color} mb-4
-                              group-hover:scale-110 transition-transform`}
+                className={cn(
+                  "inline-flex p-3 rounded-xl mb-4 group-hover:scale-110 transition-transform",
+                  action.color,
+                )}
               >
                 <Icon className="w-6 h-6 text-white" />
               </div>
@@ -148,6 +207,67 @@ export function DashboardContent() {
         })}
       </div>
 
+      {/* Démarrer un quiz — Saved Presets */}
+      {presets.length > 0 && (
+        <div className="mt-8 animate-fade-in">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-display font-semibold text-franol-text">
+              {t("dashboard.startQuiz")}
+            </h2>
+            <Link
+              href="/dashboard/practice/presets"
+              className="flex items-center gap-1 text-sm text-franol-accent-blue
+                         hover:underline font-medium"
+            >
+              {t("practice.presets.viewAll")}
+              <ChevronRight size={14} />
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {presets.map((preset) => {
+              const Icon = MODE_ICONS[preset.mode] || Shuffle;
+              const modeLabel = t(`practice.modes.${preset.mode}`);
+              const dirLabel =
+                preset.direction === "fr-to-es" ? "FR → ES" : "ES → FR";
+
+              return (
+                <button
+                  key={preset.id}
+                  onClick={() => handleLaunchPreset(preset)}
+                  className="group text-left bg-white rounded-2xl p-5 border border-franol-warm
+                             hover:border-franol-accent-blue hover:shadow-lg
+                             transition-all duration-300 active:scale-[0.98]"
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="p-2 bg-franol-sand rounded-xl group-hover:scale-110 transition-transform">
+                      <Icon className="w-4 h-4 text-franol-muted" />
+                    </div>
+                    <span className="text-sm font-semibold text-franol-text truncate flex-1">
+                      {preset.name}
+                    </span>
+                    <Play
+                      size={14}
+                      className="text-franol-accent-blue opacity-0 group-hover:opacity-100 transition-opacity"
+                    />
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    <span className="px-2 py-0.5 bg-franol-sand rounded text-[11px] text-franol-muted font-medium">
+                      {modeLabel}
+                    </span>
+                    <span className="px-2 py-0.5 bg-franol-sand rounded text-[11px] text-franol-muted font-medium">
+                      {dirLabel}
+                    </span>
+                    <span className="px-2 py-0.5 bg-franol-sand rounded text-[11px] text-franol-muted font-medium">
+                      {preset.question_count}Q
+                    </span>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       {/* Changelog */}
       <div className="mt-8">
         <Changelog />
@@ -161,13 +281,13 @@ export function DashboardContent() {
         <button
           onClick={handleLogout}
           disabled={isLoggingOut}
-          className={`w-full flex items-center justify-center gap-3 px-6 py-4
-                     bg-white border border-franol-warm rounded-2xl
-                     transition-all ${
-                       isLoggingOut
-                         ? "opacity-70 cursor-not-allowed text-franol-muted"
-                         : "text-red-600 hover:bg-red-50 hover:border-red-200"
-                     }`}
+          className={cn(
+            "w-full flex items-center justify-center gap-3 px-6 py-4",
+            "bg-white border border-franol-warm rounded-2xl transition-all",
+            isLoggingOut
+              ? "opacity-70 cursor-not-allowed text-franol-muted"
+              : "text-red-600 hover:bg-red-50 hover:border-red-200",
+          )}
         >
           {isLoggingOut ? (
             <Loader2 size={20} className="animate-spin" />

@@ -4,7 +4,12 @@
  * Preguntas en español rioplatense, respuestas en francés
  */
 
-import type { PromptPair, QuizPromptParams } from "../types";
+import type {
+  PromptPair,
+  QuizPromptParams,
+  ConjugationPromptParams,
+  WrongAnswersPromptParams,
+} from "../types";
 
 /**
  * Genera el prompt del sistema según la dirección
@@ -229,3 +234,119 @@ export const buildQuizFirstBatchPrompt = buildQuizPrompt;
 export const buildQuizContinuationPrompt = buildQuizPrompt;
 export const QUIZ_SIMPLE_SYSTEM_PROMPT = QUIZ_SYSTEM_PROMPT;
 export const buildSimpleQuizPrompt = buildQuizPrompt;
+
+// ---------------------------------------------------------------------------
+// US-Q5/Q6: Conjugation prompts — Spanish portal
+// ---------------------------------------------------------------------------
+
+const CONJUGATION_SYSTEM_PROMPT_ES_TO_FR = `Experto en conjugación francesa.
+Generá la conjugación EXACTA en el tiempo y pronombre pedidos. Solo JSON, sin texto.
+
+REGLA CRÍTICA PARA PRONOMBRES CON BARRA:
+- Si el pronombre tiene "/", usá SIEMPRE el PRIMER variante en la respuesta.
+- "il/elle" → usá SIEMPRE "il". Correcto: "il écoute". PROHIBIDO: "il/elle écoute"
+- "ils/elles" → usá SIEMPRE "ils". Correcto: "ils terminent". PROHIBIDO: "ils/elles terminent"
+- NUNCA escribas un pronombre con "/" en "correct" o "wrongAnswers".
+
+Formato: {"conjugations":[{"id":"...","correct":"[pronombre solo] [conjugado]","wrongAnswers":["[mismo pronombre] [conjugado_otro_tiempo]","...","..."],"tenseUsed":"[tiempo fr]"}]}
+wrongAnswers: mismo pronombre (solo, sin barra), tiempo diferente, conjugaciones reales, 3 tiempos diferentes.`;
+
+const CONJUGATION_SYSTEM_PROMPT_FR_TO_ES = `Experto en conjugación española RIOPLATENSE (Argentina). Solo JSON.
+REGLAS RIOPLATENSE:
+- "vosotros/ustedes" → SIEMPRE "ustedes" (ej: ustedes toman, ustedes comen)
+- "tú/vos" → SIEMPRE "vos" al presente: -ar→ás, -er→és, -ir→ís (ej: vos tomás, vos comés, vos vivís)
+- "tú/vos" en otros tiempos → "tú" estándar (ej: tú tomaste, tú comiste)
+
+REGLA CRÍTICA PARA PRONOMBRES CON BARRA:
+- Si el pronombre tiene "/", usá SIEMPRE el PRIMER variante en la respuesta.
+- "él/ella" → usá SIEMPRE "él". Correcto: "él escuche". PROHIBIDO: "él/ella escuche"
+- "ellos/ellas" → usá SIEMPRE "ellos". Correcto: "ellos terminen". PROHIBIDO: "ellos/ellas terminen"
+- "il/elle" → usá SIEMPRE "il". Correcto: "il écoute". PROHIBIDO: "il/elle écoute"
+- NUNCA escribas un pronombre con "/" en "correct" o "wrongAnswers".
+
+wrongAnswers: mismo pronombre (solo, sin barra), tiempo diferente, conjugaciones reales, 3 tiempos diferentes.
+Formato: {"conjugations":[{"id":"...","correct":"[pronombre solo] [conjugado]","wrongAnswers":["[mismo pronombre] [conjugado_otro_tiempo]","...","..."],"tenseUsed":"[tiempo]"}]}`;
+
+export function buildConjugationPrompt(
+  params: ConjugationPromptParams,
+): string {
+  const { verbs, direction, generateWrongAnswers, allTenseKeys } = params;
+  const isEsToFr = direction === "es-to-fr";
+
+  const verbList = verbs
+    .map((v) => {
+      const inf = isEsToFr ? v.infinitiveFr : v.infinitiveEs;
+      return `{"id":"${v.id}","inf":"${inf}","tiempo":"${v.tenseLabel}","pronombre":"${v.pronoun}"}`;
+    })
+    .join(",");
+
+  const targetLang = isEsToFr ? "FRANCÉS" : "ESPAÑOL (rioplatense)";
+  const wrongInstr = generateWrongAnswers
+    ? `+3 respuestas incorrectas por verbo (mismo pronombre, otro tiempo entre: ${allTenseKeys.join(",")})`
+    : "wrongAnswers:[]";
+
+  return `Conjuga en ${targetLang}:[${verbList}]${wrongInstr}`;
+}
+
+export function buildConjugationPrompts(
+  params: ConjugationPromptParams,
+): PromptPair {
+  const isEsToFr = params.direction === "es-to-fr";
+  return {
+    system: isEsToFr
+      ? CONJUGATION_SYSTEM_PROMPT_ES_TO_FR
+      : CONJUGATION_SYSTEM_PROMPT_FR_TO_ES,
+    user: buildConjugationPrompt(params),
+  };
+}
+
+// ---------------------------------------------------------------------------
+// US-Q7: Wrong answers for QCM — Spanish portal
+// ---------------------------------------------------------------------------
+
+const WRONG_ANSWERS_SYSTEM_PROMPT_ES = `Generá respuestas incorrectas pero plausibles para un quiz de traducción.
+Reglas ESTRICTAS:
+- Para cada elemento, generá EXACTAMENTE 3 respuestas falsas en el idioma destino (targetLang)
+- Mismo tipo: sustantivo con sustantivo, expresión con expresión, número con número
+- LAS 3 RESPUESTAS FALSAS DEBEN ESTAR MUY CERCANAS A LA RESPUESTA CORRECTA:
+  - MISMA CATEGORÍA SEMÁNTICA: palabras del mismo dominio (frutas, vehículos, colores, números...)
+  - PROXIMIDAD ORTOGRÁFICA: palabras que se parecen visualmente
+  - SONIDO SIMILAR: palabras que suenan parecido
+- EJEMPLOS DE CALIDAD:
+  - correcto="quarante-deux" → wrong=["quarante-et-un","cinquante-deux","soixante-deux"]
+  - correcto="une voiture" → wrong=["un camion","une camionnette","un autocar"]
+  - correcto="une pomme" → wrong=["une poire","une pêche","une prune"]
+  - correcto="le rouge" → wrong=["le rose","le roux","le rouille"]
+- Los artículos deben ser coherentes (mismo artículo que la respuesta correcta para el género)
+- NUNCA la respuesta correcta ni sus variantes/sinónimos
+- NUNCA duplicados entre las 3 falsas
+- Las respuestas deben ser PALABRAS REALES, nunca inventadas
+Formato JSON: {"results":[{"id":"...","wrongAnswers":["falso1","falso2","falso3"]}]}`;
+
+export function buildWrongAnswersPrompt(
+  params: WrongAnswersPromptParams,
+): string {
+  const itemsJson = params.items
+    .map((item) =>
+      JSON.stringify({
+        id: item.id,
+        correct: item.correctAnswer,
+        question: item.questionText,
+        targetLang: item.targetLang,
+        type: item.type,
+      }),
+    )
+    .join(",");
+
+  return `Generá 3 respuestas incorrectas para cada elemento (en el idioma targetLang indicado):
+[${itemsJson}]`;
+}
+
+export function buildWrongAnswersPrompts(
+  params: WrongAnswersPromptParams,
+): PromptPair {
+  return {
+    system: WRONG_ANSWERS_SYSTEM_PROMPT_ES,
+    user: buildWrongAnswersPrompt(params),
+  };
+}

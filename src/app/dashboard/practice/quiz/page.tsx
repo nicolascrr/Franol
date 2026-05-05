@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useLocale } from "@/contexts/LocaleContext";
 import {
@@ -10,14 +10,17 @@ import {
   type QuizAnswer,
 } from "@/lib/quiz";
 import { generateAIQuizBatchWithStream, getAIExplanation } from "@/lib/ai";
-import { checkAnswer } from "@/lib/levenshtein";
+import { checkAnswer, checkConjugationAnswer } from "@/lib/levenshtein";
 import { fixGuillemets } from "@/lib/utils";
+import { getTenseLabel } from "@/lib/tenses";
+import { fromQuizDirection } from "@/lib/lang";
 import { QuitModal } from "@/components/practice/QuitModal";
 import {
   Loader2,
   Check,
   X,
   ArrowRight,
+  ArrowLeft,
   LogOut,
   HelpCircle,
 } from "lucide-react";
@@ -95,18 +98,13 @@ export default function QuizPage() {
     }
   };
 
-  // Fetch first fun fact on mount when in discovery mode
+  // Fetch first fun fact on mount — shown for ALL quiz modes during loading
+  // since all modes now use AI (wrong answers, conjugation, discovery)
   useEffect(() => {
     if (funFactFetchedRef.current) return;
 
-    const configStr = sessionStorage.getItem("quizConfig");
-    if (configStr) {
-      const parsedConfig = JSON.parse(configStr) as QuizConfig;
-      if (parsedConfig.mode === "discovery" && parsedConfig.isAI) {
-        funFactFetchedRef.current = true;
-        fetchFunFact();
-      }
-    }
+    funFactFetchedRef.current = true;
+    fetchFunFact();
   }, []);
 
   // Load config and generate ALL questions in one call
@@ -150,7 +148,7 @@ export default function QuizPage() {
                 JSON.parse(configStr).prompt === savedQuiz.config.prompt &&
                 JSON.parse(configStr).mode === savedQuiz.config.mode);
 
-            if (isResume && savedQuiz.currentIndex > 0) {
+            if (isResume && savedQuiz.questions && savedQuiz.questions.length > 0) {
               quizLoadedRef.current = true;
               setConfig(savedQuiz.config);
               setQuestions(savedQuiz.questions);
@@ -265,6 +263,12 @@ export default function QuizPage() {
           return;
         }
 
+        // Adjust totalQuestions to actual count returned
+        // (AI may return fewer questions than requested due to truncation)
+        if (generatedQuestions.length < parsedConfig.questionCount) {
+          setTotalQuestions(generatedQuestions.length);
+        }
+
         // Sauvegarder le quiz dans localStorage pour reprise
         try {
           localStorage.setItem(
@@ -335,21 +339,46 @@ export default function QuizPage() {
   const currentQuestion = questions[currentIndex];
   const score = answers.filter((a) => a.isCorrect).length;
   const isDiscoveryMode = config?.mode === "discovery";
+  const isConjugationMode = config?.mode === "conjugation";
+
+  // Derive locale for tense labels from quiz config
+  // For conjugation: tense labels are in the LEARNED language (portal's target)
+  // For other modes: use the source language from direction
+  const tenseLocale = useMemo(() => {
+    if (config?.mode === "conjugation") {
+      // Learned language = portal's target language
+      return config.locale === "fr" ? ("es" as const) : ("fr" as const);
+    }
+    if (!config?.direction)
+      return locale === "fr" ? ("fr" as const) : ("es" as const);
+    const { source } = fromQuizDirection(config.direction);
+    return source;
+  }, [config?.mode, config?.direction, config?.locale, locale]);
 
   const handleAnswer = useCallback(
     (answer: string) => {
       if (state !== "playing" || !currentQuestion) return;
 
-      // For QCM, use exact comparison (no Levenshtein tolerance needed since user picks from options)
-      // For translation, use checkAnswer with fuzzy matching for typo tolerance
-      const correct =
-        currentQuestion.format === "qcm"
-          ? answer === currentQuestion.correctAnswer
-          : checkAnswer(
-              answer,
-              currentQuestion.correctAnswer,
-              currentQuestion.aliases,
-            );
+      let correct: boolean;
+
+      if (currentQuestion.format === "qcm") {
+        // QCM: exact string match (user picks from options)
+        correct = answer === currentQuestion.correctAnswer;
+      } else if (currentQuestion.type === "conjugation") {
+        // Conjugation translation: strict match only (no Levenshtein tolerance)
+        correct = checkConjugationAnswer(
+          answer,
+          currentQuestion.correctAnswer,
+          currentQuestion.aliases,
+        );
+      } else {
+        // Vocabulary/Expression translation: typo-tolerant matching
+        correct = checkAnswer(
+          answer,
+          currentQuestion.correctAnswer,
+          currentQuestion.aliases,
+        );
+      }
 
       setIsCorrect(correct);
       setState("answered");
@@ -400,27 +429,56 @@ export default function QuizPage() {
     }
   };
 
-  const handleNext = useCallback(() => {
-    if (currentIndex < totalQuestions - 1) {
-      const nextIndex = currentIndex + 1;
-      setCurrentIndex(nextIndex);
+  /**
+   * Navigate to a specific question index.
+   * If the question has already been answered, restore its answer state (review mode).
+   * Otherwise, show it as a fresh question.
+   */
+  const navigateToQuestion = useCallback((targetIndex: number) => {
+    if (targetIndex < 0 || targetIndex >= totalQuestions) return;
+
+    setCurrentIndex(targetIndex);
+    setShowExplanation(false);
+    setExplanation("");
+
+    // Check if this question has already been answered
+    const existingAnswer = answers[targetIndex];
+    if (existingAnswer) {
+      // Review mode: restore the answer state
+      setState("answered");
+      setIsCorrect(existingAnswer.isCorrect);
+      if (currentQuestion?.format === "qcm" || questions[targetIndex]?.format === "qcm") {
+        setSelectedOption(existingAnswer.userAnswer);
+        setUserInput("");
+      } else {
+        setSelectedOption(null);
+        setUserInput(existingAnswer.userAnswer);
+      }
+    } else {
+      // Fresh question
+      setState("playing");
       setUserInput("");
       setSelectedOption(null);
       setIsCorrect(null);
-      setState("playing");
+    }
 
-      // Mettre à jour la progression dans localStorage
-      try {
-        const saved = localStorage.getItem("savedQuiz");
-        if (saved) {
-          const data = JSON.parse(saved);
-          data.currentIndex = nextIndex;
-          data.answers = answers;
-          localStorage.setItem("savedQuiz", JSON.stringify(data));
-        }
-      } catch {
-        // Ignore
+    // Update localStorage progress
+    try {
+      const saved = localStorage.getItem("savedQuiz");
+      if (saved) {
+        const data = JSON.parse(saved);
+        data.currentIndex = targetIndex;
+        data.answers = answers;
+        localStorage.setItem("savedQuiz", JSON.stringify(data));
       }
+    } catch {
+      // Ignore
+    }
+  }, [totalQuestions, answers, questions, currentQuestion]);
+
+  const handleNext = useCallback(() => {
+    if (currentIndex < totalQuestions - 1) {
+      navigateToQuestion(currentIndex + 1);
     } else {
       // Quiz finished
       const duration = Math.round((Date.now() - startTime) / 1000);
@@ -446,8 +504,6 @@ export default function QuizPage() {
       };
 
       sessionStorage.setItem("quizResult", JSON.stringify(result));
-      // Quiz terminé : nettoyer le savedQuiz
-      localStorage.removeItem("savedQuiz");
       router.push("/dashboard/practice/results");
     }
   }, [
@@ -460,7 +516,14 @@ export default function QuizPage() {
     userInput,
     isCorrect,
     router,
+    navigateToQuestion,
   ]);
+
+  const handlePrevious = useCallback(() => {
+    if (currentIndex > 0) {
+      navigateToQuestion(currentIndex - 1);
+    }
+  }, [currentIndex, navigateToQuestion]);
 
   const handleQuit = () => {
     sessionStorage.removeItem("quizConfig");
@@ -473,45 +536,58 @@ export default function QuizPage() {
   // Handle keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (state === "answered" && e.key === "Enter" && !e.shiftKey) {
+      if (e.key === "Enter" && !e.shiftKey && state === "answered") {
+        // Enter: go to next (but only if on the latest unanswered question)
+        const nextUnanswered = answers.length;
+        if (currentIndex < nextUnanswered) {
+          // Viewing an old answered question — don't auto-advance on Enter
+          return;
+        }
         e.preventDefault();
         handleNext();
+      } else if (e.key === "ArrowRight" && state === "answered") {
+        e.preventDefault();
+        if (currentIndex < totalQuestions - 1) {
+          navigateToQuestion(currentIndex + 1);
+        }
+      } else if (e.key === "ArrowLeft" && state === "answered") {
+        e.preventDefault();
+        handlePrevious();
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [state, handleNext]);
+  }, [state, handleNext, handlePrevious, navigateToQuestion, currentIndex, totalQuestions, answers.length]);
+
+  // Fun fact type labels (used in loading screen)
+  const isLearningSpanish = locale === "fr";
+  const factTypeLabels: Record<string, string> = isLearningSpanish
+    ? {
+        faux_ami: "Faux ami",
+        mot_identique: "Mot identique",
+        mot_similaire: "Mot similaire",
+        intraduisible: "Intraduisible",
+        etymologie: "Étymologie",
+        expression_idiomatique: "Expression",
+        culture: "Culture",
+        grammaire: "Grammaire",
+        prononciation: "Prononciation",
+      }
+    : {
+        faux_ami: "Falso amigo",
+        mot_identique: "Palabra idéntica",
+        mot_similaire: "Palabra similar",
+        intraduisible: "Intraducible",
+        etymologie: "Etimología",
+        expression_idiomatique: "Expresión",
+        culture: "Cultura",
+        grammaire: "Gramática",
+        prononciation: "Pronunciación",
+      };
 
   // Show loading if waiting for questions
   if (state === "loading") {
-    // locale "fr" = FR portal, user is French → labels in French
-    // locale "es" = ES portal, user is Argentine → labels in Spanish
-    const isLearningSpanish = locale === "fr";
-    const factTypeLabels: Record<string, string> = isLearningSpanish
-      ? {
-          faux_ami: "Faux ami",
-          mot_identique: "Mot identique",
-          mot_similaire: "Mot similaire",
-          intraduisible: "Intraduisible",
-          etymologie: "Étymologie",
-          expression_idiomatique: "Expression",
-          culture: "Culture",
-          grammaire: "Grammaire",
-          prononciation: "Prononciation",
-        }
-      : {
-          faux_ami: "Falso amigo",
-          mot_identique: "Palabra idéntica",
-          mot_similaire: "Palabra similar",
-          intraduisible: "Intraducible",
-          etymologie: "Etimología",
-          expression_idiomatique: "Expresión",
-          culture: "Cultura",
-          grammaire: "Gramática",
-          prononciation: "Pronunciación",
-        };
-
     return (
       <div className="min-h-[80vh] flex flex-col items-center justify-center p-6">
         {/* Loader animé */}
@@ -525,54 +601,52 @@ export default function QuizPage() {
             : t("common.loading")}
         </p>
 
-        {/* Fun fact card */}
-        {isDiscoveryMode && (
-          <div className="max-w-md w-full">
-            {currentFact ? (
-              <div
-                key={currentFact.keyword}
-                className="bg-white rounded-xl p-5 border border-franol-warm shadow-sm animate-fade-in"
-              >
-                {/* Type label */}
-                <p className="text-xs font-medium text-franol-muted uppercase tracking-wide mb-3">
-                  {factTypeLabels[currentFact.type] || "Info"}
-                </p>
-
-                {/* Fact text */}
-                <p className="text-franol-text leading-relaxed">
-                  {currentFact.fact}
-                </p>
-              </div>
-            ) : (
-              <div className="bg-white rounded-xl p-5 border border-franol-warm shadow-sm">
-                <div className="h-4 bg-franol-sand rounded animate-pulse mb-3 w-20" />
-                <div className="h-5 bg-franol-sand rounded animate-pulse w-full" />
-              </div>
-            )}
-
-            {/* Next button */}
-            <button
-              onClick={fetchFunFact}
-              disabled={isLoadingFact}
-              className="w-full mt-4 px-5 py-2.5 text-sm text-franol-muted
-                        border border-franol-warm rounded-lg
-                        hover:bg-franol-sand hover:text-franol-text
-                        transition-colors disabled:opacity-50
-                        flex items-center justify-center gap-2"
+        {/* Fun fact card — shown for ALL quiz modes during loading */}
+        <div className="max-w-md w-full">
+          {currentFact ? (
+            <div
+              key={currentFact.keyword}
+              className="bg-white rounded-xl p-5 border border-franol-warm shadow-sm animate-fade-in"
             >
-              {isLoadingFact ? (
-                <Loader2 size={16} className="animate-spin" />
-              ) : (
-                <>
-                  <span>
-                    {isLearningSpanish ? "Autre anecdote" : "Otra anécdota"}
-                  </span>
-                  <ArrowRight size={16} />
-                </>
-              )}
-            </button>
-          </div>
-        )}
+              {/* Type label */}
+              <p className="text-xs font-medium text-franol-muted uppercase tracking-wide mb-3">
+                {factTypeLabels[currentFact.type] || "Info"}
+              </p>
+
+              {/* Fact text */}
+              <p className="text-franol-text leading-relaxed">
+                {currentFact.fact}
+              </p>
+            </div>
+          ) : (
+            <div className="bg-white rounded-xl p-5 border border-franol-warm shadow-sm">
+              <div className="h-4 bg-franol-sand rounded animate-pulse mb-3 w-20" />
+              <div className="h-5 bg-franol-sand rounded animate-pulse w-full" />
+            </div>
+          )}
+
+          {/* Next button */}
+          <button
+            onClick={fetchFunFact}
+            disabled={isLoadingFact}
+            className="w-full mt-4 px-5 py-2.5 text-sm text-franol-muted
+                      border border-franol-warm rounded-lg
+                      hover:bg-franol-sand hover:text-franol-text
+                      transition-colors disabled:opacity-50
+                      flex items-center justify-center gap-2"
+          >
+            {isLoadingFact ? (
+              <Loader2 size={16} className="animate-spin" />
+            ) : (
+              <>
+                <span>
+                  {isLearningSpanish ? "Autre anecdote" : "Otra anécdota"}
+                </span>
+                <ArrowRight size={16} />
+              </>
+            )}
+          </button>
+        </div>
       </div>
     );
   }
@@ -626,6 +700,88 @@ export default function QuizPage() {
               style={{ width: `${progress}%` }}
             />
           </div>
+
+          {/* Question progress dots */}
+          {totalQuestions <= 50 && (
+            <>
+              {/* Mobile: single scrollable row */}
+              <div className="mt-3 overflow-x-auto hide-scrollbar md:hidden">
+                <div className="flex items-center gap-1.5 px-2 py-1 w-max mx-auto">
+                  {questions.map((_, index) => {
+                    const isAnswered = index < answers.length;
+                    const answer = answers[index];
+                    const isCurrent = index === currentIndex;
+                    return (
+                      <button
+                        key={index}
+                        onClick={() => {
+                          if (isAnswered || index === currentIndex) {
+                            navigateToQuestion(index);
+                          }
+                        }}
+                        disabled={!isAnswered && index !== currentIndex}
+                        className={`
+                          w-7 h-7 min-w-[28px] min-h-[28px] rounded-lg text-[10px] font-bold shrink-0
+                          transition-all duration-200 flex items-center justify-center
+                          border
+                          ${isCurrent ? "ring-2 ring-offset-1 ring-franol-accent-blue scale-105" : ""}
+                          ${isAnswered
+                            ? answer?.isCorrect
+                              ? "bg-emerald-100 text-emerald-700 border-emerald-300"
+                              : "bg-red-100 text-red-700 border-red-300"
+                            : index === currentIndex
+                              ? "bg-franol-accent-blue text-white border-franol-accent-blue"
+                              : "bg-white text-franol-muted border-franol-warm cursor-default"
+                          }
+                        `}
+                        title={`${t("practice.quiz.question")} ${index + 1}`}
+                      >
+                        {index + 1}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+              {/* Desktop: wrapping grid, all visible */}
+              <div className="hidden md:block mt-3">
+                <div className="flex flex-wrap items-center justify-center gap-1.5 px-2 py-1">
+                  {questions.map((_, index) => {
+                    const isAnswered = index < answers.length;
+                    const answer = answers[index];
+                    const isCurrent = index === currentIndex;
+                    return (
+                      <button
+                        key={index}
+                        onClick={() => {
+                          if (isAnswered || index === currentIndex) {
+                            navigateToQuestion(index);
+                          }
+                        }}
+                        disabled={!isAnswered && index !== currentIndex}
+                        className={`
+                          w-7 h-7 min-w-[28px] min-h-[28px] rounded-lg text-[10px] font-bold
+                          transition-all duration-200 flex items-center justify-center
+                          border
+                          ${isCurrent ? "ring-2 ring-offset-1 ring-franol-accent-blue scale-105" : ""}
+                          ${isAnswered
+                            ? answer?.isCorrect
+                              ? "bg-emerald-100 text-emerald-700 border-emerald-300"
+                              : "bg-red-100 text-red-700 border-red-300"
+                            : index === currentIndex
+                              ? "bg-franol-accent-blue text-white border-franol-accent-blue"
+                              : "bg-white text-franol-muted border-franol-warm cursor-default"
+                          }
+                        `}
+                        title={`${t("practice.quiz.question")} ${index + 1}`}
+                      >
+                        {index + 1}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
 
@@ -637,23 +793,32 @@ export default function QuizPage() {
             {currentQuestion.type === "conjugation" &&
               currentQuestion.tense &&
               currentQuestion.pronoun && (
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-medium">
-                    {t("practice.quiz.tense")}: {currentQuestion.tense}
+                <div className="flex items-center justify-center gap-3 mb-4">
+                  <span className="px-4 py-2 bg-purple-100 text-purple-700 rounded-lg text-base font-semibold">
+                    {getTenseLabel(currentQuestion.tense, tenseLocale)}
                   </span>
-                  <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">
-                    {t("practice.quiz.pronoun")}: {currentQuestion.pronoun}
+                  <span className="px-4 py-2 bg-blue-100 text-blue-700 rounded-lg text-base font-semibold">
+                    {currentQuestion.pronoun}
                   </span>
                 </div>
               )}
 
+            {/* Synonym question badge */}
+            {currentQuestion.isSynonymQuestion && (
+              <div className="flex items-center justify-center mb-3">
+                <span className="px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-xs font-semibold">
+                  {t("practice.quiz.sayDifferently")}
+                </span>
+              </div>
+            )}
+
             <h2 className="text-2xl md:text-3xl font-display font-bold text-franol-text text-center">
               {fixGuillemets(
                 currentQuestion.type === "conjugation" &&
-                currentQuestion.tense &&
-                currentQuestion.pronoun
-                  ? `${t("practice.quiz.conjugate")}: ${currentQuestion.questionText}`
-                  : currentQuestion.questionText
+                  currentQuestion.tense &&
+                  currentQuestion.pronoun
+                  ? `${currentQuestion.questionText}`
+                  : currentQuestion.questionText,
               )}
             </h2>
           </div>
@@ -789,6 +954,28 @@ export default function QuizPage() {
                         </>
                       )}
                     </p>
+                    {/* Show infinitive translation for conjugation questions */}
+                    {currentQuestion.type === "conjugation" && (
+                      <p className="text-franol-muted mt-1 text-sm">
+                        {t("practice.quiz.translation")}:{" "}
+                        <span className="italic">
+                          {locale === "fr" ? currentQuestion.wordFr : currentQuestion.wordEs}
+                        </span>
+                      </p>
+                    )}
+                    {/* Show synonyms for vocabulary and expression questions */}
+                    {(currentQuestion.type === "vocabulary" || currentQuestion.type === "expression" || currentQuestion.type === "synonym") &&
+                      currentQuestion.aliases && currentQuestion.aliases.length > 0 && (
+                      <p className="text-franol-muted mt-1.5 text-sm">
+                        {t("practice.quiz.youCanAlsoSay")}{" "}
+                        {currentQuestion.aliases.map((alias, i) => (
+                          <span key={i}>
+                            {i > 0 && <span className="text-franol-warm mx-1">•</span>}
+                            <span className="font-medium text-franol-text">{alias}</span>
+                          </span>
+                        ))}
+                      </p>
+                    )}
                   </div>
 
                   {/* Desktop: inline button */}
@@ -845,21 +1032,39 @@ export default function QuizPage() {
                 </div>
               )}
 
-              <button
-                onClick={handleNext}
-                className={`w-full flex items-center justify-center gap-2 px-6 py-4
-                          font-semibold rounded-xl transition-colors active:scale-[0.98]
-                          ${
-                            isDiscoveryMode
-                              ? "bg-gradient-to-r from-orange-500 to-amber-500 text-white hover:from-orange-600 hover:to-amber-600"
-                              : "bg-franol-accent-blue text-white hover:bg-blue-700"
-                          }`}
-              >
-                {currentIndex < totalQuestions - 1
-                  ? t("practice.quiz.next")
-                  : t("practice.results.title")}
-                <ArrowRight size={20} />
-              </button>
+              <div className="flex gap-3">
+                {/* Previous button (US-Q11) — icon only on mobile */}
+                {currentIndex > 0 && (
+                  <button
+                    onClick={handlePrevious}
+                    className="flex items-center justify-center
+                              w-12 md:w-auto md:px-5 md:gap-2 py-4
+                              bg-white border-2 border-franol-warm text-franol-text
+                              font-semibold rounded-xl hover:border-franol-accent-blue
+                              transition-colors active:scale-[0.98] shrink-0"
+                  >
+                    <ArrowLeft size={20} />
+                    <span className="hidden md:inline">{t("practice.quiz.previous")}</span>
+                  </button>
+                )}
+
+                {/* Next / See results button */}
+                <button
+                  onClick={handleNext}
+                  className={`flex-1 flex items-center justify-center gap-2 px-6 py-4
+                            font-semibold rounded-xl transition-colors active:scale-[0.98]
+                            ${
+                              isDiscoveryMode
+                                ? "bg-gradient-to-r from-orange-500 to-amber-500 text-white hover:from-orange-600 hover:to-amber-600"
+                                : "bg-franol-accent-blue text-white hover:bg-blue-700"
+                            }`}
+                >
+                  {currentIndex < totalQuestions - 1
+                    ? t("practice.quiz.next")
+                    : t("practice.results.title")}
+                  <ArrowRight size={20} />
+                </button>
+              </div>
             </div>
           )}
         </div>

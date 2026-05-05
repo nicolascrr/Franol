@@ -15,6 +15,9 @@ export type {
   PromptPair,
   QuizPromptParams,
   ExplanationPromptParams,
+  ConjugationPromptParams,
+  ConjugationVerbSpec,
+  WrongAnswersPromptParams,
   Locale,
 } from "./types";
 
@@ -42,6 +45,8 @@ export const prompts = {
 import type {
   QuizPromptParams,
   ExplanationPromptParams,
+  ConjugationPromptParams,
+  WrongAnswersPromptParams,
   PromptPair,
   Locale,
 } from "./types";
@@ -87,4 +92,28 @@ export function getExplanationPrompts(
   return locale === "fr"
     ? frExplanation.buildExplanationPrompts(params)
     : esExplanation.buildExplanationPrompts(params);
+}
+
+/**
+ * US-Q5/Q6: Obtient les prompts de conjugaison selon la locale
+ */
+export function getConjugationPrompts(
+  locale: Locale,
+  params: ConjugationPromptParams
+): PromptPair {
+  return locale === "fr"
+    ? frQuiz.buildConjugationPrompts(params)
+    : esQuiz.buildConjugationPrompts(params);
+}
+
+/**
+ * US-Q7: Obtient les prompts de mauvaises réponses selon la locale
+ */
+export function getWrongAnswersPrompts(
+  locale: Locale,
+  params: WrongAnswersPromptParams
+): PromptPair {
+  return locale === "fr"
+    ? frQuiz.buildWrongAnswersPrompts(params)
+    : esQuiz.buildWrongAnswersPrompts(params);
 }

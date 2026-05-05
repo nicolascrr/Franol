@@ -1,16 +1,32 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, useMemo, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useLocale } from "@/contexts/LocaleContext";
 import { createClient } from "@/lib/supabase/client";
 
 const supabase = createClient();
-import type { QuizMode, QuizFormat, QuizDirection, QuizConfig } from "@/lib/quiz";
+import type {
+  QuizMode,
+  QuizFormat,
+  QuizDirection,
+  QuizConfig,
+} from "@/lib/quiz";
+import { calculateMaxQuestions } from "@/lib/quiz";
 import type { Category } from "@/types";
-import { getLangValue } from "@/lib/lang";
+import { getLangValue, fromQuizDirection, type LangCode } from "@/lib/lang";
+import { getTensesForLocale } from "@/lib/tenses";
+import {
+  VERB_GROUPS_FR,
+  VERB_GROUPS_ES,
+  PRONOUNS_FR,
+  PRONOUNS_ES,
+} from "@/lib/constants";
 import { ArrowLeft, Play, Loader2 } from "lucide-react";
+import { AlertPopup } from "@/components/ui/AlertPopup";
+import type { AlertVariant } from "@/components/ui/AlertPopup";
 import { CustomDropdown } from "@/components/ui/CustomDropdown";
+import { cn } from "@/lib/utils";
 
 function SetupContent() {
   const { t, locale, sourceLang } = useLocale();
@@ -24,10 +40,29 @@ function SetupContent() {
   const [format, setFormat] = useState<QuizFormat>("qcm");
   const [category, setCategory] = useState("all");
   const [direction, setDirection] = useState<QuizDirection>(
-    locale === "fr" ? "fr-to-es" : "es-to-fr"
+    locale === "fr" ? "fr-to-es" : "es-to-fr",
   );
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  // US-Q2, Q3, Q4: Conjugation-specific state
+  const [selectedTense, setSelectedTense] = useState("all");
+  const [selectedGroup, setSelectedGroup] = useState("all");
+  const [selectedPronoun, setSelectedPronoun] = useState("all");
+
+  // US-Q9: Count validation state
+  const [isLaunching, setIsLaunching] = useState(false);
+
+  // US-Q9: Alert popup state
+  const [alertShow, setAlertShow] = useState(false);
+  const [alertVariant, setAlertVariant] = useState<AlertVariant>("info");
+  const [alertMessage, setAlertMessage] = useState("");
+
+  const showAlert = (variant: AlertVariant, message: string) => {
+    setAlertVariant(variant);
+    setAlertMessage(message);
+    setAlertShow(true);
+  };
 
   // Fetch categories
   useEffect(() => {
@@ -54,14 +89,75 @@ function SetupContent() {
     }
   }, [mode]);
 
-  const handleStart = () => {
+  // US-Q2: Tense options from locale-aware helper
+  const tenseOptions = useMemo(() => {
+    const tenses = getTensesForLocale(locale || "fr");
+    return [
+      { value: "all", label: t("practice.setup.allTenses") },
+      ...tenses.map((te) => ({ value: te.key, label: te.label })),
+    ];
+  }, [locale, t]);
+
+  // US-Q3: Verb group options
+  const verbGroupOptions = useMemo(() => {
+    const groups = locale === "fr" ? VERB_GROUPS_FR : VERB_GROUPS_ES;
+    return [
+      { value: "all", label: t("practice.setup.allGroups") },
+      ...groups.map((g) => ({
+        value: g.value,
+        label: "label" in g ? g.label : t(g.labelKey),
+      })),
+    ];
+  }, [locale, t]);
+
+  // US-Q4: Pronoun options
+  const pronounOptions = useMemo(() => {
+    const targetLang = locale === "fr" ? "es" : "fr";
+    return targetLang === "fr" ? PRONOUNS_FR : PRONOUNS_ES;
+  }, [locale]);
+
+  const handleStart = async () => {
+    setIsLaunching(true);
+    setAlertShow(false);
+
     const config: QuizConfig = {
       mode,
       format,
       questionCount,
       category: category !== "all" ? category : undefined,
       direction,
+      locale: (locale || "fr") as "fr" | "es",
+      tense:
+        mode === "conjugation" && selectedTense !== "all"
+          ? selectedTense
+          : undefined,
+      verbGroup:
+        mode === "conjugation" && selectedGroup !== "all"
+          ? selectedGroup
+          : undefined,
+      pronoun:
+        mode === "conjugation" && selectedPronoun !== "all"
+          ? selectedPronoun
+          : undefined,
     };
+
+    // US-Q9: Validate question count against available content
+    const validation = await calculateMaxQuestions(config);
+
+    if (validation.maxQuestions === 0) {
+      showAlert("warning", t("practice.setup.noContent"));
+      setIsLaunching(false);
+      return;
+    }
+
+    if (validation.adjusted) {
+      config.questionCount = validation.maxQuestions;
+      showAlert("info", t("practice.setup.adjustedCount")
+        .replace("{requested}", String(questionCount))
+        .replace("{available}", String(validation.maxQuestions)));
+      // Pause to let user see the rotating timer alert
+      await new Promise((r) => setTimeout(r, 5000));
+    }
 
     // Nettoyer tout quiz précédent avant de lancer le nouveau
     localStorage.removeItem("savedQuiz");
@@ -75,7 +171,7 @@ function SetupContent() {
   const questionCountOptions = [10, 20, 30];
 
   return (
-    <div className="p-6 md:p-8 max-w-2xl mx-auto">
+    <div className="p-4 sm:p-6 md:p-8 max-w-2xl mx-auto">
       {/* Header with back button */}
       <header className="mb-8 animate-fade-in">
         <button
@@ -86,7 +182,7 @@ function SetupContent() {
           <ArrowLeft size={20} />
           {t("common.back")}
         </button>
-        <h1 className="text-3xl md:text-4xl font-display font-bold text-franol-text">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-franol-text">
           {t("practice.setup.title")}
         </h1>
         <p className="mt-2 text-franol-muted">{t("practice.setup.subtitle")}</p>
@@ -95,7 +191,7 @@ function SetupContent() {
       {/* Configuration Form */}
       <div className="space-y-6">
         {/* Question Count */}
-        <div className="bg-white rounded-2xl p-6 border border-franol-warm animate-slide-up">
+        <div className="bg-white rounded-2xl p-4 sm:p-6 border border-franol-warm animate-slide-up">
           <label className="block text-sm font-semibold text-franol-text mb-4">
             {t("practice.setup.questionCount")}
           </label>
@@ -107,24 +203,24 @@ function SetupContent() {
                   setQuestionCount(count);
                   setIsCustomCount(false);
                 }}
-                className={`px-5 py-2.5 rounded-xl font-medium transition-all duration-200
-                           ${
-                             !isCustomCount && questionCount === count
-                               ? "bg-franol-accent-blue text-white shadow-md"
-                               : "bg-franol-sand text-franol-text hover:bg-franol-warm"
-                           }`}
+                className={cn(
+                  "px-5 py-2.5 rounded-xl font-medium transition-all duration-200",
+                  !isCustomCount && questionCount === count
+                    ? "bg-franol-accent-blue text-white shadow-md"
+                    : "bg-franol-sand text-franol-text hover:bg-franol-warm",
+                )}
               >
                 {count}
               </button>
             ))}
             <button
               onClick={() => setIsCustomCount(true)}
-              className={`px-5 py-2.5 rounded-xl font-medium transition-all duration-200
-                         ${
-                           isCustomCount
-                             ? "bg-franol-accent-blue text-white shadow-md"
-                             : "bg-franol-sand text-franol-text hover:bg-franol-warm"
-                         }`}
+              className={cn(
+                "px-5 py-2.5 rounded-xl font-medium transition-all duration-200",
+                isCustomCount
+                  ? "bg-franol-accent-blue text-white shadow-md"
+                  : "bg-franol-sand text-franol-text hover:bg-franol-warm",
+              )}
             >
               {t("practice.setup.custom")}
             </button>
@@ -138,7 +234,7 @@ function SetupContent() {
                 value={questionCount}
                 onChange={(e) =>
                   setQuestionCount(
-                    Math.min(50, Math.max(5, parseInt(e.target.value) || 5))
+                    Math.min(50, Math.max(5, parseInt(e.target.value) || 5)),
                   )
                 }
                 className="w-32 px-4 py-2.5 rounded-xl border-2 border-franol-warm
@@ -151,7 +247,7 @@ function SetupContent() {
 
         {/* Format */}
         <div
-          className="bg-white rounded-2xl p-6 border border-franol-warm animate-slide-up"
+          className="bg-white rounded-2xl p-4 sm:p-6 border border-franol-warm animate-slide-up"
           style={{ animationDelay: "0.1s" }}
         >
           <label className="block text-sm font-semibold text-franol-text mb-4">
@@ -162,14 +258,16 @@ function SetupContent() {
               <button
                 key={f}
                 onClick={() => setFormat(f)}
-                className={`px-5 py-2.5 rounded-xl font-medium transition-all duration-200
-                           ${
-                             format === f
-                               ? "bg-franol-accent-blue text-white shadow-md"
-                               : "bg-franol-sand text-franol-text hover:bg-franol-warm"
-                           }`}
+                className={cn(
+                  "px-5 py-2.5 rounded-xl font-medium transition-all duration-200",
+                  format === f
+                    ? "bg-franol-accent-blue text-white shadow-md"
+                    : "bg-franol-sand text-franol-text hover:bg-franol-warm",
+                )}
               >
-                {t(`practice.setup.format${f.charAt(0).toUpperCase() + f.slice(1)}`)}
+                {t(
+                  `practice.setup.format${f.charAt(0).toUpperCase() + f.slice(1)}`,
+                )}
               </button>
             ))}
           </div>
@@ -178,7 +276,7 @@ function SetupContent() {
         {/* Category (not for conjugation) */}
         {mode !== "conjugation" && (
           <div
-            className="bg-white rounded-2xl p-6 border border-franol-warm animate-slide-up"
+            className="bg-white rounded-2xl p-4 sm:p-6 border border-franol-warm animate-slide-up"
             style={{ animationDelay: "0.2s" }}
           >
             <label className="block text-sm font-semibold text-franol-text mb-4">
@@ -207,9 +305,94 @@ function SetupContent() {
           </div>
         )}
 
-        {/* Direction */}
+        {/* ===== Conjugation-specific options (US-Q2, Q3, Q4) ===== */}
+        {mode === "conjugation" && (
+          <div
+            className="bg-white rounded-2xl p-4 sm:p-6 border border-franol-warm animate-slide-up space-y-6"
+            style={{ animationDelay: "0.2s" }}
+          >
+            <label className="block text-sm font-semibold text-franol-text">
+              {t("practice.setup.conjugationOptions")}
+            </label>
+
+            {/* US-Q2: Tense Selection */}
+            <div>
+              <label className="block text-xs font-medium text-franol-muted mb-2">
+                {t("practice.setup.tense")}
+              </label>
+              <CustomDropdown
+                value={selectedTense}
+                onChange={setSelectedTense}
+                options={tenseOptions}
+                placeholder={t("practice.setup.allTenses")}
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-franol-muted mb-2">
+                {t("practice.setup.verbGroup")}
+              </label>
+              <div className="flex flex-wrap gap-2 sm:gap-3">
+                {verbGroupOptions.map((opt) => (
+                  <button
+                    key={opt.value}
+                    onClick={() => setSelectedGroup(opt.value)}
+                    className={cn(
+                      "px-4 py-2 rounded-xl font-medium transition-all duration-200 min-h-[44px]",
+                      "text-sm whitespace-nowrap",
+                      selectedGroup === opt.value
+                        ? "bg-franol-accent-blue text-white shadow-md"
+                        : "bg-franol-sand text-franol-text hover:bg-franol-warm",
+                    )}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* US-Q4: Pronoun Selection */}
+            <div>
+              <label className="block text-xs font-medium text-franol-muted mb-2">
+                {t("practice.setup.pronoun")}
+              </label>
+              <div className="flex flex-wrap gap-2 sm:gap-3">
+                {/* "All pronouns" option */}
+                <button
+                  onClick={() => setSelectedPronoun("all")}
+                  className={cn(
+                    "px-4 py-2 rounded-xl font-medium transition-all duration-200 min-h-[44px]",
+                    "text-sm whitespace-nowrap",
+                    selectedPronoun === "all"
+                      ? "bg-franol-accent-blue text-white shadow-md"
+                      : "bg-franol-sand text-franol-text hover:bg-franol-warm",
+                  )}
+                >
+                  {t("practice.setup.allPronouns")}
+                </button>
+                {pronounOptions.map((p) => (
+                  <button
+                    key={p}
+                    onClick={() => setSelectedPronoun(p)}
+                    className={cn(
+                      "px-4 py-2 rounded-xl font-medium transition-all duration-200 min-h-[44px]",
+                      "text-sm whitespace-nowrap",
+                      selectedPronoun === p
+                        ? "bg-franol-accent-blue text-white shadow-md"
+                        : "bg-franol-sand text-franol-text hover:bg-franol-warm",
+                    )}
+                  >
+                    {p}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Direction — hidden for conjugation (direction is hardcoded per portal) */}
+        {mode !== "conjugation" && (
         <div
-          className="bg-white rounded-2xl p-6 border border-franol-warm animate-slide-up"
+          className="bg-white rounded-2xl p-4 sm:p-6 border border-franol-warm animate-slide-up"
           style={{ animationDelay: "0.3s" }}
         >
           <label className="block text-sm font-semibold text-franol-text mb-4">
@@ -218,44 +401,57 @@ function SetupContent() {
           <div className="flex flex-col sm:flex-row gap-3">
             <button
               onClick={() => setDirection("fr-to-es")}
-              className={`flex-1 px-5 py-3 rounded-xl font-medium transition-all duration-200
-                         ${
-                           direction === "fr-to-es"
-                             ? "bg-franol-accent-blue text-white shadow-md"
-                             : "bg-franol-sand text-franol-text hover:bg-franol-warm"
-                         }`}
+              className={cn(
+                "flex-1 px-5 py-3 rounded-xl font-medium transition-all duration-200",
+                direction === "fr-to-es"
+                  ? "bg-franol-accent-blue text-white shadow-md"
+                  : "bg-franol-sand text-franol-text hover:bg-franol-warm",
+              )}
             >
-              {locale === "fr"
-                ? t("practice.setup.frToEs")
-                : t("practice.setup.frToEs")}
+              {t("practice.setup.frToEs")}
             </button>
             <button
               onClick={() => setDirection("es-to-fr")}
-              className={`flex-1 px-5 py-3 rounded-xl font-medium transition-all duration-200
-                         ${
-                           direction === "es-to-fr"
-                             ? "bg-franol-accent-blue text-white shadow-md"
-                             : "bg-franol-sand text-franol-text hover:bg-franol-warm"
-                         }`}
+              className={cn(
+                "flex-1 px-5 py-3 rounded-xl font-medium transition-all duration-200",
+                direction === "es-to-fr"
+                  ? "bg-franol-accent-blue text-white shadow-md"
+                  : "bg-franol-sand text-franol-text hover:bg-franol-warm",
+              )}
             >
-              {locale === "fr"
-                ? t("practice.setup.esToFr")
-                : t("practice.setup.esToFr")}
+              {t("practice.setup.esToFr")}
             </button>
           </div>
         </div>
+        )}
+
+        {/* Alert popup (US-Q9) — with rotating timer for adjusted count */}
+        <AlertPopup
+          show={alertShow}
+          variant={alertVariant}
+          message={alertMessage}
+          onClose={() => setAlertShow(false)}
+          showTimer={true}
+          duration={5000}
+        />
 
         {/* Start Button */}
         <button
           onClick={handleStart}
+          disabled={isLaunching}
           className="w-full flex items-center justify-center gap-3 px-6 py-4
                     bg-franol-accent-blue text-white font-semibold rounded-2xl
                     hover:bg-blue-700 active:scale-[0.98] transition-all duration-200
-                    shadow-lg hover:shadow-xl animate-slide-up"
+                    shadow-lg hover:shadow-xl animate-slide-up
+                    disabled:opacity-50 disabled:cursor-not-allowed"
           style={{ animationDelay: "0.4s" }}
         >
-          <Play size={20} />
-          {t("practice.setup.start")}
+          {isLaunching ? (
+            <Loader2 size={20} className="animate-spin" />
+          ) : (
+            <Play size={20} />
+          )}
+          {isLaunching ? t("common.loading") : t("practice.setup.start")}
         </button>
       </div>
     </div>

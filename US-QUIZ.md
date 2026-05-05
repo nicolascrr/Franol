@@ -24,12 +24,12 @@
 
 ---
 
-## US-Q1: Tense Mapping Data Files
+## US-Q1: Tense Mapping Data Files ✅ DONE
 
 **Priority:** High
 **Complexity:** Low
 **Dependencies:** None
-**Files to create:**
+**Files created:**
 - `src/data/tenses-fr.json`
 - `src/data/tenses-es.json`
 - `src/lib/tenses.ts` (mapping utility)
@@ -55,16 +55,16 @@ Create two JSON files defining the tense lists for French and Spanish (Rioplaten
 
 ### Acceptance Criteria
 
-- [ ] `src/data/tenses-fr.json` contains an array of `{ key: string, label: string }` for all 10 French tenses
-- [ ] `src/data/tenses-es.json` contains an array of `{ key: string, label: string }` for all 10 Spanish tenses (Rioplatense labels)
-- [ ] `src/lib/tenses.ts` exports:
+- [x] `src/data/tenses-fr.json` contains an array of `{ key: string, label: string }` for all 10 French tenses
+- [x] `src/data/tenses-es.json` contains an array of `{ key: string, label: string }` for all 10 Spanish tenses (Rioplatense labels)
+- [x] `src/lib/tenses.ts` exports:
   - `TENSE_MAP_FR_TO_ES`: `Record<string, string>` — maps French tense key → Spanish tense key
   - `TENSE_MAP_ES_TO_FR`: `Record<string, string>` — reverse mapping
   - `getTensesForLocale(locale: "fr" | "es"): TenseEntry[]` — returns the appropriate array
   - `getCorrespondingTense(tenseKey: string, from: LangCode, to: LangCode): string` — returns the equivalent tense key in the other language
-- [ ] Gerund (`gerondif` / `gerundio`) is included in both files
-- [ ] All types are exported for use in `QuizConfig` and prompt builders
-- [ ] No hardcoded tense values in `src/lib/quiz.ts` — replace existing `TENSES` array with imports from this module
+- [x] Gerund (`gerondif` / `gerundio`) is included in both files
+- [x] All types are exported for use in `QuizConfig` and prompt builders
+- [x] No hardcoded tense values in `src/lib/quiz.ts` — replace existing `TENSES` array with imports from this module
 
 ### Technical Notes
 
@@ -73,12 +73,13 @@ Create two JSON files defining the tense lists for French and Spanish (Rioplaten
 
 ---
 
-## US-Q2: Conjugation Configuration Panel — Tense Selection
+## US-Q2: Conjugation Configuration Panel — Tense Selection ✅ DONE
 
 **Priority:** High
 **Complexity:** Medium
 **Dependencies:** US-Q1
-**Files to modify:**
+**Status:** ✅ DONE
+**Files modified:**
 - `src/app/dashboard/practice/setup/page.tsx`
 - `src/lib/quiz.ts` (extend `QuizConfig`)
 - `src/types/index.ts`
@@ -107,23 +108,24 @@ User selects tense → state: selectedTense (string | "all")
 
 ### Acceptance Criteria
 
-- [ ] A "Tense" dropdown card appears when `mode === "conjugation"`, animated with `animate-slide-up`
-- [ ] Dropdown is populated from `getTensesForLocale(locale)` — labels are translated per portal
-- [ ] Default option is "All tenses" with value `"all"`
-- [ ] Selected tense is stored in `QuizConfig.tense` (optional field)
-- [ ] The `QuizConfig` type is extended: `tense?: string` (key from tenses JSON, e.g. `"present"`)
-- [ ] Translation keys added: `practice.setup.tense`, `practice.setup.allTenses`
-- [ ] Both `fr.json` and `es.json` are updated
-- [ ] Responsive: full-width on mobile, works within the `max-w-2xl` container
+- [x] A "Tense" dropdown card appears when `mode === "conjugation"`, animated with `animate-slide-up`
+- [x] Dropdown is populated from `getTensesForLocale(locale)` — labels are translated per portal
+- [x] Default option is "All tenses" with value `"all"`
+- [x] Selected tense is stored in `QuizConfig.tense` (optional field)
+- [x] The `QuizConfig` type is extended: `tense?: string` (key from tenses JSON, e.g. `"present"`)
+- [x] Translation keys added: `practice.setup.tense`, `practice.setup.allTenses`
+- [x] Both `fr.json` and `es.json` are updated
+- [x] Responsive: full-width on mobile, works within the `max-w-2xl` container
 
 ---
 
-## US-Q3: Conjugation Configuration Panel — Verb Group Selection
+## US-Q3: Conjugation Configuration Panel — Verb Group Selection ✅ DONE
 
 **Priority:** High
 **Complexity:** Medium
 **Dependencies:** None (uses existing `VERB_GROUPS_FR`, `VERB_GROUPS_ES` from `constants.ts`)
-**Files to modify:**
+**Status:** ✅ DONE
+**Files modified:**
 - `src/app/dashboard/practice/setup/page.tsx`
 - `src/lib/quiz.ts` (extend `QuizConfig`)
 - `src/translations/fr.json`
@@ -152,23 +154,24 @@ User selects group → state: selectedGroup (string | "all")
 
 ### Acceptance Criteria
 
-- [ ] A "Verb Group" button group appears when `mode === "conjugation"`
-- [ ] Group labels change based on quiz direction (FR groups for FR→ES, ES groups for ES→FR)
-- [ ] Default selection: "All groups" with value `"all"`
-- [ ] Selected group stored in `QuizConfig.verbGroup?: string`
-- [ ] `QuizConfig` type extended accordingly
-- [ ] In `generateQuiz()`, conjugation query filters by `group_fr` or `group_es` when specified
-- [ ] Translation keys added: `practice.setup.verbGroup`, `practice.setup.allGroups`
-- [ ] Responsive: wraps on mobile using `flex-wrap gap-3`
+- [x] A "Verb Group" button group appears when `mode === "conjugation"`
+- [x] Group labels change based on quiz direction (FR groups for FR→ES, ES groups for ES→FR)
+- [x] Default selection: "All groups" with value `"all"`
+- [x] Selected group stored in `QuizConfig.verbGroup?: string`
+- [x] `QuizConfig` type extended accordingly
+- [x] In `generateQuiz()`, conjugation query filters by `group_fr` or `group_es` when specified
+- [x] Translation keys added: `practice.setup.verbGroup`, `practice.setup.allGroups`
+- [x] Responsive: wraps on mobile using `flex-wrap gap-3`
 
 ---
 
-## US-Q4: Conjugation Configuration Panel — Pronoun Selection
+## US-Q4: Conjugation Configuration Panel — Pronoun Selection ✅ DONE
 
 **Priority:** High
 **Complexity:** Medium
 **Dependencies:** None
-**Files to modify:**
+**Status:** ✅ DONE
+**Files modified:**
 - `src/app/dashboard/practice/setup/page.tsx`
 - `src/lib/quiz.ts` (extend `QuizConfig`)
 - `src/lib/constants.ts` (add pronoun constants)
@@ -207,32 +210,33 @@ User selects pronoun → state: selectedPronoun (string | "all")
 
 ### Acceptance Criteria
 
-- [ ] A "Pronoun" selector appears when `mode === "conjugation"`
-- [ ] Pronoun labels adapt to the quiz direction (ES pronouns for FR→ES, FR pronouns for ES→FR)
-- [ ] Default: "All pronouns" with value `"all"`
-- [ ] Selected pronoun stored in `QuizConfig.pronoun?: string` (stores the pronoun string itself, e.g. `"tu"`)
-- [ ] Pronoun constants added to `src/lib/constants.ts`:
+- [x] A "Pronoun" selector appears when `mode === "conjugation"`
+- [x] Pronoun labels adapt to the quiz direction (ES pronouns for FR→ES, FR pronouns for ES→FR)
+- [x] Default: "All pronouns" with value `"all"`
+- [x] Selected pronoun stored in `QuizConfig.pronoun?: string` (stores the pronoun string itself, e.g. `"tu"`)
+- [x] Pronoun constants added to `src/lib/constants.ts`:
   - `PRONOUNS_FR: string[]`
   - `PRONOUNS_ES: string[]`
-- [ ] Remove hardcoded `PRONOUNS_ES` / `PRONOUNS_FR` from `src/lib/quiz.ts` — import from constants
-- [ ] Translation keys: `practice.setup.pronoun`, `practice.setup.allPronouns`
-- [ ] Responsive: horizontal scroll or wrap on mobile
+- [x] Remove hardcoded `PRONOUNS_ES` / `PRONOUNS_FR` from `src/lib/quiz.ts` — import from constants
+- [x] Translation keys: `practice.setup.pronoun`, `practice.setup.allPronouns`
+- [x] Responsive: horizontal scroll or wrap on mobile
 
 ---
 
-## US-Q5: AI-Powered Conjugation — Correct Answer Generation
+## US-Q5: AI-Powered Conjugation — Correct Answer Generation ✅ DONE
 
 **Priority:** Critical
 **Complexity:** High
 **Dependencies:** US-Q1, US-Q2, US-Q4
-**Files to modify:**
-- `src/lib/quiz.ts` (refactor conjugation mode)
-- `src/lib/ai.ts` (add conjugation generation function)
-- `src/app/api/ai/generate-batch/route.ts` (or new dedicated route)
-- `src/lib/prompts/fr/quiz.ts` (add conjugation prompts)
-- `src/lib/prompts/es/quiz.ts` (add conjugation prompts)
-- `src/lib/prompts/types.ts` (extend params)
-- `src/lib/prompts/index.ts` (add dispatch)
+**Status:** ✅ DONE
+**Files modified:**
+- `src/lib/quiz.ts` (refactored conjugation branch — per-verb tense/pronoun randomization)
+- `src/lib/ai.ts` (added `generateConjugationBatch()` with per-verb `ConjugationVerbInput`)
+- `src/app/api/ai/conjugation/route.ts` (new dedicated route with JSON truncation repair)
+- `src/lib/prompts/fr/quiz.ts` (added conjugation prompts with per-verb specs)
+- `src/lib/prompts/es/quiz.ts` (added conjugation prompts with per-verb specs)
+- `src/lib/prompts/types.ts` (added `ConjugationVerbSpec`, `ConjugationPromptParams`)
+- `src/lib/prompts/index.ts` (added `getConjugationPrompts()` dispatcher)
 
 ### Description
 
@@ -289,32 +293,46 @@ User: Conjuga el verbo francés "manger" al "présent" para "je"
 
 ### Acceptance Criteria
 
-- [ ] New function `generateAIConjugation()` in `src/lib/ai.ts`:
-  - Takes: infinitive (FR + ES), tense, pronoun, direction, locale
-  - Returns: `{ conjugatedForm: string, pronoun: string }`
-- [ ] New API route or extension of existing `/api/ai/generate-batch` for conjugation
-- [ ] Conjugation prompts added to both `fr/quiz.ts` and `es/quiz.ts`
-- [ ] `src/lib/quiz.ts` `generateQuiz()` conjugation branch completely refactored:
+- [x] New function `generateConjugationBatch()` in `src/lib/ai.ts`:
+  - Takes: `ConjugationVerbInput[]` (each verb carries its own tense/pronoun), direction, locale, format, allTenseKeys
+  - Returns: `AIConjugationResponse { conjugations: ConjugationResult[] }`
+- [x] New dedicated API route `/api/ai/conjugation` (POST):
+  - Accepts per-verb specs (`ConjugationVerbSpec[]`) from request body
+  - Uses `getConjugationPrompts()` from prompt dispatcher
+  - High `maxOutputTokens` (`Math.max(4000, verbs.length * 400)`) to prevent truncation
+  - 3-tier JSON parsing: direct → markdown strip → truncation repair (closes unclosed brackets)
+  - Validates wrong answers: deduplication, removal of correct answer matches, padding to 3
+- [x] Conjugation prompts added to both `fr/quiz.ts` and `es/quiz.ts`:
+  - Per-verb specs sent to AI (each verb has its own `tenseKey`, `tenseLabel`, `pronoun`)
+  - FR portal: French system prompt, conjugates Spanish verbs
+  - ES portal: Spanish (rioplatense) system prompt, conjugates French verbs
+  - Wrong answer rules: same pronoun, different tense
+- [x] `src/lib/quiz.ts` `generateQuiz()` conjugation branch completely refactored:
   - No longer uses the infinitive as both question and answer
-  - Calls AI to generate the actual conjugated form
-  - Respects `config.tense` and `config.pronoun` from QuizConfig
-- [ ] The `tense` field on `QuizQuestion` stores the **tense key** (e.g. `"present"`) not a display label
-- [ ] The `pronoun` field on `QuizQuestion` stores the target-language pronoun used
-- [ ] AI response is validated (non-empty, plausible conjugation)
-- [ ] Error handling: fallback to infinitive if AI fails (with a warning logged)
-- [ ] Tense labels in the quiz UI are localized using the tense data files
+  - Each verb gets its own random tense and pronoun (unless user fixed them)
+  - Calls `generateConjugationBatch()` with per-verb `ConjugationVerbInput[]`
+  - Respects `config.tense`, `config.verbGroup`, `config.pronoun` from QuizConfig
+  - Stores per-question `tense`, `pronoun`, `wordFr`, `wordEs` on each QuizQuestion
+- [x] The `tense` field on `QuizQuestion` stores the **tense key** (e.g. `"present"`)
+- [x] The `pronoun` field on `QuizQuestion` stores the target-language pronoun used
+- [x] AI response is validated (non-empty conjugated form, deduplicated wrong answers)
+- [x] Error handling: fallback to infinitive if AI fails (with `console.error` logged)
+- [x] Tense labels in the quiz UI are localized using `getTenseLabel()` from `src/lib/tenses.ts`
+- [x] Fun facts shown during conjugation loading (both discovery AND conjugation modes)
 
 ---
 
-## US-Q6: AI-Powered Conjugation — Wrong Answers for QCM
+## US-Q6: AI-Powered Conjugation — Wrong Answers for QCM ✅ DONE
 
 **Priority:** High
 **Complexity:** High
 **Dependencies:** US-Q5
-**Files to modify:**
-- `src/lib/ai.ts` (extend conjugation generation)
-- `src/lib/prompts/fr/quiz.ts` (add wrong answer prompts)
-- `src/lib/prompts/es/quiz.ts` (add wrong answer prompts)
+**Status:** ✅ DONE
+**Files modified:**
+- `src/lib/ai.ts` (conjugation batch always generates wrong answers)
+- `src/app/api/ai/conjugation/route.ts` (wrong answer validation + padding)
+- `src/lib/prompts/fr/quiz.ts` (wrong answer generation rules in prompt)
+- `src/lib/prompts/es/quiz.ts` (wrong answer generation rules in prompt)
 
 ### Description
 
@@ -337,11 +355,12 @@ If the user practices **passé composé** with **"tu"**:
 
 ### Acceptance Criteria
 
-- [ ] AI prompt for conjugation wrong answers enforces same pronoun, different tense
-- [ ] Wrong answers are validated: they must differ from the correct answer and from each other
-- [ ] The AI generates exactly 3 wrong answers per question
-- [ ] Prompt is in the dedicated prompt files (`fr/quiz.ts`, `es/quiz.ts`)
-- [ ] Fallback: if AI returns fewer than 3 wrong answers, retry once; if still failing, use hardcoded fallback patterns
+- [x] AI prompt for conjugation wrong answers enforces same pronoun, different tense
+- [x] Wrong answers are validated: they must differ from the correct answer and from each other (deduplication)
+- [x] The AI generates exactly 3 wrong answers per question (padded with fallback if fewer returned)
+- [x] Prompt is in the dedicated prompt files (`fr/quiz.ts`, `es/quiz.ts`)
+- [x] Fallback: if AI returns fewer than 3 wrong answers, padding fills the remainder; if AI fails entirely, fallback to translation format (no QCM options)
+- [x] `generateQuiz()` always passes `"qcm"` format to `generateConjugationBatch()` to ensure wrong answers are generated, then decides per-question format with `getQuestionFormat()`
 
 ---
 
@@ -954,20 +973,20 @@ Phase 5 — UX Enhancements
 
 ## Summary
 
-| US | Title | Priority | Complexity | Dependencies |
-|---|---|---|---|---|
-| US-Q1 | Tense Mapping Data Files | High | Low | None |
-| US-Q2 | Tense Selection UI | High | Medium | US-Q1 |
-| US-Q3 | Verb Group Selection UI | High | Medium | None |
-| US-Q4 | Pronoun Selection UI | High | Medium | None |
-| US-Q5 | AI Conjugation — Correct Answers | Critical | High | US-Q1, Q2, Q4 |
-| US-Q6 | AI Conjugation — Wrong Answers | High | High | US-Q5 |
-| US-Q7 | AI Wrong Answers (All Modes) | High | High | None |
-| US-Q8 | Synonym-Based Questions | High | Very High | US-Q7 |
-| US-Q9 | Question Count Validation | High | Medium | US-Q8 |
-| US-Q10 | Saved Quiz Presets | Medium | High | None (DB first) |
-| US-Q11 | Backward Navigation | Medium | Medium | None |
-| US-Q12 | Conjugation Answer Format | High | Low | US-Q5 |
-| US-Q13 | Conjugation AI Prompts | High | Medium | US-Q1 |
+| US | Title | Priority | Complexity | Dependencies | Status |
+|---|---|---|---|---|---|
+| US-Q1 | Tense Mapping Data Files | High | Low | None | ✅ Done |
+| US-Q2 | Tense Selection UI | High | Medium | US-Q1 | ✅ Done |
+| US-Q3 | Verb Group Selection UI | High | Medium | None | ✅ Done |
+| US-Q4 | Pronoun Selection UI | High | Medium | None | ✅ Done |
+| US-Q5 | AI Conjugation — Correct Answers | Critical | High | US-Q1, Q2, Q4 | ✅ Done |
+| US-Q6 | AI Conjugation — Wrong Answers | High | High | US-Q5 | ✅ Done |
+| US-Q7 | AI Wrong Answers (All Modes) | High | High | None | ✅ Done |
+| US-Q8 | Synonym-Based Questions | High | Very High | US-Q7 | ✅ Done |
+| US-Q9 | Question Count Validation | High | Medium | US-Q8 | ✅ Done |
+| US-Q10 | Saved Quiz Presets | Medium | High | None (DB first) | ✅ Done |
+| US-Q11 | Backward Navigation | Medium | Medium | None | ✅ Done |
+| US-Q12 | Conjugation Answer Format | High | Low | US-Q5 | ✅ Done |
+| US-Q13 | Conjugation AI Prompts | High | Medium | US-Q1 | ✅ Done |
 
 **Total:** 13 user stories
