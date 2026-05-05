@@ -1,13 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { GoogleGenAI } from "@google/genai";
+import { getAIClient } from "@/lib/ai/client";
 import { getExplanationPrompts } from "@/lib/prompts";
 import type { Locale } from "@/lib/prompts";
+import { sanitizeStringInput, validateEnum } from "@/lib/auth/input-validation";
 
 export const dynamic = "force-dynamic";
-
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-
-const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY ?? "" });
 
 interface ExplanationRequestBody {
   question: string;
@@ -18,23 +15,48 @@ interface ExplanationRequestBody {
 
 export async function POST(request: NextRequest) {
   try {
-    const body: ExplanationRequestBody = await request.json();
-    const { question, correctAnswer, userAnswer, locale } = body;
+    const contentType = request.headers.get("content-type") || "";
+    if (!contentType.includes("application/json")) {
+      return NextResponse.json(
+        { error: "Content-Type must be application/json" },
+        { status: 400 },
+      );
+    }
 
-    const localeTyped: Locale = locale === "es" ? "es" : "fr";
+    let body: ExplanationRequestBody;
+    try {
+      body = await request.json();
+    } catch {
+      return NextResponse.json(
+        { error: "Invalid JSON body" },
+        { status: 400 },
+      );
+    }
+
+    const { locale } = body;
+
+    // Sanitize all string inputs
+    const question = sanitizeStringInput(body.question, 500);
+    const correctAnswer = sanitizeStringInput(body.correctAnswer, 200);
+    const userAnswer = sanitizeStringInput(body.userAnswer, 200);
+
+    if (!question || !correctAnswer || !userAnswer) {
+      return NextResponse.json(
+        { error: "Missing required fields: question, correctAnswer, userAnswer" },
+        { status: 400 },
+      );
+    }
+
+    const localeTyped: Locale = validateEnum<Locale>(locale, ["fr", "es"]) || "fr";
     const wasCorrect =
       userAnswer.toLowerCase().trim() === correctAnswer.toLowerCase().trim();
 
-    // Utiliser les prompts centralisés
     const { system: systemPrompt, user: userPrompt } = getExplanationPrompts(
       localeTyped,
-      {
-        question,
-        correctAnswer,
-        userAnswer,
-        wasCorrect,
-      },
+      { question, correctAnswer, userAnswer, wasCorrect },
     );
+
+    const ai = getAIClient();
 
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
@@ -57,7 +79,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ explanation: explanation.trim() });
   } catch (error) {
-    console.error("Error getting explanation:", error);
+    console.error("[Explanation] Error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 },

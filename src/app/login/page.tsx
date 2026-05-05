@@ -7,15 +7,17 @@ import { Lock, Eye, EyeOff, ArrowLeft, Loader2 } from "lucide-react";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { locale, t, clearLocale } = useLocale();
+  const { locale, t, clearLocale, isLoading: localeLoading } = useLocale();
 
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  // Vérifier si l'utilisateur est déjà authentifié
+  // Vérifier si l'utilisateur est déjà authentifié (after locale is loaded)
   useEffect(() => {
+    if (localeLoading) return;
+
     const checkAuth = async () => {
       try {
         const response = await fetch("/api/auth/check");
@@ -30,15 +32,14 @@ export default function LoginPage() {
       }
     };
 
-    checkAuth();
-  }, [router]);
-
-  // Rediriger vers l'accueil si pas de locale
-  useEffect(() => {
+    // Only redirect to home if locale is confirmed absent (not just unloaded)
     if (!locale) {
       router.push("/");
+      return;
     }
-  }, [locale, router]);
+
+    checkAuth();
+  }, [locale, localeLoading, router]);
 
   const handleBack = () => {
     clearLocale();
@@ -73,8 +74,8 @@ export default function LoginPage() {
     }
   };
 
-  // Ne rien afficher si pas de locale (évite le flash)
-  if (!locale) {
+  // Attendre le chargement de la locale depuis localStorage
+  if (localeLoading || !locale) {
     return null;
   }
 
