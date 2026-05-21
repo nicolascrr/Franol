@@ -5,7 +5,7 @@
     "keyword": "voyelles espagnoles"
   },
   {
-    "fact": "En espagnol, toutes les consonnes en fin de mot se prononcent. Quand vous lisez «verdad», le «d» final.",
+    "fact": "En espagnol, toutes les consonnes en fin de mot se prononcent. Quand vous lisez «verdad», le «d» final s'entend clairement.",
     "type": "linguistique",
     "keyword": "consonnes finales"
   },
@@ -120,7 +120,7 @@
     "keyword": "groupes consonantiques initiaux"
   },
   {
-    "fact": "Le mot «chocolat» vient du náhuatl «xocolatl», la langue des Aztèques. Il est passé en espagnol sous la forme «chocolate» avant.",
+    "fact": "Le mot «chocolat» vient du náhuatl «xocolatl», la langue des Aztèques. Il est passé en espagnol sous la forme «chocolate» avant de se répandre dans toutes les langues européennes.",
     "type": "etymologie",
     "keyword": "chocolat"
   },
@@ -130,7 +130,7 @@
     "keyword": "tomate"
   },
   {
-    "fact": "«Tabac» vient de l'espagnol «tabaco», lui-même issu de l'arawak, la langue des peuples des Caraïbes. Les premiers explorateurs espagnols ont.",
+    "fact": "«Tabac» vient de l'espagnol «tabaco», lui-même issu de l'arawak, la langue des peuples des Caraïbes. Les premiers explorateurs espagnols ont ramené cette plante en Europe au XVIe siècle.",
     "type": "etymologie",
     "keyword": "tabac"
   },
@@ -140,17 +140,17 @@
     "keyword": "bizarre"
   },
   {
-    "fact": "«Moustique» vient de l'espagnol «mosquito», diminutif de «mosca» (la mouche). Le suffixe diminutif espagnol «ito» était si expressif que le.",
+    "fact": "«Moustique» vient de l'espagnol «mosquito», diminutif de «mosca» (la mouche). Le suffixe diminutif espagnol «ito» était si expressif que le mot a été adopté tel quel dans de nombreuses langues.",
     "type": "etymologie",
     "keyword": "moustique"
   },
   {
-    "fact": "Le mot «embargo» est entré dans presque toutes les langues du monde via l'espagnol. Il vient du verbe «embargar» (saisir, bloquer), lui-même issu du latin tardif.",
+    "fact": "Le mot «embargo» est entré dans presque toutes les langues du monde via l'espagnol. Il vient du verbe «embargar» (saisir, bloquer), lui-même issu du latin tardif «imbarricare» (enfermer derrière des barreaux).",
     "type": "etymologie",
     "keyword": "embargo"
   },
   {
-    "fact": "«Guérilla» vient de l'espagnol «guerrilla», diminutif de «guerra» (la guerre). Le mot a été introduit dans les langues européennes lors des.",
+    "fact": "«Guérilla» vient de l'espagnol «guerrilla», diminutif de «guerra» (la guerre). Le mot a été introduit dans les langues européennes lors des guerres d'indépendance espagnoles au début du XIXe siècle.",
     "type": "etymologie",
     "keyword": "guérilla"
   },
@@ -160,7 +160,7 @@
     "keyword": "patio"
   },
   {
-    "fact": "«Canyon» vient de l'espagnol «cañón», augmentatif de «caño» (tuyau). La métaphore visuelle est limpide : un canyon ressemble à un.",
+    "fact": "«Canyon» vient de l'espagnol «cañón», augmentatif de «caño» (tuyau). La métaphore visuelle est limpide : un canyon ressemble à un immense tuyau naturel.",
     "type": "etymologie",
     "keyword": "canyon"
   },
@@ -175,17 +175,17 @@
     "keyword": "savane"
   },
   {
-    "fact": "«Alcool» vient de l'arabe «al-kuhl» via l'espagnol «alcohol». L'Espagne médiévale, influencée par la culture arabe pendant huit siècles, a été le.",
+    "fact": "«Alcool» vient de l'arabe «al-kuhl» via l'espagnol «alcohol». L'Espagne médiévale, influencée par la culture arabe pendant huit siècles, a été le principal relais de ce mot vers l'Europe.",
     "type": "etymologie",
     "keyword": "alcool"
   },
   {
-    "fact": "«Guitare» vient de l'espagnol «guitarra», qui descend du grec «kithara» via l'arabe «qitar». L'instrument a voyagé des Grecs aux Arabes,.",
+    "fact": "«Guitare» vient de l'espagnol «guitarra», qui descend du grec «kithara» via l'arabe «qitar». L'instrument a voyagé des Grecs aux Arabes, puis aux Espagnols avant de conquérir le monde.",
     "type": "etymologie",
     "keyword": "guitare"
   },
   {
-    "fact": "«Maïs» vient de l'espagnol «maíz», lui-même emprunté au taíno «mahiz», une langue des Caraïbes. Comme le cacao et la tomate, c'est l'espagnol qui a.",
+    "fact": "«Maïs» vient de l'espagnol «maíz», lui-même emprunté au taíno «mahiz», une langue des Caraïbes. Comme le cacao et la tomate, c'est l'espagnol qui a introduit ce mot en Europe.",
     "type": "etymologie",
     "keyword": "maïs"
   },
@@ -205,7 +205,7 @@
     "keyword": "vanille"
   },
   {
-    "fact": "«Créole» vient de l'espagnol «criollo», qui désignait à l'origine les Espagnols nés en Amérique. En Argentine, «criollo» reste très usité pour désigner.",
+    "fact": "«Créole» vient de l'espagnol «criollo», qui désignait à l'origine les Espagnols nés en Amérique. En Argentine, «criollo» reste très usité pour désigner quelqu'un ou quelque chose d'authentiquement local.",
     "type": "etymologie",
     "keyword": "créole"
   },
@@ -220,7 +220,7 @@
     "keyword": "lasso"
   },
   {
-    "fact": "«Anchois» vient de l'espagnol «anchoa» ou «anchova», d'origine peut-être basque ou provençale. Les Basques, présents en grand nombre en Argentine.",
+    "fact": "«Anchois» vient de l'espagnol «anchoa» ou «anchova», d'origine peut-être basque ou provençale. Les Basques, présents en grand nombre en Argentine, ont contribué à enrichir le vocabulaire culinaire local.",
     "type": "etymologie",
     "keyword": "anchois"
   },
@@ -235,7 +235,7 @@
     "keyword": "bonanza"
   },
   {
-    "fact": "«Mosquée» vient de l'espagnol «mezquita», qui lui-même vient de l'arabe «masjid». L'Espagne médiévale a été le filtre principal par lequel.",
+    "fact": "«Mosquée» vient de l'espagnol «mezquita», qui lui-même vient de l'arabe «masjid». L'Espagne médiévale a été le filtre principal par lequel de nombreux mots arabes sont entrés dans les langues européennes.",
     "type": "etymologie",
     "keyword": "mosquée"
   },
@@ -265,7 +265,7 @@
     "keyword": "copado"
   },
   {
-    "fact": "«Quilombo» désigne un désordre, un bazar ou une situation chaotique. À l'origine, le mot vient du kimbundu (langue d'Angola) et désignait les.",
+    "fact": "«Quilombo» désigne un désordre, un bazar ou une situation chaotique. À l'origine, le mot vient du kimbundu (langue d'Angola) et désignait les habitations des esclaves en fuite.",
     "type": "expression_idiomatique",
     "keyword": "quilombo"
   },
@@ -325,7 +325,7 @@
     "keyword": "re intensificateur"
   },
   {
-    "fact": "«De taquito» signifie «facilement», «sans effort», les doigts dans le nez. L'image vient du football : marquer un but «de taquito» c'est le.",
+    "fact": "«De taquito» signifie «facilement», «sans effort», les doigts dans le nez. L'image vient du football : marquer un but «de taquito» c'est le faire avec une facilité déconcertante, du bout du pied.",
     "type": "expression_idiomatique",
     "keyword": "de taquito"
   },
@@ -335,7 +335,7 @@
     "keyword": "tirar bronca"
   },
   {
-    "fact": "«Estar al horno con papas» est la version renforcée de «estar en el horno». En ajoutant «avec des pommes de terre», l'expression insiste sur le.",
+    "fact": "«Estar al horno con papas» est la version renforcée de «estar en el horno». En ajoutant «avec des pommes de terre», l'expression insiste sur le côté irrémédiable de la situation.",
     "type": "expression_idiomatique",
     "keyword": "al horno con papas"
   },
@@ -385,17 +385,17 @@
     "keyword": "noche porteña"
   },
   {
-    "fact": "Le «voseo» ne change pas seulement le pronom mais toute la conjugaison au présent. On dit «vos tenés» (tu as), «vos comés» (tu manges), «vos.",
+    "fact": "Le «voseo» ne change pas seulement le pronom mais toute la conjugaison au présent. On dit «vos tenés» (tu as), «vos comés» (tu manges), «vos vivís» (tu vis).",
     "type": "rioplatense",
     "keyword": "voseo conjugaison"
   },
   {
-    "fact": "Le lunfardo est l'argot né à Buenos Aires au XIXe siècle dans les quartiers d'immigrants. Forgé par le mélange de l'espagnol, de l'italien, du génois,.",
+    "fact": "Le lunfardo est l'argot né à Buenos Aires au XIXe siècle dans les quartiers d'immigrants. Forgé par le mélange de l'espagnol, de l'italien, du génois et de langues africaines, il enrichit encore l'argot d'aujourd'hui.",
     "type": "rioplatense",
     "keyword": "lunfardo"
   },
   {
-    "fact": "Le vesre est la technique du lunfardo qui consiste à inverser les syllabes des mots. «Café» devient «feca», «tango» devient «gotán», «hotel».",
+    "fact": "Le vesre est la technique du lunfardo qui consiste à inverser les syllabes des mots. «Café» devient «feca», «tango» devient «gotán», «hotel» devient «telo».",
     "type": "rioplatense",
     "keyword": "vesre"
   },
@@ -430,7 +430,7 @@
     "keyword": "intonation italienne"
   },
   {
-    "fact": "L'espagnol argentin utilise les diminutifs de manière très intensive pour exprimer l'affection. «Un momentito», «un cafecito», «un besito» ne désignent.",
+    "fact": "L'espagnol argentin utilise les diminutifs de manière très intensive pour exprimer l'affection. «Un momentito», «un cafecito», «un besito» ne désignent pas forcément quelque chose de petit mais témoignent de tendresse.",
     "type": "rioplatense",
     "keyword": "diminutifs affectifs"
   },
@@ -450,7 +450,7 @@
     "keyword": "español neutro"
   },
   {
-    "fact": "Les termes d'adresse argentin incluent un registre d'insultes douces utilisées entre amis. «Boludo/a» entre proches est presque affectueux, comme «con».",
+    "fact": "Les termes d'adresse argentin incluent un registre d'insultes douces utilisées entre amis. «Boludo/a» entre proches est presque affectueux, comme «con» entre amis en français familier.",
     "type": "rioplatense",
     "keyword": "insultes affectives"
   },
@@ -465,7 +465,7 @@
     "keyword": "viste"
   },
   {
-    "fact": "Les Argentins disent «castellano» et non «español» pour désigner leur langue. Ce choix n'est pas neutre : «castellano» rappelle que la langue vient de.",
+    "fact": "Les Argentins disent «castellano» et non «español» pour désigner leur langue. Ce choix n'est pas neutre : «castellano» rappelle que la langue vient de Castille, et non d'un pays unique.",
     "type": "rioplatense",
     "keyword": "castellano vs español"
   },
@@ -475,17 +475,17 @@
     "keyword": "lunfardo vivant"
   },
   {
-    "fact": "«No tiene nada que ver» signifie «ça n'a rien à voir» et s'utilise exactement comme son équivalent français. C'est l'un des nombreux parallèles.",
+    "fact": "«No tiene nada que ver» signifie «ça n'a rien à voir» et s'utilise exactement comme son équivalent français. C'est l'un des nombreux parallèles entre les deux langues qui facilitent l'apprentissage.",
     "type": "rioplatense",
     "keyword": "nada que ver"
   },
   {
-    "fact": "À la fin du XIXe siècle, Buenos Aires était surnommée «le Paris de l'Amérique du Sud» avec raison. Le gouvernement argentin avait fait appel à des.",
+    "fact": "À la fin du XIXe siècle, Buenos Aires était surnommée «le Paris de l'Amérique du Sud» avec raison. Le gouvernement argentin avait fait appel à des architectes français pour modeler la ville.",
     "type": "histoire",
     "keyword": "Buenos Aires Paris"
   },
   {
-    "fact": "Entre 1850 et 1950, plus de 200 000 Français ont immigré en Argentine. La province de Buenos Aires comptait des colonies françaises entières, et des villes.",
+    "fact": "Entre 1850 et 1950, plus de 200 000 Français ont immigré en Argentine. La province de Buenos Aires comptait des colonies françaises entières, et des villes portent encore des noms français.",
     "type": "histoire",
     "keyword": "immigration française"
   },
@@ -495,7 +495,7 @@
     "keyword": "Alliance française Buenos Aires"
   },
   {
-    "fact": "Les idéaux de la Révolution française ont profondément influencé les libérateurs argentins. José de San Martín et Manuel Belgrano avaient.",
+    "fact": "Les idéaux de la Révolution française ont profondément influencé les libérateurs argentins. José de San Martín et Manuel Belgrano avaient étudié les textes des Lumières et s'en étaient inspirés pour l'indépendance.",
     "type": "histoire",
     "keyword": "Lumières et indépendance"
   },
@@ -535,7 +535,7 @@
     "keyword": "dictature et exil en France"
   },
   {
-    "fact": "Julio Cortázar a vécu à Paris pendant plus de 30 ans, de 1951 jusqu'à sa mort en 1984. Il travaillait comme traducteur pour l'UNESCO et écrivait ses.",
+    "fact": "Julio Cortázar a vécu à Paris pendant plus de 30 ans, de 1951 jusqu'à sa mort en 1984. Il travaillait comme traducteur pour l'UNESCO et écrivait ses chefs-d'œuvre en espagnol depuis la France.",
     "type": "histoire",
     "keyword": "Cortázar à Paris"
   },
@@ -555,7 +555,7 @@
     "keyword": "guaraní survivance"
   },
   {
-    "fact": "L'immigration italienne en Argentine au XIXe siècle a été encore plus massive que la française. Buenos Aires a accueilli plus d'Italiens que n'importe.",
+    "fact": "L'immigration italienne en Argentine au XIXe siècle a été encore plus massive que la française. Buenos Aires a accueilli plus d'Italiens que n'importe quelle autre ville hors d'Italie.",
     "type": "histoire",
     "keyword": "immigration italienne"
   },
@@ -580,7 +580,7 @@
     "keyword": "subjonctif espagnol"
   },
   {
-    "fact": "En espagnol argentin, le «pretérito indefinido» est quasi exclusivement utilisé pour le passé. Les Argentins disent «ayer fui» (hier j'y suis allé) là où.",
+    "fact": "En espagnol argentin, le «pretérito indefinido» est quasi exclusivement utilisé pour le passé. Les Argentins disent «ayer fui» (hier j'y suis allé) là où un Espagnol dirait «ayer he ido».",
     "type": "apprentissage",
     "keyword": "passé argentin vs castillan"
   },
@@ -595,7 +595,7 @@
     "keyword": "shadowing"
   },
   {
-    "fact": "Lire les journaux argentins est l'une des façons les plus efficaces d'acquérir du vocabulaire contextuel. «Infobae», «La Nación» et «Página 12» représentent.",
+    "fact": "Lire les journaux argentins est l'une des façons les plus efficaces d'acquérir du vocabulaire contextuel. «Infobae», «La Nación» et «Página 12» représentent les trois courants principaux de la presse argentine.",
     "type": "apprentissage",
     "keyword": "lecture journaux"
   },
@@ -605,17 +605,17 @@
     "keyword": "musique apprentissage"
   },
   {
-    "fact": "Le français et l'espagnol partagent environ 75% de vocabulaire d'origine latine commune. Pour un francophone, ce «transfert positif» est immense : des.",
+    "fact": "Le français et l'espagnol partagent environ 75% de vocabulaire d'origine latine commune. Pour un francophone, ce «transfert positif» est immense : des milliers de mots se devinent naturellement.",
     "type": "apprentissage",
     "keyword": "transfert positif"
   },
   {
-    "fact": "L'espagnol ne compte qu'une cinquantaine de verbes vraiment irréguliers à haute fréquence. De plus, leurs irrégularités suivent des patterns.",
+    "fact": "L'espagnol ne compte qu'une cinquantaine de verbes vraiment irréguliers à haute fréquence. De plus, leurs irrégularités suivent des patterns prévisibles qui facilitent leur mémorisation.",
     "type": "apprentissage",
     "keyword": "verbes irréguliers patterns"
   },
   {
-    "fact": "Les prépositions sont souvent les dernières à se naturaliser dans une langue étrangère. En espagnol, «a» est à la fois la préposition du mouvement et celle.",
+    "fact": "Les prépositions sont souvent les dernières à se naturaliser dans une langue étrangère. En espagnol, «a» est à la fois la préposition du mouvement et celle qui introduit les compléments d'objets humains.",
     "type": "apprentissage",
     "keyword": "a personnel"
   },
@@ -710,7 +710,7 @@
     "keyword": "football argentin"
   },
   {
-    "fact": "Diego Maradona est une figure quasi mythologique en Argentine. Sa «mano de Dios» contre l'Angleterre en 1986 (un but marqué de la main qu'il attribua à.",
+    "fact": "Diego Maradona est une figure quasi mythologique en Argentine. Sa «mano de Dios» contre l'Angleterre en 1986 (un but marqué de la main qu'il attribua à la main de Dieu) est restée dans la légende.",
     "type": "culture",
     "keyword": "Maradona"
   },
@@ -735,7 +735,7 @@
     "keyword": "cumbia villera"
   },
   {
-    "fact": "La murga est une tradition de carnaval née dans les quartiers populaires de Buenos Aires et Montevideo. Des troupes habillées de façon extravagante.",
+    "fact": "La murga est une tradition de carnaval née dans les quartiers populaires de Buenos Aires et Montevideo. Des troupes habillées de façon extravagante défilent au rythme de percussions et de chants satiriques.",
     "type": "culture",
     "keyword": "murga"
   },
@@ -760,7 +760,7 @@
     "keyword": "psychanalyse Buenos Aires"
   },
   {
-    "fact": "«Martín Fierro» de José Hernández est l'œuvre fondatrice de la littérature gauchesque argentine. Ce long poème épique célèbre la figure du gaucho, le cavalier.",
+    "fact": "«Martín Fierro» de José Hernández est l'œuvre fondatrice de la littérature gauchesque argentine. Ce long poème épique célèbre la figure du gaucho, le cavalier des plaines, symbole de liberté et de résistance.",
     "type": "culture",
     "keyword": "Martin Fierro"
   },
@@ -770,7 +770,7 @@
     "keyword": "Patagonie"
   },
   {
-    "fact": "Le Malbec, cépage emblématique argentin, vient en réalité du sud-ouest de la France, de la région de Cahors. Introduit en Argentine au XIXe siècle, il a trouvé.",
+    "fact": "Le Malbec, cépage emblématique argentin, vient en réalité du sud-ouest de la France, de la région de Cahors. Introduit en Argentine au XIXe siècle, il a trouvé dans le climat de Mendoza des conditions idéales pour s'épanouir.",
     "type": "culture",
     "keyword": "Malbec Mendoza"
   },
@@ -805,7 +805,7 @@
     "keyword": "Mafalda"
   },
   {
-    "fact": "San Telmo est le quartier historique le plus emblématique de Buenos Aires. Ses rues pavées, ses maisons coloniales et ses marchés d'antiquités lui donnent une.",
+    "fact": "San Telmo est le quartier historique le plus emblématique de Buenos Aires. Ses rues pavées, ses maisons coloniales et ses marchés d'antiquités lui donnent une atmosphère unique et nostalgique.",
     "type": "culture",
     "keyword": "San Telmo"
   },
@@ -855,7 +855,7 @@
     "keyword": "ponctuation inversée"
   },
   {
-    "fact": "Le mot «ojalá» (espérons que, pourvu que) vient directement de l'arabe «insha'Allah» (si Dieu le veut). C'est l'une des traces les plus directes des huit.",
+    "fact": "Le mot «ojalá» (espérons que, pourvu que) vient directement de l'arabe «insha'Allah» (si Dieu le veut). C'est l'une des traces les plus directes des huit siècles de présence arabe dans la péninsule Ibérique.",
     "type": "insolite",
     "keyword": "ojalá arabe"
   },
@@ -900,12 +900,12 @@
     "keyword": "Argentine et lecture"
   },
   {
-    "fact": "L'espagnol est géré par 23 académies nationales coordonnées par la RAE. Cette structure unique au monde signifie que l'espagnol d'Argentine, du Mexique ou.",
+    "fact": "L'espagnol est géré par 23 académies nationales coordonnées par la RAE. Cette structure unique au monde signifie que l'espagnol d'Argentine, du Mexique ou d'Espagne est reconnu comme également légitime.",
     "type": "insolite",
     "keyword": "23 académies"
   },
   {
-    "fact": "Le nom «Argentina» vient du latin «argentum» (argent). Les conquistadors espagnols croyaient cette région riche en argent, sur la foi de rumeurs évoquant des.",
+    "fact": "Le nom «Argentina» vient du latin «argentum» (argent). Les conquistadors espagnols croyaient cette région riche en argent, sur la foi de rumeurs évoquant des montagnes d'argent, d'où le nom du Río de la Plata.",
     "type": "insolite",
     "keyword": "nom Argentine"
   },
@@ -915,7 +915,7 @@
     "keyword": "Gardel et Toulouse"
   },
   {
-    "fact": "Don Quichotte de Cervantes (1605) est souvent présenté comme le premier roman moderne de la littérature mondiale. Il a été traduit en français dès 1614, soit.",
+    "fact": "Don Quichotte de Cervantes (1605) est souvent présenté comme le premier roman moderne de la littérature mondiale. Il a été traduit en français dès 1614, soit moins de dix ans après sa publication originale.",
     "type": "insolite",
     "keyword": "Don Quichotte"
   },

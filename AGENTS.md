@@ -23,6 +23,7 @@
 13. [Portal Component Guidelines](#13-portal-component-guidelines)
 14. [Responsive Bug Patterns & Fixes](#14-responsive-bug-patterns--fixes)
 15. [User Story Files](#15-user-story-files)
+16. [Mandatory Post-Development Verification (MANDATORY)](#16-mandatory-post-development-verification-mandatory)
 
 ---
 
@@ -989,7 +990,83 @@ git commit -m "docs: update AGENTS.md with Gemini architecture"
 
 ---
 
-**Last Updated:** 2026 — Phase 4 (Gemini migration + comprehensive architecture documentation)
+## 16. Mandatory Post-Development Verification (MANDATORY)
+
+> **After EVERY code change — feature, fix, or improvement — the following checks MUST be executed and pass before considering the task complete. No exceptions.**
+
+### Verification Pipeline
+
+Every `@coder`, `@code-simplifier`, or any agent that produces code MUST run these commands in order:
+
+```bash
+# Step 1: TypeScript type check — catches type errors, missing imports, wrong props
+npx tsc --noEmit
+
+# Step 2: ESLint — catches lint errors, unused vars, security issues, code smells
+pnpm lint
+
+# Step 3: Production build — catches runtime errors, SSR issues, hydration mismatches
+pnpm build
+```
+
+### When to Run
+
+| Event | TypeScript Check | ESLint | Build |
+|-------|:---:|:---:|:---:|
+| After each user story implementation | ✅ | ✅ | ✅ |
+| After a bugfix | ✅ | ✅ | ✅ |
+| After refactoring / simplification | ✅ | ✅ | ⚠️ (if structural changes) |
+| After editing translations (`.json`) | ✅ | ✅ | — |
+| After editing data files (`.json`, `.ts` in `data/`) | ✅ | — | — |
+| After editing `AGENTS.md` or docs only | — | — | — |
+
+### Rules
+
+1. **NEVER** report a task as complete if `tsc --noEmit` has errors
+2. **NEVER** report a task as complete if `pnpm lint` has errors (warnings are acceptable)
+3. **NEVER** report a feature as complete if `pnpm build` fails
+4. If a build error is pre-existing (not caused by your changes), document it explicitly
+5. Fix all errors before delivering — do not leave them for the next agent
+6. When using the `@coder` agent, always include `"After implementation, run 'npx tsc --noEmit && pnpm lint && pnpm build' and fix any errors"` in the prompt
+
+### Failure Protocol
+
+If any check fails:
+1. **Read the error output carefully** — TypeScript and ESLint errors are usually self-explanatory
+2. **Fix the error** in the relevant file(s)
+3. **Re-run the failed check** to confirm the fix
+4. **Re-run all checks** if the fix touched multiple files
+5. If the error is a legitimate pre-existing issue not caused by your changes, **document it** in your response
+
+### Integration with Standard Workflows
+
+The verification pipeline integrates into every workflow:
+
+**New Feature (updated):**
+```
+1. @brainstormer  → Clarification & ideation (if objective is vague)
+2. @planner       → Decomposition into user stories + feasibility study
+3. User validation of the plan
+4. @coder         → Implementation US by US
+                    → ⚡ RUN: tsc --noEmit && pnpm lint && pnpm build AFTER EACH US
+5. @tester        → Test generation after each implemented user story
+6. @code-reviewer → Audit of produced code
+7. @code-simplifier → Simplification if needed
+                    → ⚡ RUN: tsc --noEmit && pnpm lint && pnpm build AFTER SIMPLIFICATION
+```
+
+**Bugfix (updated):**
+```
+1. @planner       → Bug analysis + fix plan
+2. @coder         → Fix implementation
+                    → ⚡ RUN: tsc --noEmit && pnpm lint && pnpm build
+3. @tester        → Regression tests
+4. @code-reviewer → Fix validation
+```
+
+---
+
+**Last Updated:** 2026 — Phase 5 (v1.3.0 — Security pipeline + quiz overhaul + mandatory verification)
 
 ---
 

@@ -89,18 +89,23 @@ function SetupContent() {
     }
   }, [mode]);
 
-  // US-Q2: Tense options from locale-aware helper
+  // The learned language is the opposite of the portal UI locale
+  // FR portal → user learns Spanish → tenses/groups in Spanish
+  // ES portal → user learns French → tenses/groups in French
+  const learnedLang: LangCode = locale === "fr" ? "es" : "fr";
+
+  // US-Q2: Tense options in the learned language
   const tenseOptions = useMemo(() => {
-    const tenses = getTensesForLocale(locale || "fr");
+    const tenses = getTensesForLocale(learnedLang);
     return [
       { value: "all", label: t("practice.setup.allTenses") },
       ...tenses.map((te) => ({ value: te.key, label: te.label })),
     ];
-  }, [locale, t]);
+  }, [learnedLang, t]);
 
-  // US-Q3: Verb group options
+  // US-Q3: Verb group options in the learned language
   const verbGroupOptions = useMemo(() => {
-    const groups = locale === "fr" ? VERB_GROUPS_FR : VERB_GROUPS_ES;
+    const groups = learnedLang === "fr" ? VERB_GROUPS_FR : VERB_GROUPS_ES;
     return [
       { value: "all", label: t("practice.setup.allGroups") },
       ...groups.map((g) => ({
@@ -108,7 +113,7 @@ function SetupContent() {
         label: "label" in g ? g.label : t(g.labelKey),
       })),
     ];
-  }, [locale, t]);
+  }, [learnedLang, t]);
 
   // US-Q4: Pronoun options
   const pronounOptions = useMemo(() => {
