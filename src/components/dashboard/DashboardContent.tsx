@@ -51,7 +51,9 @@ export function DashboardContent() {
 
   const fetchPresets = useCallback(async () => {
     try {
-      const response = await fetch(`/api/quiz-presets?locale=${locale || "fr"}&limit=3`);
+      const response = await fetch(
+        `/api/quiz-presets?locale=${locale || "fr"}&limit=3`,
+      );
       if (response.ok) {
         const data = await response.json();
         setPresets((data.presets || []).slice(0, 3));
@@ -88,7 +90,7 @@ export function DashboardContent() {
 
   const quickActions = [
     {
-      titleKey: "addVocabulary",
+        titleKey: "addVocabulary",
       descKey: "addVocabularyDesc",
       href: "/dashboard/add",
       icon: PlusCircle,
@@ -107,6 +109,7 @@ export function DashboardContent() {
       href: "/dashboard/lessons",
       icon: BookOpen,
       color: "bg-purple-500",
+      disabled: true,
     },
   ];
 
@@ -179,6 +182,28 @@ export function DashboardContent() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {quickActions.map((action, index) => {
           const Icon = action.icon;
+
+          if (action.disabled) {
+            return (
+              <div
+                key={action.href}
+                className="bg-white rounded-2xl p-6 border border-franol-warm
+                           opacity-40 cursor-not-allowed animate-slide-up"
+                style={{ animationDelay: `${0.3 + index * 0.1}s` }}
+              >
+                <div className={cn("inline-flex p-3 rounded-xl mb-4", action.color)}>
+                  <Icon className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-lg font-semibold text-franol-text mb-1">
+                  {t(`dashboard.${action.titleKey}`)}
+                </h3>
+                <p className="text-sm text-franol-muted">
+                  {t(`dashboard.${action.descKey}`)}
+                </p>
+              </div>
+            );
+          }
+
           return (
             <Link
               key={action.href}

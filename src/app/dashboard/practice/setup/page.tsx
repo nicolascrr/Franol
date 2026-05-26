@@ -436,7 +436,7 @@ function SetupContent() {
           variant={alertVariant}
           message={alertMessage}
           onClose={() => setAlertShow(false)}
-          showTimer={true}
+          showTimer={alertVariant === "info"}
           duration={5000}
         />
 

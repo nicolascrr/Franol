@@ -20,7 +20,12 @@ const navItems = [
   { key: "add", href: "/dashboard/add", icon: PlusCircle },
   { key: "content", href: "/dashboard/content", icon: Database },
   { key: "practice", href: "/dashboard/practice", icon: Dumbbell },
-  { key: "lessons", href: "/dashboard/lessons", icon: BookOpen },
+  {
+    key: "lessons",
+    href: "/dashboard/lessons",
+    icon: BookOpen,
+    disabled: true,
+  },
 ];
 
 export function Navigation() {
@@ -78,6 +83,19 @@ export function Navigation() {
             const Icon = item.icon;
             const active = isActive(item.href);
             const isNavigating = navigatingTo === item.href;
+
+            if (item.disabled) {
+              return (
+                <div
+                  key={item.key}
+                  className="flex items-center gap-3 px-6 py-3 mx-2 rounded-xl opacity-40 cursor-not-allowed text-franol-muted"
+                >
+                  <Icon size={20} />
+                  <span className="font-medium">{t(`nav.${item.key}`)}</span>
+                </div>
+              );
+            }
+
             return (
               <Link
                 key={item.key}
